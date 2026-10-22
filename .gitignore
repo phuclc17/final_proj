@@ -1,0 +1,40 @@
+# Du lieu sinh ra (tai tao duoc bang simulator + pipeline), kho DuckDB
+data/*
+!data/public_reference/
+data/public_reference/*
+!data/public_reference/calibration_report.json
+
+# Moi truong, cache
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# dbt: thu muc sinh ra khi chay
+dbt/target*/
+dbt/logs*/
+dbt/dbt_packages/
+logs/
+
+# Ban cu cua du an (chi giu tren may de doi chieu)
+_ban_cu/
+
+# File Word dang mo, file tam
+~$*
+*.tmp
+
+# Video demo du phong (tai tao bang tools/quay_video_demo.py)
+docs/review/*.webm
+
+# Mat khau trien khai
+.env
+
+# Duong dan Metabase sinh boi bi/metabase_setup.py (rieng moi may)
+bi/metabase_links.json
+docs/review/*.mp4
+docs/review/_video_doan/
+
+# Ghi chu lam viec noi bo (khong dua len repo cong khai)
+CLAUDE.md
+BUSINESS_CONTEXT.md
+docs/KHUNG_BAO_CAO.md

@@ -1,0 +1,59 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_style.css">
+<style>
+#fig { width: 800px; height: 640px; position: relative; }
+#fig > * { position: absolute; }
+.actor { width: 92px; text-align: center; font-size: 13.5px; line-height: 1.3; color: #1f2933; }
+.actor svg { display: block; margin: 0 auto 3px auto; }
+.sysactor { width: 112px; text-align: center; font-size: 13px; line-height: 1.3; background: var(--blue-bg);
+            border: 1.5px solid var(--blue); border-radius: 8px; padding: 6px 4px; color: #1f2933; }
+.sysactor small { display: block; color: #52606d; font-size: 11.5px; }
+.boundary { border: 1.8px solid #52606d; border-radius: 6px; background: #fbfcfd; }
+.boundary .title { position: absolute; left: 12px; top: 8px; }
+.uc { width: 222px; height: 62px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      text-align: center; font-size: 13.5px; line-height: 1.3; padding: 0 16px; box-sizing: border-box;
+      border: 1.5px solid; }
+.da { background: var(--red-bg); border-color: var(--red); }
+.de { background: var(--silver-bg); border-color: var(--silver); }
+.grp { font-size: 12.5px; color: #52606d; font-weight: 600; letter-spacing: .02em; }
+.ucid { display: block; font-size: 11.5px; letter-spacing: .04em; color: #52606d; }
+</style></head><body><div id="fig">
+
+<div class="boundary" style="left:160px; top:0; width:500px; height:610px">
+  <div class="title">Nền tảng dữ liệu vận hành Fast&amp;Fat</div></div>
+<div class="grp" style="left:180px; top:38px">Phân tích vận hành</div>
+<div class="grp" style="left:424px; top:38px">Dữ liệu và đánh giá</div>
+
+<div class="uc da" id="u1" style="left:176px; top:66px"><span><b class="ucid">UC01</b>Xem dashboard kinh doanh theo chi nhánh và kỳ</span></div>
+<div class="uc da" id="u2" style="left:176px; top:160px"><span><b class="ucid">UC02</b>Xem cảnh báo sắp theo thiệt hại ước tính</span></div>
+<div class="uc da" id="u3" style="left:176px; top:254px"><span><b class="ucid">UC03</b>Truy vết nguyên nhân biến động doanh thu</span></div>
+<div class="uc da" id="u4" style="left:176px; top:378px"><span><b class="ucid">UC04</b>Xem bằng chứng gốc và đề xuất xử lý</span></div>
+<div class="uc da" id="u10" style="left:176px; top:510px"><span><b class="ucid">UC05</b>Gửi tệp nguồn qua trang tải lên</span></div>
+
+<div class="uc de" id="u5" style="left:424px; top:66px"><span><b class="ucid">UC06</b>Theo dõi kết nối nguồn, tệp bị từ chối</span></div>
+<div class="uc de" id="u6" style="left:424px; top:140px"><span><b class="ucid">UC07</b>Tra cứu dữ liệu nguồn và kho</span></div>
+<div class="uc de" id="u7" style="left:424px; top:214px"><span><b class="ucid">UC08</b>Xem mô hình dữ liệu và phả hệ</span></div>
+<div class="uc de" id="u8" style="left:424px; top:288px"><span><b class="ucid">UC09</b>Theo dõi chất lượng dữ liệu</span></div>
+<div class="uc de" id="u9" style="left:424px; top:362px"><span><b class="ucid">UC10</b>Theo dõi lượt xử lý hằng ngày</span></div>
+<div class="uc de" id="u11" style="left:424px; top:436px"><span><b class="ucid">UC11</b>Đánh giá bộ phát hiện</span></div>
+<div class="uc de" id="u12" style="left:424px; top:530px"><span><b class="ucid">UC12</b>Thu thập và xử lý dữ liệu mới</span></div>
+
+<div class="actor" id="a1" style="left:0; top:60px"><svg width="34" height="58" viewBox="0 0 34 58"><g fill="none" stroke="#1f2933" stroke-width="2"><circle cx="17" cy="9" r="7.5"/><path d="M17 16.5 V38 M3 25 H31 M17 38 L5 56 M17 38 L29 56"/></g></svg>Quản lý<br>vận hành</div>
+<div class="actor" id="a2" style="left:0; top:250px"><svg width="34" height="58" viewBox="0 0 34 58"><g fill="none" stroke="#1f2933" stroke-width="2"><circle cx="17" cy="9" r="7.5"/><path d="M17 16.5 V38 M3 25 H31 M17 38 L5 56 M17 38 L29 56"/></g></svg>Quản lý<br>chi nhánh</div>
+<div class="actor" id="a3" style="left:0; top:450px"><svg width="34" height="58" viewBox="0 0 34 58"><g fill="none" stroke="#1f2933" stroke-width="2"><circle cx="17" cy="9" r="7.5"/><path d="M17 16.5 V38 M3 25 H31 M17 38 L5 56 M17 38 L29 56"/></g></svg>Kế toán</div>
+
+<div class="actor" id="a4" style="left:704px; top:196px"><svg width="34" height="58" viewBox="0 0 34 58"><g fill="none" stroke="#1f2933" stroke-width="2"><circle cx="17" cy="9" r="7.5"/><path d="M17 16.5 V38 M3 25 H31 M17 38 L5 56 M17 38 L29 56"/></g></svg>Kỹ sư<br>dữ liệu</div>
+<div class="sysactor" id="a5" style="left:684px; top:470px">Hệ thống nguồn<small>API, tệp xuất</small></div>
+<div class="sysactor" id="a6" style="left:684px; top:552px">Airflow<small>khi có dữ liệu mới, mỗi giờ</small></div>
+
+</div>
+<script src="_connect.js"></script>
+<script>
+const L = {straight: true, arrow: false, color: "#52606d", width: 1.2};
+const side = (a, b, from, to) => connect(a, b, Object.assign({from, to}, L));
+side("a1", "u1", "right", "left"); side("a1", "u2", "right", "left"); side("a1", "u3", "right", "left");
+side("a2", "u1", "right", "left"); side("a2", "u3", "right", "left"); side("a2", "u10", "right", "left");
+side("a3", "u2", "right", "left"); side("a3", "u4", "right", "left"); side("a3", "u10", "right", "left");
+for (const u of ["u5", "u6", "u7", "u8", "u9", "u11"]) side("a4", u, "left", "right");
+side("a5", "u12", "left", "right"); side("a6", "u12", "left", "right");
+connect("u3", "u4", {from: "bottom", to: "top", straight: true, dash: true, color: "#7a869a", label: "«include»", dx: 6, dy: 4});
+</script></body></html>

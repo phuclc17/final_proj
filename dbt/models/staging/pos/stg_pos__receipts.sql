@@ -1,0 +1,35 @@
+-- Silver: hoa don POS hop le, dung kieu du lieu, gan voi ma chi nhanh chuan.
+-- Hoa don huy (is_void) va hoan tien (is_refund) duoc GIU LAI va gan co: day la bang chung cho phat hien gian lan (P5).
+select
+    receipt_no,
+    branch_id,
+    business_date,
+    txn_at,
+    channel,
+    order_type,
+    terminal_id,
+    pos_version,
+    cashier_staff_id,
+    payment_method,
+    subtotal_amount,
+    discount_code,
+    discount_amount,
+    rounding_adjustment,
+    total_paid,
+    is_void,
+    void_reason,
+    void_by_staff_id,
+    void_at,
+    minutes_to_void,
+    is_refund,
+    refund_amount,
+    refund_by_staff_id,
+    is_printed,
+    reprint_count,
+    sync_status,
+    json_array_length(items_json) as n_lines,
+    _source_file,
+    _row_number,
+    _batch_id
+from {{ ref('base_pos__receipts') }}
+where dq_issue is null

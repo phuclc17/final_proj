@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: stg_master__menu_items
+    description: Moi anh chup danh muc mon (lich su gia).
+    columns:
+      - name: item_id
+        data_tests: [not_null]
+      - name: price
+        data_tests: [not_null]
+  - name: stg_master__staff
+    description: Moi anh chup danh sach nhan vien (lich su vai tro, luong).
+    columns:
+      - name: staff_id
+        data_tests: [not_null]
+  - name: stg_master__app_catalog
+    description: Danh muc mon cua ung dung rieng.
+  - name: stg_master__branches
+    columns:
+      - name: branch_id
+        data_tests: [unique, not_null]
+      - name: branch_name
+        data_tests: [unique, not_null]
+  - name: stg_master__ingredients
+    columns:
+      - name: ingredient_id
+        data_tests: [unique, not_null]
+      - name: ingredient_code
+        data_tests: [unique, not_null]
+      - name: ingredient_name_norm
+        data_tests: [unique]
+  - name: stg_master__recipes
+    columns:
+      - name: ingredient_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_master__ingredients')
+                field: ingredient_id
+  - name: stg_master__combo_components
+  - name: stg_master__marketplace_contracts
+    columns:
+      - name: platform
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['GRABFOOD', 'SHOPEEFOOD']

@@ -1,0 +1,8 @@
+# Duong dan kho DuckDB duoc truyen qua bien moi truong FASTFAT_DB (xem pipeline/run_dbt.py)
+fastfat:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('FASTFAT_DB') }}"
+      threads: 4

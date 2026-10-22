@@ -1,0 +1,46 @@
+# He giao dien: trung tinh, mot mau nhan (do thuong hieu) dung tiet che cho thao tac chinh va muc canh bao.
+# Chu Inter, tieu de vua phai, vien manh, bo goc nho, khong bong do.
+[theme]
+base = "light"
+primaryColor = "#B4232A"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F6F7F9"
+textColor = "#111827"
+linkColor = "#1D4ED8"
+linkUnderline = false
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+headingFont = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+baseFontSize = 15
+headingFontSizes = ["1.75rem", "1.25rem", "1.05rem", "1rem", "0.95rem", "0.9rem"]
+headingFontWeights = [650, 600, 600, 600, 600, 600]
+metricValueFontSize = "1.6rem"
+metricValueFontWeight = 600
+baseRadius = "6px"
+buttonRadius = "6px"
+borderColor = "#E5E7EB"
+dataframeBorderColor = "#E5E7EB"
+dataframeHeaderBackgroundColor = "#F9FAFB"
+dataframeHeaderTextColor = "#4B5563"
+showWidgetBorder = true
+showSidebarBorder = true
+redColor = "#B42318"
+orangeColor = "#B54708"
+greenColor = "#067647"
+blueColor = "#1D4ED8"
+grayColor = "#6B7280"
+chartCategoricalColors = ["#1F3A5F", "#9CA3AF", "#2F7F86", "#5B8DB8", "#C08A2E", "#4F7F5F", "#7C6A9A"]
+
+[theme.sidebar]
+backgroundColor = "#FAFAFB"
+secondaryBackgroundColor = "#F3F4F6"
+borderColor = "#E5E7EB"
+
+[client]
+toolbarMode = "viewer"
+showSidebarNavigation = true
+
+[server]
+headless = true
+
+[browser]
+gatherUsageStats = false

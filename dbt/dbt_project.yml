@@ -1,0 +1,24 @@
+name: fastfat
+version: "1.0"
+config-version: 2
+profile: fastfat
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  fastfat:
+    staging:
+      +schema: silver
+      +materialized: table
+    marts:
+      +schema: gold
+      +materialized: table
+
+seeds:
+  fastfat:
+    +schema: silver_work   # bang tra cuu tu lap (anh xa ma, bien the ten, ngay le)

@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: stg_marketplace__settlement
+    description: Doi soat GrabFood + ShopeeFood hop nhat, kem ty le hop dong va do lech ty le hoa hong.
+    columns:
+      - name: settlement_key
+        data_tests: [unique, not_null]
+      - name: contract_commission_rate
+        data_tests: [not_null]
+
+  - name: stg_shopee__settlement
+    description: Bao cao doi soat ShopeeFood theo chi nhanh x tuan (Silver).
+    columns:
+      - name: branch_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('branch_code_map')
+                field: branch_id
+      - name: week_start
+        data_tests: [not_null]
+      - name: gross_sales
+        data_tests: [not_null]
+      - name: commission
+        data_tests: [not_null]
+      - name: net_payout
+        data_tests: [not_null]
+
+  - name: stg_grab__settlement
+    description: Bao cao doi soat GrabFood theo chi nhanh x tuan (Silver).
+    columns:
+      - name: branch_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('branch_code_map')
+                field: branch_id
+      - name: week_start
+        data_tests: [not_null]
+      - name: week_end
+        data_tests: [not_null]
+      - name: report_generated_date
+        data_tests: [not_null]
+      - name: gross_sales
+        data_tests: [not_null]
+      - name: orders_completed
+        data_tests: [not_null]
+      - name: commission
+        data_tests: [not_null]
+      - name: net_payout
+        data_tests: [not_null]
+      - name: effective_commission_rate
+        data_tests: [not_null]

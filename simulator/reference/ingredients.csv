@@ -1,0 +1,23 @@
+ingredient_id,ingredient_name,unit,category,shelf_life_days,unit_cost,par_level_per_branch
+1,Thit ga tuoi,kg,fresh,3,85000,25
+2,Thit bo xay,kg,fresh,3,140000,10
+3,Thit tom,kg,fresh,2,220000,5
+4,Rau xa lach,kg,fresh,3,25000,8
+5,Ca chua,kg,fresh,4,20000,6
+6,Bap cai,kg,fresh,5,15000,6
+7,Trung ga,qua,fresh,10,3500,100
+8,Sua tuoi,lit,fresh,5,32000,15
+9,Bot chien gion,kg,dry,120,45000,30
+10,Banh burger,cai,dry,7,3500,200
+11,Khoai tay dong lanh,kg,dry,90,28000,40
+12,Com trang,kg,dry,3,18000,30
+13,My y,kg,dry,180,35000,15
+14,Sot cay Han Quoc,lit,dry,60,55000,10
+15,Sot mayonnaise,lit,dry,45,38000,10
+16,Pho mai lat,kg,dry,30,90000,8
+17,Tran chau,kg,dry,60,32000,8
+18,Ly + ong hut + hop dung,bo,dry,365,1200,500
+19,Pepsi lon (mua san),lon,dry,180,4200,300
+20,7Up lon (mua san),lon,dry,180,4200,300
+21,Nuoc suoi (mua san),chai,dry,365,2600,300
+22,Nguyen lieu pha che tra/tra sua (goi chung: tra/duong/da),phan,dry,90,3800,50

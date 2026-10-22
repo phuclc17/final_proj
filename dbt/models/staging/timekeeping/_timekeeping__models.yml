@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: base_timekeeping__punches
+    description: Toan bo luot quet the kem nhan loi (quet trung -> cach ly).
+  - name: stg_timekeeping__punches
+    columns:
+      - name: punch_id
+        data_tests: [unique, not_null]
+      - name: branch_id
+        data_tests: [not_null]
+      - name: event_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['CHECK_IN', 'CHECK_OUT']
+  - name: stg_timekeeping__shifts
+    description: Ca lam viec ghep tu luot vao - ra; ca thieu luot ra duoc gan co, khong tu gan so gio.
+    columns:
+      - name: shift_key
+        data_tests: [unique, not_null]
+      - name: shift_name
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['SANG', 'TOI']

@@ -1,0 +1,78 @@
+# Ban trinh dien tren may chu cho giang vien cham. Ghep voi tep compose chinh:
+#   docker compose -f docker-compose.yml -f deploy/docker-compose.server.yml --env-file deploy/.env up -d --build
+#
+# Khac voi may ca nhan:
+#   - Khong mo cong nao cua cac dich vu ra ngoai; chi Caddy nghe 80/443 va cap HTTPS tu dong (Let's Encrypt).
+#       https://<DOMAIN>          ung dung Streamlit (che do trinh dien: an Tai tep len, bat/tat lich chay)
+#       https://bi.<DOMAIN>       Metabase (dashboard nhung trong trang Tong quan)
+#       https://airflow.<DOMAIN>  Airflow, giang vien dang nhap tai khoan chi xem (vai tro Viewer)
+#   - Mat khau quan tri lay tu deploy/.env (bat buoc dat, khong dung mat khau mac dinh).
+#   - API nguon gia lap va PostgreSQL chi chay trong mang noi bo cua Docker.
+#   - He thong nguon khong tu chay luc 23:00; moi dem 02:00 DAG fastfat_dat_lai_demo dua moi truong van hanh ve
+#     diem ban dau (anh chup data/_demo_snapshot), de nguoi xem nao cung thay cung mot trang thai.
+services:
+  airflow:
+    ports: !reset []
+    command: >
+      bash -c "rm -f /opt/airflow/airflow-webserver*.pid &&
+               airflow db migrate &&
+               (airflow users create -u admin -p \"$$AIRFLOW_ADMIN_PASSWORD\" -r Admin -f Admin -l FastFat -e admin@example.com || true) &&
+               airflow users reset-password -u admin -p \"$$AIRFLOW_ADMIN_PASSWORD\" &&
+               (airflow users create -u giangvien -p \"$$AIRFLOW_VIEWER_PASSWORD\" -r Viewer -f Giang -l Vien -e viewer@example.com || true) &&
+               airflow users reset-password -u giangvien -p \"$$AIRFLOW_VIEWER_PASSWORD\" &&
+               airflow standalone"
+    environment:
+      AIRFLOW_ADMIN_PASSWORD: ${AIRFLOW_ADMIN_PASSWORD:?Đặt AIRFLOW_ADMIN_PASSWORD trong deploy/.env}
+      AIRFLOW_VIEWER_PASSWORD: ${AIRFLOW_VIEWER_PASSWORD:?Đặt AIRFLOW_VIEWER_PASSWORD trong deploy/.env}
+      AIRFLOW_USER: admin
+      AIRFLOW_PASSWORD: ${AIRFLOW_ADMIN_PASSWORD}
+      AIRFLOW__WEBSERVER__BASE_URL: https://airflow.${DOMAIN}
+      AIRFLOW__WEBSERVER__WARN_DEPLOYMENT_EXPOSURE: "false"
+      FASTFAT_DEMO: "1"
+
+  source-api:
+    ports: !reset []
+
+  warehouse-db:
+    ports: !reset []
+
+  metabase:
+    ports: !reset []
+    environment:
+      MB_SITE_URL: https://bi.${DOMAIN}
+      JAVA_OPTS: -Xmx768m
+
+  app:
+    ports: !reset []
+    environment:
+      FASTFAT_DEMO: "1"
+      AIRFLOW_USER: admin
+      AIRFLOW_PASSWORD: ${AIRFLOW_ADMIN_PASSWORD}
+      AIRFLOW_PUBLIC_URL: https://airflow.${DOMAIN}
+      METABASE_PUBLIC_URL: https://bi.${DOMAIN}
+      # tro ly phan tich khong bat tren ban cong khai (ton phi goi mo hinh, chua danh gia)
+      ANTHROPIC_API_KEY: ""
+      AWS_ACCESS_KEY_ID: ""
+      AWS_SECRET_ACCESS_KEY: ""
+
+  caddy:
+    image: caddy:2.10.0
+    container_name: fastfat-caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN:?Đặt DOMAIN trong deploy/.env}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - app
+      - metabase
+      - airflow
+    restart: unless-stopped
+
+volumes:
+  caddy-data:
+  caddy-config:

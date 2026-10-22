@@ -1,0 +1,45 @@
+version: 2
+
+seeds:
+  - name: branch_code_map
+    description: >
+      Bang anh xa ma chi nhanh giua cac he thong nguon, do ky su du lieu lap tu khao sat du lieu Bronze.
+      11 chi nhanh, on dinh -> dung bang anh xa thu cong thay vi khop mo.
+    config:
+      column_types:
+        branch_id: integer
+    columns:
+      - name: branch_id
+        data_tests: [unique, not_null]
+      - name: pos_terminal_prefix
+        data_tests: [unique, not_null]
+      - name: app_branch_code
+        data_tests: [unique, not_null]
+      - name: grab_store_name
+        data_tests: [unique, not_null]
+      - name: shopee_store_code
+        data_tests: [unique, not_null]
+      - name: timekeeping_branch_code
+        data_tests: [unique, not_null]
+
+  - name: vn_public_holidays_2024
+    description: Lich nghi le chinh thuc Viet Nam 2024 (thong tin cong khai), dung cho dim_date.
+    config:
+      column_types:
+        holiday_date: date
+    columns:
+      - name: holiday_date
+        data_tests: [unique, not_null]
+
+  - name: ingredient_name_variants
+    description: >
+      Bang bien the ten nguyen lieu (da chuan hoa) -> ma nguyen lieu. Lap tu khao sat cac ten trong so nhap kho
+      cua tap hieu chinh; nhung ten khong khop thang voi danh muc sau khi chuan hoa.
+    config:
+      column_types:
+        ingredient_id: integer
+    columns:
+      - name: name_norm
+        data_tests: [unique, not_null]
+      - name: ingredient_id
+        data_tests: [not_null]

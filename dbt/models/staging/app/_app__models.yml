@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: map_app_product_item
+    description: Anh xa ma san pham ung dung -> ma mon tru so (khop ten chuan hoa).
+    columns:
+      - name: product_ref
+        data_tests: [unique, not_null]
+      - name: item_id
+        description: Rong nghia la ten mon tren ung dung khong khop danh muc -> can bo sung anh xa.
+        data_tests: [not_null]
+
+  - name: base_app__orders
+    description: Toan bo don ung dung kem nhan loi dq_issue. Bang trung gian.
+
+  - name: stg_app__orders
+    description: Don ung dung hop le (Silver), gio Viet Nam.
+    columns:
+      - name: order_id
+        data_tests: [unique, not_null]
+      - name: branch_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('branch_code_map')
+                field: branch_id
+      - name: business_date
+        data_tests: [not_null]
+      - name: order_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['DELIVERED', 'CANCELLED_BY_STORE', 'CANCELLED_BY_CUSTOMER', 'REFUNDED']
+
+  - name: stg_app__order_lines
+    columns:
+      - name: order_id
+        data_tests: [not_null]
+      - name: item_id
+        data_tests: [not_null]

@@ -1,0 +1,30 @@
+name_norm,ingredient_id,ghi_chu
+tom tuoi,3,ten tieng Viet day du (mau A) khac ten danh muc "Thit tom"
+tom,3,viet tat
+pepsi lon,19,danh muc ghi "Pepsi lon (mua san)"
+pepsi,19,viet tat
+7up lon,20,danh muc ghi "7Up lon (mua san)"
+7up,20,viet tat
+nuoc suoi,21,danh muc ghi "Nuoc suoi (mua san)"
+aquafina,21,ten thuong hieu
+nguyen lieu pha che tra tra sua,22,ten tieng Viet (mau A) ngan hon ten danh muc
+nl pha che,22,viet tat
+tra duong,22,ten tu dat
+xa lach,4,viet tat cua "Rau xa lach"
+trung,7,viet tat cua "Trung ga"
+thit ga,1,viet tat cua "Thit ga tuoi"
+ga tuoi,1,viet tat cua "Thit ga tuoi"
+bo xay,2,viet tat cua "Thit bo xay"
+thit bo,2,viet tat cua "Thit bo xay"
+sot cay hq,14,viet tat cua "Sot cay Han Quoc"
+pho mai,16,viet tat cua "Pho mai lat"
+sot mayo,15,viet tat cua "Sot mayonnaise"
+mayonnaise,15,viet tat cua "Sot mayonnaise"
+bot chien,9,viet tat cua "Bot chien gion"
+khoai tay dl,11,viet tat cua "Khoai tay dong lanh"
+khoai tay,11,viet tat cua "Khoai tay dong lanh"
+vo banh burger,10,ten tu dat cua "Banh burger"
+bao bi,18,ten goi chung cua "Ly + ong hut + hop dung"
+ly ong hut hop,18,viet tat
+gao nau,12,ten tu dat cua "Com trang"
+mi y,13,cach viet khac cua "My y"

@@ -1,0 +1,112 @@
+[
+  {
+    "internal_branch_id": 1,
+    "branch_name_internal": "Fast&Fat 250 Ly Chinh Thang",
+    "pos_terminal_prefix": "POS-01",
+    "owned_app_branch_code": "FNF-Q3-01",
+    "grabfood_settlement_name": "Fast&Fat - District 3 (#1)",
+    "shopeefood_settlement_name": "FASTFAT_DISTRICT3_01",
+    "timekeeping_branch_code": "BR01",
+    "tier": "medium"
+  },
+  {
+    "internal_branch_id": 2,
+    "branch_name_internal": "Fast&Fat 95 Tran Hung Dao",
+    "pos_terminal_prefix": "POS-02",
+    "owned_app_branch_code": "FNF-Q1-02",
+    "grabfood_settlement_name": "Fast&Fat - District 1 (#2)",
+    "shopeefood_settlement_name": "FASTFAT_DISTRICT1_02",
+    "timekeeping_branch_code": "BR02",
+    "tier": "hot"
+  },
+  {
+    "internal_branch_id": 3,
+    "branch_name_internal": "Fast&Fat 02 Ton Duc Thang",
+    "pos_terminal_prefix": "POS-03",
+    "owned_app_branch_code": "FNF-Q1-03",
+    "grabfood_settlement_name": "Fast&Fat - District 1 (#3)",
+    "shopeefood_settlement_name": "FASTFAT_DISTRICT1_03",
+    "timekeeping_branch_code": "BR03",
+    "tier": "hot"
+  },
+  {
+    "internal_branch_id": 4,
+    "branch_name_internal": "Fast&Fat 102 Le Quoc Hung",
+    "pos_terminal_prefix": "POS-04",
+    "owned_app_branch_code": "FNF-Q4-04",
+    "grabfood_settlement_name": "Fast&Fat - District 4 (#4)",
+    "shopeefood_settlement_name": "FASTFAT_DISTRICT4_04",
+    "timekeeping_branch_code": "BR04",
+    "tier": "low"
+  },
+  {
+    "internal_branch_id": 5,
+    "branch_name_internal": "Fast&Fat 211 Binh Phu",
+    "pos_terminal_prefix": "POS-05",
+    "owned_app_branch_code": "FNF-Q6-05",
+    "grabfood_settlement_name": "Fast&Fat - District 6 (#5)",
+    "shopeefood_settlement_name": "FASTFAT_DISTRICT6_05",
+    "timekeeping_branch_code": "BR05",
+    "tier": "low"
+  },
+  {
+    "internal_branch_id": 6,
+    "branch_name_internal": "Fast&Fat 114 Tran Hung Dao",
+    "pos_terminal_prefix": "POS-06",
+    "owned_app_branch_code": "FNF-Q10-06",
+    "grabfood_settlement_name": "Fast&Fat - District 10 (#6)",
+    "shopeefood_settlement_name": "FASTFAT_DISTRICT10_06",
+    "timekeeping_branch_code": "BR06",
+    "tier": "medium"
+  },
+  {
+    "internal_branch_id": 7,
+    "branch_name_internal": "Fast&Fat 356 Tran Hung Dao",
+    "pos_terminal_prefix": "POS-07",
+    "owned_app_branch_code": "FNF-Q5-07",
+    "grabfood_settlement_name": "Fast&Fat - District 5 (#7)",
+    "shopeefood_settlement_name": "FASTFAT_DISTRICT5_07",
+    "timekeeping_branch_code": "BR07",
+    "tier": "medium"
+  },
+  {
+    "internal_branch_id": 8,
+    "branch_name_internal": "Fast&Fat 194 Pasteur",
+    "pos_terminal_prefix": "POS-08",
+    "owned_app_branch_code": "FNF-Q3-08",
+    "grabfood_settlement_name": "Fast&Fat - District 3 (#8)",
+    "shopeefood_settlement_name": "FASTFAT_DISTRICT3_08",
+    "timekeeping_branch_code": "BR08",
+    "tier": "hot"
+  },
+  {
+    "internal_branch_id": 9,
+    "branch_name_internal": "Fast&Fat 204 Nguyen Thi Minh Khai",
+    "pos_terminal_prefix": "POS-09",
+    "owned_app_branch_code": "FNF-Q3-09",
+    "grabfood_settlement_name": "Fast&Fat - District 3 (#9)",
+    "shopeefood_settlement_name": "FASTFAT_DISTRICT3_09",
+    "timekeeping_branch_code": "BR09",
+    "tier": "medium"
+  },
+  {
+    "internal_branch_id": 10,
+    "branch_name_internal": "Fast&Fat 15 Cong Hoa",
+    "pos_terminal_prefix": "POS-10",
+    "owned_app_branch_code": "FNF-TanBinh-10",
+    "grabfood_settlement_name": "Fast&Fat - Tan Binh (#10)",
+    "shopeefood_settlement_name": "FASTFAT_TANBINH_10",
+    "timekeeping_branch_code": "BR10",
+    "tier": "medium"
+  },
+  {
+    "internal_branch_id": 11,
+    "branch_name_internal": "Fast&Fat 503 Nguyen Duy Trinh",
+    "pos_terminal_prefix": "POS-11",
+    "owned_app_branch_code": "FNF-Q2-11",
+    "grabfood_settlement_name": "Fast&Fat - District 2 (#11)",
+    "shopeefood_settlement_name": "FASTFAT_DISTRICT2_11",
+    "timekeeping_branch_code": "BR11",
+    "tier": "low"
+  }
+]

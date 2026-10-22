@@ -1,0 +1,147 @@
+# Toan bo nen tang Fast&Fat bang mot lenh:
+#   docker compose up -d --build
+#     http://localhost:8501  ung dung (phan tich van hanh + quan ly du lieu + danh gia)
+#     http://localhost:8080  Airflow (dieu phoi pipeline hang ngay, tai khoan admin / admin)
+#     http://localhost:3000  Metabase (BI, doc kho phuc vu Postgres bang tai khoan chi doc)
+#     http://localhost:8600  API gia lap cua phan mem POS dam may va App (tai lieu API: /docs)
+#     localhost:5433         PostgreSQL - kho phuc vu: Gold, ops cua tap van hanh thu (5432 de cho du an khac)
+#   docker compose down
+# Mat khau lay tu tep .env neu co (xem .env.example), khong thi dung gia tri mac dinh cho may ca nhan.
+# Thu muc du an duoc gan vao /opt/fastfat: pipeline doc/ghi dung data/<tap>/ tren may, app Streamlit tren may
+# doc duoc ket qua ngay.
+services:
+  airflow:
+    build:
+      context: .
+      dockerfile: docker/airflow/Dockerfile
+    image: fastfat-airflow:1
+    container_name: fastfat-airflow
+    # tep PID cua web server nam trong volume: neu Docker tat dot ngot, tep cu con lai lam web server tu thoat
+    # ("Already running on PID ...") -> xoa truoc moi lan khoi dong
+    command: >
+      bash -c "rm -f /opt/airflow/airflow-webserver*.pid &&
+               airflow db migrate &&
+               (airflow users create -u admin -p admin -r Admin -f Admin -l FastFat -e admin@example.com || true) &&
+               airflow standalone"
+    ports:
+      - "8080:8080"
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "false"
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/fastfat/airflow/dags
+      AIRFLOW__CORE__DEFAULT_TIMEZONE: Asia/Ho_Chi_Minh
+      AIRFLOW__WEBSERVER__DEFAULT_UI_TIMEZONE: Asia/Ho_Chi_Minh
+      AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "false"
+      AIRFLOW__API__AUTH_BACKENDS: "airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session"
+      FASTFAT_HOME: /opt/fastfat
+      FASTFAT_PYTHON: /opt/fastfat-venv/bin/python
+      FASTFAT_PG_HOST: warehouse-db
+      FASTFAT_PG_PORT: "5432"
+      FASTFAT_PG_USER: ${PG_ADMIN_USER:-fastfat}
+      FASTFAT_PG_PASSWORD: ${PG_ADMIN_PASSWORD:-fastfat_local}
+      FASTFAT_SOURCE_API: http://source-api:8600
+      SOURCE_API_TOKEN: ${SOURCE_API_TOKEN:-fastfat-demo-token}
+      PYTHONIOENCODING: utf-8
+      TZ: Asia/Ho_Chi_Minh
+    volumes:
+      - ./:/opt/fastfat
+      - airflow-home:/opt/airflow
+    depends_on:
+      warehouse-db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Phia doanh nghiep, khong thuoc duong ong: phan mem POS dam may va App chi cho lay du lieu qua API (xac thuc, phan
+  # trang, gioi han tan suat, thinh thoang loi tam thoi). Chi doc kho cua phan mem (SOURCE_STORE), gan chi doc; gan ca
+  # data/ chu khong rieng thu muc kho vi cong cu khoi phuc demo xoa va tao lai thu muc do.
+  source-api:
+    build:
+      context: .
+      dockerfile: docker/source_api/Dockerfile
+    image: fastfat-source-api:1
+    container_name: fastfat-source-api
+    ports:
+      - "8600:8600"
+    environment:
+      SOURCE_STORE: /opt/fastfat/data/live/_he_thong_nguon
+      SOURCE_API_TOKEN: ${SOURCE_API_TOKEN:-fastfat-demo-token}
+      SOURCE_API_FAIL_RATE: ${SOURCE_API_FAIL_RATE:-0.08}
+      TZ: Asia/Ho_Chi_Minh
+    volumes:
+      - ./source_api:/opt/fastfat/source_api:ro
+      - ./data:/opt/fastfat/data:ro
+    restart: unless-stopped
+
+  warehouse-db:
+    image: postgres:16.15-alpine
+    container_name: fastfat-postgres
+    environment:
+      POSTGRES_DB: fastfat
+      POSTGRES_USER: ${PG_ADMIN_USER:-fastfat}
+      POSTGRES_PASSWORD: ${PG_ADMIN_PASSWORD:-fastfat_local}
+      BI_READER_PASSWORD: ${BI_READER_PASSWORD:-bi_reader_local}
+      MB_DB_PASSWORD: ${MB_DB_PASSWORD:-metabase_local}
+      TZ: Asia/Ho_Chi_Minh
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres/init.sh:/docker-entrypoint-initdb.d/init.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d fastfat"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  metabase:
+    image: metabase/metabase:v0.58.36.1
+    container_name: fastfat-metabase
+    ports:
+      - "3000:3000"
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: metabase
+      MB_DB_PORT: "5432"
+      MB_DB_USER: metabase
+      MB_DB_PASS: ${MB_DB_PASSWORD:-metabase_local}
+      MB_DB_HOST: warehouse-db
+      MB_SITE_LOCALE: vi
+      MB_ANON_TRACKING_ENABLED: "false"
+      MB_CHECK_FOR_UPDATES: "false"
+      JAVA_TIMEZONE: Asia/Ho_Chi_Minh
+      JAVA_OPTS: -Xmx1g
+    depends_on:
+      warehouse-db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    image: fastfat-app:1
+    container_name: fastfat-app
+    ports:
+      - "8501:8501"
+    environment:
+      AIRFLOW_URL: http://airflow:8080
+      AIRFLOW_PUBLIC_URL: http://localhost:8080
+      METABASE_URL: http://metabase:3000
+      SOURCE_API_PUBLIC_URL: http://localhost:8600
+      # tro ly AI: dat trong tep .env (khong dua vao git); trong thi trang Tro ly bao chua ket noi
+      FASTFAT_LLM_PROVIDER: ${FASTFAT_LLM_PROVIDER:-anthropic}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      AWS_REGION: ${AWS_REGION:-}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-}
+      TZ: Asia/Ho_Chi_Minh
+    volumes:
+      - ./:/opt/fastfat
+    depends_on:
+      - airflow
+    restart: unless-stopped
+
+volumes:
+  airflow-home:
+  pgdata:

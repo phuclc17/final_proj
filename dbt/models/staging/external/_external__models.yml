@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: stg_weather__daily
+    columns:
+      - name: weather_date
+        data_tests: [unique, not_null]
+
+  - name: silver_row_reconciliation
+    description: Doi soat so dong Bronze -> Silver theo nguon (dung cho bao cao chat luong du lieu).

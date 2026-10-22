@@ -1,0 +1,192 @@
+version: 2
+
+models:
+  # ---------------- Chieu ----------------
+  - name: dim_date
+    description: Chieu thoi gian 1 dong/ngay, kem le (seed) va thoi tiet (Silver).
+    columns:
+      - name: date_day
+        data_tests: [unique, not_null]
+
+  - name: dim_branch
+    description: Chieu chi nhanh (ban moi nhat) + ma chi nhanh o 6 he thong nguon.
+    columns:
+      - name: branch_id
+        data_tests: [unique, not_null]
+      - name: store_class
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['A', 'B', 'C']
+
+  - name: dim_channel
+    columns:
+      - name: channel
+        data_tests: [unique, not_null]
+
+  - name: dim_menu_item
+    description: Chieu mon an SCD2 (gia, gia von theo thoi gian).
+    columns:
+      - name: menu_item_sk
+        data_tests: [unique, not_null]
+      - name: item_id
+        data_tests: [not_null]
+
+  - name: dim_employee
+    description: Chieu nhan vien SCD2 (chi nhanh, vai tro, luong gio theo thoi gian).
+    columns:
+      - name: employee_sk
+        data_tests: [unique, not_null]
+      - name: staff_id
+        data_tests: [not_null]
+
+  - name: dim_ingredient
+    columns:
+      - name: ingredient_id
+        data_tests: [unique, not_null]
+
+  - name: dim_customer
+    description: Khach hang App (kenh duy nhat dinh danh duoc khach).
+    columns:
+      - name: customer_id
+        data_tests: [unique, not_null]
+
+  # ---------------- Su kien ----------------
+  - name: fact_order
+    description: 1 dong / don hang (POS + App), trang thai chuan hoa, doanh thu thuan.
+    columns:
+      - name: order_key
+        data_tests: [unique, not_null]
+      - name: branch_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_branch')
+                field: branch_id
+      - name: date_day
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_day
+      - name: channel
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_channel')
+                field: channel
+      - name: order_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['COMPLETED', 'VOIDED', 'REFUNDED', 'CANCELLED_BY_STORE', 'CANCELLED_BY_CUSTOMER']
+      - name: cashier_employee_sk
+        description: Phien ban nhan vien thu ngan tai ngay ban (null voi don App).
+        data_tests:
+          - not_null:
+              config:
+                where: "source_system = 'POS'"
+          - relationships:
+              arguments:
+                to: ref('dim_employee')
+                field: employee_sk
+      - name: customer_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_id
+
+  - name: fact_order_line
+    columns:
+      - name: order_line_key
+        data_tests: [unique, not_null]
+      - name: order_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fact_order')
+                field: order_key
+      - name: menu_item_sk
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_menu_item')
+                field: menu_item_sk
+
+  - name: fact_labor_shift
+    columns:
+      - name: shift_key
+        data_tests: [unique, not_null]
+      - name: employee_sk
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_employee')
+                field: employee_sk
+      - name: hours_paid
+        data_tests: [not_null]
+
+  - name: fact_marketplace_settlement
+    columns:
+      - name: settlement_key
+        data_tests: [unique, not_null]
+      - name: branch_id
+        data_tests: [not_null]
+      - name: contract_commission_rate
+        data_tests: [not_null]
+
+  - name: fact_inventory_receipt
+    columns:
+      - name: receipt_line_id
+        data_tests: [unique, not_null]
+      - name: ingredient_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_ingredient')
+                field: ingredient_id
+
+  - name: fact_stock_count
+    columns:
+      - name: count_key
+        data_tests: [unique, not_null]
+
+  # ---------------- Mart ----------------
+  - name: mart_branch_daily
+    description: KPI chi nhanh x ngay (doanh thu/so don/AOV theo kenh, huy, nhan su, COGS%, Labor%).
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [branch_id, date_day]
+  - name: mart_branch_weekly
+    description: KPI chi nhanh x tuan + doi soat san (do phu POS, chenh lech hoa hong).
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [branch_id, week_start]
+  - name: mart_ingredient_avt
+    description: Tieu hao thuc te so voi dinh muc theo chi nhanh x nguyen lieu x ky kiem ke.
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [branch_id, ingredient_id, period_end]
+  - name: mart_cashier_weekly
+    description: Ty le huy/hoan/giam gia theo thu ngan x tuan, so voi cac thu ngan khac cung chi nhanh.
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [branch_id, week_start, staff_id]
+  - name: mart_kpi_vs_peers_weekly
+    description: Moi KPI chi nhanh x tuan dat canh muc ky vong (nhom cung hang + nen 4 tuan truoc), z theo nhieu 8 tuan.
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [branch_id, week_start, kpi]

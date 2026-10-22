@@ -1,0 +1,25 @@
+{
+  "profile": "calibration",
+  "seed": 2024,
+  "description": "Tap hieu chinh: dung de phat trien va chon nguong cho detector",
+  "scenarios": [
+    {"id": "S1", "pain_point": "P1", "type": "commission_overcharge", "branch_id": 4, "platform": "GRABFOOD",
+     "start": "2024-05-13", "end": "2024-06-02", "actual_rate": 0.30,
+     "story": "GrabFood tinh hoa hong 30% thay vi 25% theo hop dong trong 3 tuan"},
+    {"id": "S2", "pain_point": "P1", "type": "marketplace_not_entered", "branch_id": 6,
+     "start": "2024-07-15", "end": "2024-07-28", "miss_rate": 0.20,
+     "story": "Nhan vien bo qua nhap 20% don san vao POS (binh thuong 3%)"},
+    {"id": "S3", "pain_point": "P2", "type": "fresh_waste", "branch_id": 7,
+     "start": "2024-04-10", "end": "2024-04-20", "factor_min": 1.15, "factor_max": 1.30,
+     "story": "Vi pham FIFO, nguyen lieu tuoi hong nhieu: hao hut x1.15-1.30"},
+    {"id": "S4", "pain_point": "P3", "type": "evening_understaffing", "branch_id": 2,
+     "start": "2024-05-06", "end": "2024-05-19", "move_share": 0.55,
+     "story": "Quan ly dieu 55% nhan vien ca toi sang ca sang: toi qua tai, sang thua nguoi"},
+    {"id": "S5", "pain_point": "P4", "type": "stock_theft", "branch_id": 9,
+     "start": "2024-06-17", "end": "2024-06-30", "ingredient_ids": [1, 2, 3, 16], "daily_rate": 0.015,
+     "story": "Mat cap nguyen lieu gia tri cao truoc ky kiem ke 30/6"},
+    {"id": "S6", "pain_point": "P5", "type": "cashier_void_fraud", "branch_id": 8,
+     "start": "2024-07-01", "end": "2024-07-28", "cashier_rank": 1, "fraud_rate": 0.12,
+     "story": "1 thu ngan huy hoa don tien mat sau khi da thu tien (12% don tien mat cua nguoi nay)"}
+  ]
+}

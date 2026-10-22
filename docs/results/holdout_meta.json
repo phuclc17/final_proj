@@ -1,0 +1,9 @@
+{
+  "profile": "holdout",
+  "commit": "60d28bb",
+  "score_alert": 3.5,
+  "z_alert": 3.0,
+  "grace_days": 14,
+  "weeks": 22,
+  "run_at": "2026-10-11T16:23:51"
+}

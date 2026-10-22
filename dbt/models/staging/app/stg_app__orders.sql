@@ -1,0 +1,33 @@
+-- Silver: don ung dung rieng hop le, gio Viet Nam, gan chi nhanh chuan. Giu don huy kem ly do (bang chung cho P3).
+select
+    order_id,
+    branch_id,
+    business_date,
+    created_at_local,
+    ready_at_local,
+    prep_minutes,
+    customer_id,
+    is_first_order,
+    device_platform,
+    order_status,
+    cancel_reason,
+    order_status = 'CANCELLED_BY_STORE'    as is_store_cancelled,
+    order_status = 'CANCELLED_BY_CUSTOMER' as is_customer_cancelled,
+    payment_method,
+    payment_status,
+    delivery_type,
+    subtotal_amount,
+    delivery_fee,
+    packaging_fee,
+    service_fee,
+    promo_code,
+    promo_value,
+    total_amount,
+    rating,
+    utm_source,
+    json_array_length(items_json)          as n_lines,
+    _source_file,
+    _row_number,
+    _batch_id
+from {{ ref('base_app__orders') }}
+where dq_issue is null

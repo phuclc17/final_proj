@@ -1,0 +1,146 @@
+staff_id,staff_name,branch_id,role,hourly_wage,valid_from,valid_to,is_current
+1,Bà Dương Lê,1,ShiftManager,35204,2021-03-15,,TRUE
+2,Hương Bùi,1,Cashier,24253,2021-03-15,,TRUE
+3,Phương Đức Phạm,1,Cashier,24006,2021-03-15,,TRUE
+4,Quý cô Phương Hoàng,1,Cashier,23828,2021-03-15,,TRUE
+5,Bà Vi Bùi,1,Cashier,23143,2021-03-15,,TRUE
+6,Cô An Lê,1,Cashier,22839,2021-03-15,,TRUE
+7,Hà Bảo Hoàng,1,Kitchen,27543,2021-03-15,,TRUE
+8,Hà Phạm,1,Kitchen,26467,2021-03-15,,TRUE
+9,Chị Vi Bùi,1,Kitchen,22712,2021-03-15,,TRUE
+10,Chi Lê,1,Kitchen,26837,2021-03-15,,TRUE
+11,Minh Quang Dương,1,Kitchen,25456,2021-03-15,,TRUE
+12,Bà Nhật Phạm,1,Kitchen,22260,2021-03-15,,TRUE
+13,Thành Tấn Vũ,2,ShiftManager,35767,2020-06-01,,TRUE
+14,Tú Bảo Vũ,2,ShiftManager,36791,2020-06-01,,TRUE
+15,Bác Minh Nguyễn,2,Cashier,23905,2020-06-01,,TRUE
+16,Dũng Mai,2,Cashier,26139,2020-06-01,,TRUE
+17,Vi Trần,2,Cashier,26931,2020-06-01,,TRUE
+18,Bảo Lê,2,Cashier,22217,2020-06-01,,TRUE
+19,Yến Vũ,2,Cashier,26597,2020-06-01,,TRUE
+20,Dương Vũ,2,Cashier,23628,2020-06-01,,TRUE
+21,Cô Vân Phạm,2,Cashier,27865,2020-06-01,,TRUE
+22,Thành Trí Dương,2,Kitchen,27323,2020-06-01,,TRUE
+23,Cô Nhật Vũ,2,Kitchen,27745,2020-06-01,,TRUE
+24,Chị Hà Nguyễn,2,Kitchen,26464,2020-06-01,,TRUE
+25,Bảo Văn Phạm,2,Kitchen,25436,2020-06-01,,TRUE
+26,Ông Vũ Hoàng,2,Kitchen,23805,2020-06-01,,TRUE
+27,Chị Ánh Vũ,2,Kitchen,25679,2020-06-01,,TRUE
+28,Phương Nguyễn,2,Kitchen,26827,2020-06-01,,TRUE
+29,Dương Dương,2,Kitchen,24278,2020-06-01,,TRUE
+30,Nhiên Đức Lê,2,Kitchen,22053,2020-06-01,,TRUE
+31,Cô Xuân Hoàng,3,ShiftManager,40719,2023-01-10,,TRUE
+32,Trung Lê,3,ShiftManager,38462,2023-01-10,,TRUE
+33,Khoa Hoàng,3,Cashier,24787,2023-01-10,,TRUE
+34,Anh Lê,3,Cashier,24276,2023-01-10,,TRUE
+35,Quý cô Hạnh Lê,3,Cashier,23273,2023-01-10,,TRUE
+36,Khoa Hoàng,3,Cashier,23763,2023-01-10,,TRUE
+37,Mai Trần,3,Cashier,24757,2023-01-10,,TRUE
+38,Ánh Bùi,3,Cashier,22837,2023-01-10,,TRUE
+39,Hồng Nguyễn,3,Cashier,22759,2023-01-10,,TRUE
+40,Bác Khoa Mai,3,Cashier,25112,2023-01-10,,TRUE
+41,Cô Kim Vũ,3,Kitchen,22792,2023-01-10,,TRUE
+42,Quý cô Dương Nguyễn,3,Kitchen,24940,2023-01-10,,TRUE
+43,Hoàng Văn Lê,3,Kitchen,24817,2023-01-10,,TRUE
+44,Thành Bảo Mai,3,Kitchen,26945,2023-01-10,,TRUE
+45,Châu Đức Dương,3,Kitchen,24166,2023-01-10,,TRUE
+46,Tú Văn Trần,3,Kitchen,22355,2023-01-10,,TRUE
+47,Quý ông Tùng Đặng,3,Kitchen,27977,2023-01-10,,TRUE
+48,Quý ông Nam Đặng,3,Kitchen,25763,2023-01-10,,TRUE
+49,Hưng Tấn Nguyễn,3,Kitchen,26392,2023-01-10,,TRUE
+50,Kim Phạm,4,ShiftManager,38100,2021-09-20,,TRUE
+51,Lâm Nguyễn,4,Cashier,22645,2021-09-20,,TRUE
+52,An Bùi,4,Cashier,26522,2021-09-20,,TRUE
+53,Bảo Vũ,4,Cashier,24401,2021-09-20,,TRUE
+54,An Vũ,4,Kitchen,27149,2021-09-20,,TRUE
+55,Ngọc Vũ,4,Kitchen,27066,2021-09-20,,TRUE
+56,Nhật Bảo Dương,4,Kitchen,24962,2021-09-20,,TRUE
+57,An Bảo Bùi,5,ShiftManager,36575,2019-11-05,,TRUE
+58,Chi Vũ,5,Cashier,27771,2019-11-05,,TRUE
+59,Thành Vũ,5,Cashier,22569,2019-11-05,,TRUE
+60,Ông Nam Nguyễn,5,Cashier,22375,2019-11-05,,TRUE
+61,Bà Duyên Nguyễn,5,Cashier,27417,2019-11-05,,TRUE
+62,Trung Mai,5,Kitchen,23866,2019-11-05,,TRUE
+63,Minh Trần,5,Kitchen,24370,2019-11-05,,TRUE
+64,Thảo Lê,5,Kitchen,22653,2019-11-05,,TRUE
+65,Chị Lâm Đặng,5,Kitchen,23907,2019-11-05,,TRUE
+66,Chị Vi Vũ,6,ShiftManager,38113,2020-02-14,,TRUE
+67,Quý ông Hoàng Mai,6,Cashier,24277,2020-02-14,,TRUE
+68,Châu Lê,6,Cashier,25714,2020-02-14,,TRUE
+69,Lan Trần,6,Cashier,27207,2020-02-14,,TRUE
+70,Bà Hà Phạm,6,Cashier,24988,2020-02-14,,TRUE
+71,Tú Hải Phạm,6,Cashier,23332,2020-02-14,,TRUE
+72,Phương Dương,6,Kitchen,25032,2020-02-14,,TRUE
+73,Bác Dũng Đặng,6,Kitchen,24910,2020-02-14,,TRUE
+74,Khoa Xuân Mai,6,Kitchen,23716,2020-02-14,,TRUE
+75,Thảo Bùi,6,Kitchen,27490,2020-02-14,,TRUE
+76,Bác Thành Vũ,6,Kitchen,24187,2020-02-14,,TRUE
+77,Chị Vân Phạm,6,Kitchen,27749,2020-02-14,,TRUE
+78,Bảo Phạm,7,ShiftManager,39990,2018-07-01,,TRUE
+79,Lâm Hải Mai,7,Cashier,27201,2018-07-01,,TRUE
+80,Trung Lê,7,Cashier,23401,2018-07-01,,TRUE
+81,Cô Hà Vũ,7,Cashier,26375,2018-07-01,,TRUE
+82,Vi Đặng,7,Cashier,27973,2018-07-01,,TRUE
+83,Hoàng Mai,7,Cashier,24005,2018-07-01,,TRUE
+84,Linh Phạm,7,Kitchen,23338,2018-07-01,,TRUE
+85,Huy Vũ,7,Kitchen,25786,2018-07-01,,TRUE
+86,Hồng Dương,7,Kitchen,25108,2018-07-01,,TRUE
+87,Chị Thảo Nguyễn,7,Kitchen,24211,2018-07-01,,TRUE
+88,Tùng Vũ,7,Kitchen,27242,2018-07-01,,TRUE
+89,Bà Ánh Dương,7,Kitchen,27637,2018-07-01,,TRUE
+90,Phúc Đặng,8,ShiftManager,36799,2022-04-18,,TRUE
+91,Kim Hoàng,8,ShiftManager,40608,2022-04-18,,TRUE
+92,Nhật Vũ,8,Cashier,24656,2022-04-18,,TRUE
+93,Thành Quang Đặng,8,Cashier,22458,2022-04-18,,TRUE
+94,Cô Thành Trần,8,Cashier,23876,2022-04-18,,TRUE
+95,Trọng Bùi,8,Cashier,22262,2022-04-18,,TRUE
+96,Quang Thế Bùi,8,Cashier,24584,2022-04-18,,TRUE
+97,Phương Phú Phạm,8,Cashier,25286,2022-04-18,,TRUE
+98,Thảo Lê,8,Cashier,24193,2022-04-18,,TRUE
+99,Khoa Tấn Hoàng,8,Cashier,22542,2022-04-18,,TRUE
+100,Bảo Nguyễn,8,Cashier,23728,2022-04-18,,TRUE
+101,Quang Dương,8,Kitchen,26646,2022-04-18,,TRUE
+102,Minh Nguyễn,8,Kitchen,27881,2022-04-18,,TRUE
+103,Anh Trọng Trần,8,Kitchen,24577,2022-04-18,,TRUE
+104,Bác Nhiên Dương,8,Kitchen,23741,2022-04-18,,TRUE
+105,Quý cô Yến Trần,8,Kitchen,27369,2022-04-18,,TRUE
+106,Anh Nguyễn,8,Kitchen,26089,2022-04-18,,TRUE
+107,Ánh Lê,8,Kitchen,25241,2022-04-18,,TRUE
+108,Chi Hoàng,8,Kitchen,27266,2022-04-18,,TRUE
+109,Bảo Tấn Vũ,8,Kitchen,25758,2022-04-18,,TRUE
+110,Anh Huy Hoàng,8,Kitchen,23170,2022-04-18,,TRUE
+111,Anh Trọng Mai,8,Kitchen,24169,2022-04-18,,TRUE
+112,Quý cô Hương Hoàng,9,ShiftManager,37020,2021-01-25,,TRUE
+113,Hồng Lê,9,Cashier,26598,2021-01-25,,TRUE
+114,Chi Phạm,9,Cashier,26415,2021-01-25,,TRUE
+115,Xuân Nguyễn,9,Cashier,24152,2021-01-25,,TRUE
+116,Bác Hưng Dương,9,Cashier,26788,2021-01-25,,TRUE
+117,Chị Ngọc Đặng,9,Cashier,25509,2021-01-25,,TRUE
+118,Bà Thành Nguyễn,9,Kitchen,26780,2021-01-25,,TRUE
+119,Hải Lê,9,Kitchen,25271,2021-01-25,,TRUE
+120,Bà Hồng Bùi,9,Kitchen,24965,2021-01-25,,TRUE
+121,Dương Hoàng,9,Kitchen,23796,2021-01-25,,TRUE
+122,Khoa Nguyễn,9,Kitchen,23133,2021-01-25,,TRUE
+123,Chị Hà Mai,9,Kitchen,26174,2021-01-25,,TRUE
+124,Vi Lê,9,Kitchen,26042,2021-01-25,,TRUE
+125,Bác Dũng Lê,10,ShiftManager,41191,2019-05-30,,TRUE
+126,Quý cô Xuân Lê,10,Cashier,22385,2019-05-30,,TRUE
+127,Kim Trí Lê,10,Cashier,22898,2019-05-30,,TRUE
+128,Ngọc Trần,10,Cashier,23252,2019-05-30,,TRUE
+129,Bác Thành Dương,10,Cashier,27140,2019-05-30,,TRUE
+130,Quý cô Khoa Lê,10,Cashier,23310,2019-05-30,,TRUE
+131,Cô Hồng Dương,10,Kitchen,27574,2019-05-30,,TRUE
+132,Vũ Hải Đặng,10,Kitchen,25458,2019-05-30,,TRUE
+133,Hương Bùi,10,Kitchen,26885,2019-05-30,,TRUE
+134,Minh Bùi,10,Kitchen,22520,2019-05-30,,TRUE
+135,Hạnh Phạm,10,Kitchen,25152,2019-05-30,,TRUE
+136,Phương Đức Dương,10,Kitchen,25126,2019-05-30,,TRUE
+137,Cô Vi Lê,11,ShiftManager,38834,2022-08-12,,TRUE
+138,Mai Lê,11,Cashier,26334,2022-08-12,,TRUE
+139,Vũ Đức Nguyễn,11,Cashier,24059,2022-08-12,,TRUE
+140,Hồng Vũ,11,Cashier,26532,2022-08-12,,TRUE
+141,Bảo Phú Hoàng,11,Cashier,22094,2022-08-12,,TRUE
+142,Anh Bùi,11,Kitchen,27572,2022-08-12,,TRUE
+143,Minh Dương,11,Kitchen,27904,2022-08-12,,TRUE
+144,Bảo Nguyễn,11,Kitchen,22938,2022-08-12,,TRUE
+145,Huy Hoàng,11,Kitchen,27584,2022-08-12,,TRUE

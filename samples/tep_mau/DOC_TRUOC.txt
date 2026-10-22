@@ -1,0 +1,40 @@
+Bộ tệp mẫu để thử kênh Tải tệp lên (môi trường vận hành). Kết quả mong đợi khi gửi lần đầu:
+
+01_KiemKe_CN03_22-09_ban_sua.xlsx
+    Kết quả mong đợi: thay bản cũ
+    Phiếu kiểm kê CN03 ngày 22/09 gửi lại sau khi đếm lại một nguyên liệu. Cùng chi nhánh, cùng ngày, nội dung khác: hệ thống coi là bản sửa, nạp lại thay bản cũ.
+
+02_bao_cao_shopee_tuan_38.xlsx
+    Kết quả mong đợi: trùng, bỏ qua
+    Kế toán gửi lại báo cáo ShopeeFood tuần 16–22/09 dưới tên khác. Hệ thống nhận ra theo nội dung, không theo tên tệp, nên không nạp hai lần.
+
+03_GrabFood_tuan_38.xlsx
+    Kết quả mong đợi: từ chối
+    Báo cáo GrabFood bị mở bằng Excel rồi lưu lại dạng .xlsx. GrabFood xuất CSV; hệ thống từ chối và chỉ rõ cần gửi tệp CSV gốc.
+
+04_chamcong_BR02_22-09_bo_sung_luot_ra.csv
+    Kết quả mong đợi: thay bản cũ
+    Quản lý CN02 bổ sung lượt ra mà nhân viên 14 quên quẹt tối 22/09, xuất từ phần mềm máy chấm công cũ (bảng mã UTF-16). Hệ thống chuyển về UTF-8 rồi nạp lại thay bản cũ.
+
+05_chamcong_BR04_thieu_cot.csv
+    Kết quả mong đợi: từ chối
+    Tệp chấm công bị xóa mất cột event_type khi chỉnh sửa bằng tay: không biết lượt nào là vào, lượt nào là ra. Hệ thống từ chối, không đoán.
+
+06_so_nhap_kho_tuan_nay.xlsx
+    Kết quả mong đợi: từ chối
+    Sổ nhập kho mẫu B không ghi chi nhánh trong tệp, và tên tệp cũng không có mã CNxx. Hệ thống không biết là của chi nhánh nào nên từ chối, yêu cầu đặt lại tên.
+
+07_bang_luong_thang_9.xlsx
+    Kết quả mong đợi: từ chối
+    Tệp không thuộc nguồn dữ liệu nào của nền tảng (bảng lương nội bộ). Hệ thống từ chối là không nhận dạng được, không bỏ qua im lặng.
+
+08_pos_may_moi_POS-12.json
+    Kết quả mong đợi: từ chối
+    Hóa đơn từ máy POS-12, của chi nhánh mới chưa được khai báo trong bảng ánh xạ mã. Hệ thống từ chối cả tệp thay vì nạp doanh thu không gắn được chi nhánh.
+
+09_NhapKho_CN01_22-09_mua_gap.xlsx
+    Kết quả mong đợi: đã nhận
+    Phiếu mua gấp nước uống ngày Chủ nhật 22/09 ở CN01, quản lý gửi bổ sung muộn. Hợp lệ, chưa có phiếu nào của CN01 ngày đó: hệ thống nhận, nạp và tính lại tồn kho của kỳ.
+
+Gửi lại cùng một tệp lần thứ hai thì kết quả là 'trùng, bỏ qua' (hoặc 'từ chối' với tệp sai).
+Muốn thử lại từ đầu: .venv\Scripts\python tools\chuan_bi_demo.py --khoi-phuc

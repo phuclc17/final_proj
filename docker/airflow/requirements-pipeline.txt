@@ -1,0 +1,9 @@
+# Moi truong chay pipeline trong container (tach khoi moi truong cua Airflow de khong xung dot thu vien).
+# Ghim dung phien ban tren may phat trien: tep DuckDB phai doc/ghi duoc o ca hai phia.
+duckdb==1.5.6
+dbt-core==1.12.5
+dbt-duckdb==1.11.0
+pandas==3.0.6
+numpy==2.5.3
+pyarrow==25.0.1
+openpyxl==3.1.5

@@ -1,0 +1,20 @@
+/* Phong cach chung cho hinh bao cao: cung bang mau voi ung dung (Bronze nau, Silver xam, Gold vang). */
+:root {
+  --ink: #1f2933; --muted: #52606d; --line: #9aa5b1; --soft: #f4f6f8;
+  --bronze: #c97b3a; --bronze-bg: #f6e3d1; --silver: #7b8794; --silver-bg: #e4e8ec;
+  --gold: #d4a500; --gold-bg: #fdf1c7; --red: #c8102e; --red-bg: #fbe3e6; --green: #2f9e44; --green-bg: #e1f3e5;
+  --blue: #3b6fb6; --blue-bg: #e3edf9;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: #fff; font-family: "Segoe UI", Arial, sans-serif; color: var(--ink); }
+#fig { display: inline-block; padding: 18px; background: #fff; }
+#fig svg { display: block; }
+.title { font-weight: 700; font-size: 15px; letter-spacing: .3px; text-transform: uppercase; color: var(--muted); }
+.box { border: 1.5px solid var(--line); border-radius: 10px; padding: 10px 12px; background: #fff; }
+.box h4 { margin: 0 0 4px 0; font-size: 16px; }
+.box p, .box li { margin: 0; font-size: 13.5px; line-height: 1.45; color: var(--muted); }
+.box ul { margin: 4px 0 0 0; padding-left: 16px; }
+.mono { font-family: Consolas, "Courier New", monospace; font-size: 12.5px; color: var(--ink); }
+.arrow { color: var(--line); font-size: 22px; display: flex; align-items: center; justify-content: center; }
+.tag { display: inline-block; font-size: 11.5px; padding: 1px 7px; border-radius: 9px; background: var(--soft);
+       color: var(--muted); margin: 2px 3px 0 0; }

@@ -1,0 +1,12 @@
+branch_id,pos_terminal_prefix,app_branch_code,grab_store_name,shopee_store_code,timekeeping_branch_code,warehouse_folder
+1,POS-01,FNF-Q3-01,Fast&Fat - District 3 (#1),FASTFAT_DISTRICT3_01,BR01,CN01
+2,POS-02,FNF-Q1-02,Fast&Fat - District 1 (#2),FASTFAT_DISTRICT1_02,BR02,CN02
+3,POS-03,FNF-Q1-03,Fast&Fat - District 1 (#3),FASTFAT_DISTRICT1_03,BR03,CN03
+4,POS-04,FNF-Q4-04,Fast&Fat - District 4 (#4),FASTFAT_DISTRICT4_04,BR04,CN04
+5,POS-05,FNF-Q6-05,Fast&Fat - District 6 (#5),FASTFAT_DISTRICT6_05,BR05,CN05
+6,POS-06,FNF-Q10-06,Fast&Fat - District 10 (#6),FASTFAT_DISTRICT10_06,BR06,CN06
+7,POS-07,FNF-Q5-07,Fast&Fat - District 5 (#7),FASTFAT_DISTRICT5_07,BR07,CN07
+8,POS-08,FNF-Q3-08,Fast&Fat - District 3 (#8),FASTFAT_DISTRICT3_08,BR08,CN08
+9,POS-09,FNF-Q3-09,Fast&Fat - District 3 (#9),FASTFAT_DISTRICT3_09,BR09,CN09
+10,POS-10,FNF-TanBinh-10,Fast&Fat - Tan Binh (#10),FASTFAT_TANBINH_10,BR10,CN10
+11,POS-11,FNF-Q2-11,Fast&Fat - District 2 (#11),FASTFAT_DISTRICT2_11,BR11,CN11

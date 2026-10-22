@@ -1,0 +1,29 @@
+item_id,item_name,category,price,standard_cost,target_cogs_ratio
+1,Ga Gion Mieng Don,Main,35000,10850,0.31
+2,Ga Gion Combo 2 Mieng,Main,68000,21760,0.32
+3,Ga Gion Combo 4 Mieng,Main,125000,40000,0.32
+4,Burger Bo Deluxe,Main,52000,15600,0.30
+5,Burger Ga Gion Pho Mai,Main,49000,14700,0.30
+6,Burger Tom,Main,55000,18150,0.33
+7,Com Ga Xot Cay,Main,45000,14400,0.32
+8,Com Suon Nuong,Main,47000,15040,0.32
+9,Mi Y Sot Bo,Main,42000,12600,0.30
+10,Ga Sot Cay Han Quoc,Main,58000,19140,0.33
+11,Ga Quay Nuong Mat Ong,Main,62000,19840,0.32
+12,Salad Ga Nuong,Main,39000,10920,0.28
+13,Khoai Tay Chien S,Side,19000,5320,0.28
+14,Khoai Tay Chien L,Side,25000,7500,0.30
+15,Ga Popcorn,Side,29000,9280,0.32
+16,Sup Ngo,Side,15000,4200,0.28
+17,Salad Bap Cai,Side,15000,4350,0.29
+18,Banh Trung Xu,Side,12000,3480,0.29
+19,Pepsi Lon,Drink,15000,4650,0.31
+20,7Up Lon,Drink,15000,4650,0.31
+21,Tra Dao,Drink,20000,6400,0.32
+22,Tra Sua Tran Chau,Drink,25000,8500,0.34
+23,Nuoc Cam Ep,Drink,22000,7480,0.34
+24,Nuoc Suoi,Drink,10000,2900,0.29
+25,Combo Ga Gion 2 Mieng + Nuoc,Combo,89000,28480,0.32
+26,Combo Burger Bo + Khoai + Nuoc,Combo,79000,24490,0.31
+27,Combo Com Ga + Sup + Nuoc,Combo,75000,23250,0.31
+28,Combo Gia Dinh 4 Nguoi,Combo,269000,86080,0.32

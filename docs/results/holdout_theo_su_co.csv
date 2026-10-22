@@ -1,0 +1,7 @@
+﻿Sự cố,Nguyên nhân thật,Chi nhánh,Thời gian,Số tuần đánh giá được,Bắt được,Trễ (ngày),Nguyên nhân hạng 1 lần đầu,Đúng nguyên nhân,Số tuần cảnh báo
+H1,P1a,CN10,05/08–18/08,4,có,6.0,P1a,True,2
+H2,P1b,CN3,22/04–05/05,4,có,6.0,P1b,True,2
+H3,P2,CN1,03/06–14/06,4,có,6.0,P2,True,2
+H4,P3,CN8,22/07–31/07,4,không,,,,0
+H5,P4,CN5,12/08–25/08,4,không,,,,0
+H6,P5,CN10,01/04–28/04,5,có,27.0,?,,1

@@ -1,0 +1,149 @@
+HUONG DAN CHAY DU AN FAST&FAT
+=============================
+
+1. CAU TRUC THU MUC
+-------------------
+
+  simulator/   Gia lap CAC HE THONG CUA DOANH NGHIEP (may POS, app, san Grab/Shopee, so kho,
+               may cham cong). Chi dung de tao ra file du lieu tho, thay cho du lieu that
+               khong thu thap duoc. KHONG thuoc pipeline DE.
+  data/        Du lieu. Moi tap co:
+                 source_systems/   file tho do cac he thong xuat ra (JSON, CSV, Excel)
+                 warehouse/        kho DuckDB: schema bronze, silver, gold
+                 ground_truth/     dap an cac su co (chi dung de danh gia, pipeline KHONG doc)
+               Hai tap: calibration = tap phat trien, holdout = tap kiem tra.
+  pipeline/    DE - nap file tho vao tang Bronze (ingest.py), chay dbt (run_dbt.py).
+  dbt/         DE + DA - bien doi bang SQL: Bronze -> Silver (lam sach) -> Gold (kho hinh sao,
+               bang chi so), kem kiem thu du lieu.
+  analytics/   DA - bo chi so giam sat va bo phat hien (doc tang Gold).
+  app/         Ung dung Streamlit duy nhat: phan tich van hanh, quan ly du lieu, danh gia.
+  tools/       Tien ich: mo kho DuckDB bang trinh SQL (open_warehouse.ps1).
+  docs/        Bao cao, tai lieu.
+
+  Luong du lieu:
+
+  [simulator] -> source_systems/ (file tho) -> Bronze -> Silver -> Gold -> truy vet, bao cao
+   gia lap         dau vao cua pipeline       |---------- pipeline DE + DA ----------|
+   doanh nghiep
+
+2. CAI DAT (1 lan)
+------------------
+
+  Python 3.12, tao moi truong ao trong thu muc du an:
+    python -m venv .venv
+    .venv\Scripts\pip install -r requirements.txt
+
+3. CHAY TU DAU (da chay san, chi lam lai khi can)
+-------------------------------------------------
+
+  B1. Tao du lieu nguon 182 ngay (~3,5 phut moi tap):
+    .venv\Scripts\python -m simulator.run --profile calibration --days 182 --reset
+    .venv\Scripts\python -m simulator.run --profile holdout --days 182 --reset
+
+  B2. Nap file tho vao Bronze (~80 giay):
+    .venv\Scripts\python -m pipeline.ingest --profile calibration
+
+  B3. Silver + Gold + kiem thu (~1-2 phut, ket qua mong doi: PASS=211 ERROR=0):
+    .venv\Scripts\python -m pipeline.run_dbt --profile calibration build
+
+  (Lam B2, B3 voi --profile holdout cho tap kiem tra.)
+
+4. THEM 1 NGAY DU LIEU MOI (mo phong van hanh hang ngay)
+---------------------------------------------------------
+
+    .venv\Scripts\python -m simulator.run --profile calibration --days 1
+    .venv\Scripts\python -m pipeline.ingest --profile calibration
+    .venv\Scripts\python -m pipeline.run_dbt --profile calibration build
+
+  Bronze chi nap cac file moi (nhan biet bang ma bam), chay lai khong bi trung.
+
+5. MO UNG DUNG (mot dia chi duy nhat cho ca phan du lieu va phan phan tich)
+---------------------------------------------------------------------------
+
+  Cach 1 - Docker, bat ca he thong bang mot lenh:
+    docker compose up -d --build
+    http://localhost:8501   ung dung
+    http://localhost:8080   Airflow (admin / admin) - cung xem/chay duoc ngay trong ung dung
+    http://localhost:8600   API gia lap cua phan mem POS dam may va App (tai lieu API: /docs)
+
+  Cach 2 - chay ung dung tren may:
+    .venv\Scripts\streamlit run app\main.py --server.port 8504
+
+  Cac nhom trang (xep theo dong du lieu; trang chu co "Hanh trinh cua du lieu" 13 buoc de trinh dien):
+    Nguon du lieu      : Ket noi nguon (3 kenh, trang thai tung nguon, bo ket noi API, tep can xu ly),
+                         Tai tep len (gui tep, hop dong du lieu, tu choi kem ly do), Tep nguon (xem tep tho)
+    Du lieu            : Van hanh hang ngay, Kho du lieu (Bronze/Silver/Gold + SQL),
+                         Mo hinh va pha he (lineage, luoc do hinh sao tu dbt), Chat luong du lieu
+    Phan tich van hanh : Tong quan (Metabase), Trung tam canh bao, Truy vet nguyen nhan (co Bang chung goc ->
+                         mo dung tep, dung dong o trang Tep nguon), Tro ly phan tich
+    Kiem chung         : Bo mo phong (mot ngay, bay goc nhin; kich ban su co - DOC DAP AN),
+                         Danh gia bo phat hien (ket qua 2 tap, do nhay theo nguong va theo cach tinh muc ky vong)
+  Chon moi truong o thanh ben: Van hanh (mac dinh) / Danh gia - tap phat trien / Danh gia - tap kiem tra.
+
+  Mo kho bang trinh SQL (chi doc):  powershell -File tools\open_warehouse.ps1
+
+6. KIEM CHUNG BO MO PHONG (doc dap an - chi de kiem tra du lieu nguon da tao dung)
+--------------------------------------------------------------------------------
+
+    .venv\Scripts\python -m simulator.validate --profile calibration
+
+7. CHAY TU DONG HANG NGAY (moi truong van hanh thu "live")
+---------------------------------------------------------
+
+  Tap live = ban sao tap phat trien, chi dung cho van hanh hang ngay; KHONG dung de danh gia
+  (tap phat trien va tap kiem tra giu nguyen de ket qua danh gia khong doi).
+
+  Tao tap live (1 lan):
+    .venv\Scripts\python -m pipeline.run_daily --init-live
+
+  Hai vai tro tach rieng, giong mot doanh nghiep that:
+    - He thong nguon (bo mo phong):
+        POS dam may (8 chi nhanh) va App ghi vao kho cua phan mem data/live/_he_thong_nguon/, ben ngoai chi lay
+        duoc qua API (source_api/, cong 8600: ma Bearer, phan trang, gioi han tan suat, thinh thoang loi 503);
+        POS cai tai may (CN5, CN7, CN10), cham cong, kho, san, thoi tiet xuat tep vao data/live/source_systems/
+        .venv\Scripts\python -m pipeline.run_daily --profile live --step simulate --days 7
+    - Pipeline: extract -> check -> ingest -> quality -> dbt -> detect -> publish
+        extract = bo ket noi (pipeline/extract.py) keo tang dan qua API theo moc ngay, trang thai o
+        data/live/landing/api_connector.json; API khong phan hoi thi cac nguon tep van chay tiep
+        .venv\Scripts\python -m pipeline.run_daily --profile live        (khong co du lieu moi thi dung ngay)
+        .venv\Scripts\python -m pipeline.extract --profile live --since 2024-09-23   (lay lai qua API tu mot ngay)
+    - Chay API tren may khong qua Docker: .venv\Scripts\uvicorn source_api.app:app --port 8600
+  Tep do nguoi gui (bao cao san, so kho, kiem ke, ban sua): trang "Tai tep len", hoac tep mau o samples\tep_mau\
+  Thu nghiem "ngay xau" (11 tinh huong tep xau + API sap roi song lai, khoang 6 phut, tu khoi phuc live):
+    .venv\Scripts\python tools\thu_tinh_huong.py   -> docs\results\TINH_HUONG_BAT_THUONG.md
+
+  Chay bang Airflow trong Docker (can mo Docker Desktop truoc):
+    docker compose up -d --build        (lan dau build image khoang 3 phut)
+    http://localhost:8080               tai khoan admin / admin
+      DAG "fastfat_nguon"    : he thong nguon, 23:00 moi ngay (hoac bam tu ung dung)
+      DAG "fastfat_pipeline" : TU CHAY khi DAG nguon xuat tep (Airflow Dataset), va kiem tra them moi gio
+    docker compose down                 (tat)
+  Moi luot xu ly ghi nhat ky vao ops.pipeline_runs, canh bao vao ops.alerts.
+  Xem va dieu khien tren app: trang "Van hanh hang ngay".
+
+  Demo "du lieu moi -> he thong tu xu ly": tap live co cai san 2 su co minh hoa tu 23/09/2024
+  (simulator/scenarios/live.json: L1 thieu nhan su ca toi CN3, L2 ShopeeFood thu hoa hong cao CN1).
+    .venv\Scripts\python tools\chuan_bi_demo.py --khoi-phuc    (dua tap live ve 22/09/2024, khoang 20-70 giay)
+    Trang "Van hanh hang ngay" -> chon 7 ngay -> bam "Gui du lieu ngay moi" -> khoang 3,5 phut
+    -> hien 2 canh bao CN1 P1a, CN3 P3 -> bam "Truy vet".
+  Anh chup luu o data/_demo_snapshot/ (tao lai: tools\chuan_bi_demo.py --luu khi live o diem mong muon).
+
+8. TRUOC BUOI BAO VE / DEMO
+  Mo Docker Desktop, roi:
+    docker compose up -d
+    .venv\Scripts\python tools\kiem_tra_truoc_demo.py          (khoang 1-3 phut; dong cuoi phai la "SAN SANG")
+    .venv\Scripts\python tools\kiem_tra_truoc_demo.py --nhanh  (bo qua pytest va chay thu 30 trang)
+  Lenh kiem tra: Docker, ung dung :8501, Airflow :8080, luot chay DAG gan nhat, 3 kho du lieu, ket qua dbt,
+  so lieu bo phat hien co KHOP voi ket qua danh gia da chot (docs/results), pytest, chay thu moi trang.
+  Kich ban demo + hoi dap: docs\review\KICH_BAN_DEMO_BAO_VE.md
+  Video du phong (khong tieng): docs\review\demo_ung_dung.webm; quay lai:
+    .venv\Scripts\python tools\quay_video_demo.py              (ung dung trong Docker, cong 8501)
+
+9. KHO PHUC VU POSTGRESQL + DASHBOARD METABASE
+  docker compose up -d                       (them 2 dich vu: warehouse-db cong 5433, metabase cong 3000)
+  .venv\Scripts\python -m pipeline.publish --profile live     (dua Gold, ops sang Postgres; DAG tu chay buoc nay)
+  .venv\Scripts\python -m pipeline.publish --profile calibration   (tap phat trien, tap kiem tra: dua 1 lan,
+  .venv\Scripts\python -m pipeline.publish --profile holdout        moi tap mot CSDL fastfat_<tap>)
+  .venv\Scripts\python bi\metabase_setup.py                   (dung dashboard "Tinh hinh kinh doanh", chay lai duoc)
+  Metabase: http://localhost:3000  tai khoan admin@fastfat.local / FastFat-Metabase-1 (doi qua tep .env)
+  Moi tap mot dashboard; trang "Tong quan" cua ung dung nhung dashboard cua tap dang chon, theo bo loc thanh ben.

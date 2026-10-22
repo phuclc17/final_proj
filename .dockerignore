@@ -1,0 +1,8 @@
+data/
+.venv/
+_ban_cu/
+dbt/target*/
+dbt/logs*/
+docs/
+.git/
+**/__pycache__/

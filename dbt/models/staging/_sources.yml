@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: Du lieu tho nap boi pipeline/ingest.py, giu nguyen gia tri goc.
+    schema: bronze
+    tables:
+      - name: pos_receipts
+        description: Moi dong la 1 hoa don POS (JSON nguyen van trong cot payload). Co 2 phien ban phan mem v2.8 va v3.2.
+      - name: app_orders
+      - name: grab_settlement
+      - name: shopee_settlement
+      - name: warehouse_receipts_form
+      - name: warehouse_receipts_table
+      - name: stock_counts
+      - name: timekeeping_punches
+      - name: weather_daily
+      - name: master_branches
+      - name: master_menu_items
+      - name: master_app_catalog
+      - name: master_ingredients
+      - name: master_recipes
+      - name: master_combo_components
+      - name: master_staff
+      - name: master_marketplace_contracts
+      - name: _ingest_log

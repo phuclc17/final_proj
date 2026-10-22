@@ -1,0 +1,4 @@
+# Tep shell chay trong container Linux phai giu xuong dong LF (Windows mac dinh doi sang CRLF)
+*.sh text eol=lf
+# Tep cau hinh may chu Linux
+deploy/** text eol=lf

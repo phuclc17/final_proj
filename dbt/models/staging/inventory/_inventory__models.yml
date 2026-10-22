@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: map_ingredient_name
+    description: Anh xa ten nguyen lieu go tay -> ma nguyen lieu (khop chinh xac / bang bien the / khop mo).
+    columns:
+      - name: name_norm
+        data_tests: [unique, not_null]
+      - name: match_method
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['khop_chinh_xac', 'bang_bien_the', 'khop_mo', 'khong_nhan_dien_duoc']
+
+  - name: base_inventory__receipts
+    description: Hop nhat 2 mau so nhap kho, phan loai dong (du lieu / tong cong / chu ky).
+  - name: checked_inventory__receipts
+    description: Dong du lieu so nhap kho kem ma nguyen lieu va nhan loi dq_issue.
+
+  - name: stg_inventory__receipt_lines
+    description: Dong nhap kho hop le (Silver).
+    columns:
+      - name: receipt_line_id
+        data_tests: [unique, not_null]
+      - name: branch_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('branch_code_map')
+                field: branch_id
+      - name: ingredient_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_master__ingredients')
+                field: ingredient_id
+      - name: receipt_date
+        data_tests: [not_null]
+      - name: quantity
+        data_tests: [not_null]
+
+  - name: base_stock__counts
+    description: Toan bo dong phieu kiem ke kem nhan loi.
+  - name: stg_stock__counts
+    description: Ton thuc te theo chi nhanh x nguyen lieu x ky kiem ke (Silver).
+    columns:
+      - name: count_key
+        data_tests: [unique, not_null]
+      - name: ingredient_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_master__ingredients')
+                field: ingredient_id
