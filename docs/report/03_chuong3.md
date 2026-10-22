@@ -172,7 +172,7 @@ WIDTHS: 4,8
 | Điều chỉnh giá | Ngày 01/06/2024 tăng giá 6 món (căn cứ để xây dựng SCD kiểu 2) |
 | Khách hàng ứng dụng | 4.200 khách, tần suất mua theo phân phối dạng Zipf (ít khách mua rất nhiều) |
 
-TODO: ghi nguồn cho các tham số nếu có.
+Các tham số có ghi chú hiệu chỉnh được ước lượng từ dữ liệu giao dịch thật công khai như trình bày ở mục 3.3.8. Các tham số còn lại là giả định của tác giả cho một chuỗi đồ ăn nhanh tại TP.HCM: hệ số ngày trong tuần và hai khung cao điểm theo đặc điểm nhu cầu theo giờ của nhà hàng (Thompson, 1998); tỷ trọng kênh giao hàng khoảng 45% phản ánh mức phổ biến của giao đồ ăn trực tuyến tại Việt Nam (Momentum Works, 2025). Tỷ lệ giữa hai sàn được giả định, không lấy theo thị phần toàn quốc, vốn gần ngang nhau giữa GrabFood và ShopeeFood. Giới hạn của các giả định này được nêu ở mục 3.3.9.
 
 ### 3.3.4. Mô hình nhân quả vận hành
 

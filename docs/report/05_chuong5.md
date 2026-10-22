@@ -22,7 +22,7 @@ Mọi phân tích lỗi thực hiện sau khi biết đáp án, như ở mục 5
 
 ### 5.1.3. Quy tắc đối chiếu cảnh báo với sự cố
 
-Đơn vị đánh giá là chi nhánh × tuần. Mỗi sự cố có một chi nhánh và một khoảng thời gian. Cửa sổ của sự cố gồm các tuần giao với khoảng từ ngày bắt đầu đến 14 ngày sau ngày kết thúc, vì một số hậu quả đến muộn: thứ hạng trên sàn giảm sau vài tuần, hao hụt chỉ lộ ra ở lần kiểm kê kế tiếp. Một cảnh báo là cảnh báo đúng nếu cùng chi nhánh và nằm trong cửa sổ của một sự cố; còn lại là báo động giả. Việc cảnh báo có chỉ đúng nguyên nhân hay không được đánh giá riêng bằng độ đo đúng nguyên nhân ở mục 5.1.4, để tách hai năng lực: phát hiện có vấn đề và chỉ ra đó là vấn đề gì.
+Đơn vị đánh giá là chi nhánh × tuần. Mỗi sự cố có một chi nhánh và một khoảng thời gian. Cửa sổ của sự cố gồm các tuần giao với khoảng từ ngày bắt đầu đến 14 ngày sau ngày kết thúc, vì một số hậu quả đến muộn: thứ hạng trên sàn giảm sau vài tuần, hao hụt chỉ lộ ra ở lần kiểm kê kế tiếp. Một cảnh báo là cảnh báo đúng nếu cùng chi nhánh và nằm trong cửa sổ của một sự cố; còn lại là báo động giả. Cách đánh giá theo khoảng thời gian này phù hợp với bất thường kéo dài, nơi một sự cố là một khoảng chứ không phải một điểm (Tatbul và cộng sự, 2018). Việc cảnh báo có chỉ đúng nguyên nhân hay không được đánh giá riêng bằng độ đo đúng nguyên nhân ở mục 5.1.4, để tách hai năng lực: phát hiện có vấn đề và chỉ ra đó là vấn đề gì.
 
 ### 5.1.4. Độ đo
 
@@ -219,7 +219,7 @@ IMAGE: figures/c5_nguong.png || Hình 5.4. Precision, recall theo tuần và F1 
 
 ### 5.5.2. So sánh với phương án cơ sở
 
-Hai phương án cơ sở được chạy trên cùng dữ liệu Gold. Phương án thứ nhất chỉ theo dõi doanh thu: cảnh báo khi |z| doanh thu thuần từ 3, tức cách làm phổ biến khi chỉ có báo cáo doanh thu. Phương án thứ hai là Isolation Forest (Liu và cộng sự, 2008), một phương pháp phát hiện bất thường không giám sát, chạy trên vector z của cả 24 chỉ số giám sát và được phép đưa ra đúng số cảnh báo như phương pháp đề xuất, để so sánh công bằng.
+Hai phương án cơ sở được chạy trên cùng dữ liệu Gold. Phương án thứ nhất chỉ theo dõi doanh thu: cảnh báo khi |z| doanh thu thuần từ 3, tức cách làm phổ biến khi chỉ có báo cáo doanh thu. Phương án thứ hai là Isolation Forest (Liu và cộng sự, 2008), cài đặt bằng thư viện scikit-learn (Pedregosa và cộng sự, 2011), một phương pháp phát hiện bất thường không giám sát, chạy trên vector z của cả 24 chỉ số giám sát và được phép đưa ra đúng số cảnh báo như phương pháp đề xuất, để so sánh công bằng.
 
 TABLE: Bảng 5.9. So sánh với các phương án cơ sở || Kết quả thực nghiệm của tác giả
 WIDTHS: 4.4,1.6,1.6,1.6,1.6,1.6,1.6
