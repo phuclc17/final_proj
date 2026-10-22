@@ -390,6 +390,8 @@ def patch_styles(xml):
         xml, n = re.subn(rf'<w:style w:type="paragraph" w:styleId="{sid}">.*?</w:style>', lambda _: new, xml, flags=re.S)
         if n != 1:
             raise RuntimeError(f"Khong tim thay style {sid} trong template")
+    # template co style bang "a" khong co w:name -> Word bao "Styles 1" va bat sua tep khi mo; dat ten cho moi style thieu ten
+    xml = re.sub(r'(<w:style\b[^>]*w:styleId="([^"]+)"[^>]*>)(?!<w:name )', r'\1<w:name w:val="Style \2"/>', xml)
     for sid in ("TOC1", "TOC2", "TOC3"):  # muc luc: giu style template, bo dam o cap 3
         xml = re.sub(rf'(<w:style [^>]*w:styleId="{sid}">.*?)<w:b/>(.*?</w:style>)', r"\1\2", xml, flags=re.S)
     return xml.replace("</w:styles>", "".join(NEW_STYLES) + "</w:styles>")
