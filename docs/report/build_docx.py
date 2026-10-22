@@ -11,9 +11,10 @@ Cu phap file nguon (moi dong la mot doan van):
   [[END_FRONT]]      ket thuc phan dau sach (so trang La Ma); phan sau danh so trang tu 1
   - y   /   "  - y"  gach dau dong cap 1 / cap 2
   1. y               danh sach so (cac dong lien tiep la mot danh sach)
-  TABLE: Bang 1.1. Ten bang      (tuy chon dong ke tiep: WIDTHS: 2,3,5) roi cac dong | o | o |; "<br>" trong o = xuong doan
+  TABLE: Bang 1.1. Ten bang [|| nguon]   (tuy chon dong ke tiep: WIDTHS: 2,3,5) roi cac dong | o | o |; "<br>" trong o = xuong doan
   FIGURE: Hinh 3.1. Ten hinh || mo ta noi dung hinh se chen
-  IMAGE: duong/dan.png || Hinh 3.1. Ten hinh || chieu_rong_cm
+  IMAGE: duong/dan.png || Hinh 3.1. Ten hinh || chieu_rong_cm [|| nguon]
+                     moi bang/hinh co dong "Nguon: ..." can phai (mac dinh "Tác giả"), nhu quy uoc trinh bay cua UEH
   EQ: cong thuc || (2.1)
   TODO: noi dung     doan nen vang [CAN BO SUNG] - phai xoa het truoc khi nop
   CENTER: / RIGHT: / NOINDENT: / REF: (tai lieu tham khao, thut treo)
@@ -122,7 +123,15 @@ def sect_pr(page_fmt, footer=True, margin=None):
 
 
 # ------------------------------------------------------------------ bang
-def table(caption, rows, widths=None):
+DEFAULT_SOURCE = "Tác giả"
+
+
+def source_line(src, keep_next=False):
+    return para(run("Nguồn: ", italic=True, size=22) + inline(src, italic=True, size=22), style="NguonHinh",
+                keep_next=keep_next)
+
+
+def table(caption, rows, widths=None, source=None):
     ncol = max(len(r) for r in rows)
     rows = [r + [""] * (ncol - len(r)) for r in rows]
     if widths:
@@ -155,6 +164,8 @@ def table(caption, rows, widths=None):
                          f'{paras}</w:tc>')
         xml.append(f"<w:tr>{trpr}{''.join(cells)}</w:tr>")
     xml.append("</w:tbl>")
+    if caption:
+        xml.append(source_line(source or DEFAULT_SOURCE))
     xml.append(para("", style="AfterTable"))
     return "".join(xml)
 
@@ -179,7 +190,7 @@ def png_size(data):
     raise ValueError("Chi ho tro PNG cho IMAGE:")
 
 
-def image(path, caption, width_cm, images, uid):
+def image(path, caption, width_cm, images, uid, source=None):
     rid, data = images.add(path)
     w, h = png_size(data)
     cx = int(float(width_cm) * 360000)
@@ -194,7 +205,8 @@ def image(path, caption, width_cm, images, uid):
                f'<pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="{cx}" cy="{cy}"/></a:xfrm>'
                f'<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic>'
                f'</wp:inline></w:drawing></w:r>')
-    return para(drawing, style="FigureBox", keep_next=True) + para(inline(caption), style="ChuThichHinh")
+    return (para(drawing, style="FigureBox", keep_next=True) + source_line(source or DEFAULT_SOURCE, keep_next=True)
+            + para(inline(caption), style="ChuThichHinh"))
 
 
 # ------------------------------------------------------------------ chuyen markup -> XML
@@ -225,7 +237,8 @@ def convert(lines, images, numbering):
         elif s.startswith("# "):
             out.append(para(inline(s[2:]), style="Heading1"))
         elif s.startswith("TABLE:"):
-            caption, widths, rows = s[6:].strip(), None, []
+            caption, _, source = s[6:].partition("||")
+            caption, source, widths, rows = caption.strip(), source.strip() or None, None, []
             while i < len(lines) and lines[i].strip().startswith("WIDTHS:"):
                 widths = lines[i].strip()[7:].split(",")
                 i += 1
@@ -234,16 +247,16 @@ def convert(lines, images, numbering):
                 if not all(re.fullmatch(r"\s*:?-{2,}:?\s*", c) for c in cells):
                     rows.append([c.strip() for c in cells])
                 i += 1
-            out.append(table(caption, rows, widths))
+            out.append(table(caption, rows, widths, source))
         elif s.startswith("FIGURE:"):
             caption, _, desc = s[7:].partition("||")
             box = run("[HÌNH SẼ CHÈN] ", bold=True, color="7F7F7F", size=22) + run(desc.strip(), italic=True, color="7F7F7F", size=22)
             out.append(para(box, style="FigurePlaceholder", keep_next=True))
             out.append(para(inline(caption.strip()), style="ChuThichHinh"))
         elif s.startswith("IMAGE:"):
-            path, caption, width = [x.strip() for x in s[6:].split("||")]
+            path, caption, width, *source = [x.strip() for x in s[6:].split("||")]
             uid += 1
-            out.append(image(HERE / path, caption, width, images, uid))
+            out.append(image(HERE / path, caption, width, images, uid, source[0] if source else None))
         elif s.startswith("EQ:"):
             formula, _, number = s[3:].partition("||")
             content = '<w:r><w:tab/></w:r>' + run(formula.strip(), italic=True) + '<w:r><w:tab/></w:r>' + run(number.strip())
@@ -344,6 +357,8 @@ NEW_STYLES = [
           'w:lineRule="auto"/><w:jc w:val="center"/>', "<w:i/><w:iCs/>" + SZ(24)),
     style("ChuThichHinh", "ChuThichHinh", '<w:spacing w:before="60" w:after="240" w:line="300" w:lineRule="auto"/>'
           '<w:jc w:val="center"/>', "<w:i/><w:iCs/>" + SZ(24)),
+    style("NguonHinh", "Nguon hinh bang", '<w:spacing w:before="40" w:after="60" w:line="264" w:lineRule="auto"/>'
+          '<w:jc w:val="right"/>', SZ(22)),
     style("TableText", "Chu trong bang", '<w:spacing w:before="20" w:after="20" w:line="264" w:lineRule="auto"/>', SZ(24)),
     style("AfterTable", "Sau bang", '<w:spacing w:before="0" w:after="120" w:line="240" w:lineRule="auto"/>', SZ(12)),
     style("FigureBox", "Khung hinh", '<w:keepNext/><w:spacing w:before="120" w:after="60"/><w:jc w:val="center"/>', SZ(26)),

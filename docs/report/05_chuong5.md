@@ -43,7 +43,7 @@ Do mỗi tập chỉ có sáu kịch bản, các tỷ lệ theo sự cố có đ
 
 Bảng 5.1 so sánh các lỗi dữ liệu mà tầng Silver phát hiện được trên hai tập. Tỷ lệ gần như giống nhau giữa hai tập, phù hợp với việc các lỗi được bộ mô phỏng sinh theo cùng xác suất. Quan trọng hơn, các quy tắc làm sạch được xây dựng trên tập phát triển hoạt động không cần sửa trên tập kiểm tra.
 
-TABLE: Bảng 5.1. Lỗi dữ liệu được phát hiện và xử lý ở tầng Silver
+TABLE: Bảng 5.1. Lỗi dữ liệu được phát hiện và xử lý ở tầng Silver || Kết quả thực nghiệm của tác giả
 WIDTHS: 4.6,3.2,3.2,3.6
 | Loại lỗi | Tập phát triển (183 ngày) | Tập kiểm tra (182 ngày) | Cách xử lý |
 | Lượt quẹt thẻ trùng | 1.290 (3,03%) | 1.285 (3,03%) | Cách ly |
@@ -64,7 +64,7 @@ Các lỗi kỹ thuật như quẹt trùng, gõ nhầm đơn vị được tách
 
 Đối soát số dòng giữa Bronze và Silver ở Bảng 4.9 cho phần không giải thích được bằng 0 ở cả bảy nguồn trên cả hai tập. Doanh thu thuần ở Gold khớp tuyệt đối với tổng tính từ Silver theo từng chi nhánh × ngày, với 37.899.868.200 đồng ở tập phát triển, kể cả ngày thêm khi kiểm chứng nạp tăng dần, và 33.302.131.300 đồng ở tập kiểm tra. Ở bước đưa sang kho phục vụ, số dòng của cả 22 bảng được so giữa DuckDB và PostgreSQL trước khi đổi lược đồ; mọi lượt chạy trong nhật ký đều khớp.
 
-TABLE: Bảng 5.2. Kết quả kiểm thử và kiểm tra chất lượng
+TABLE: Bảng 5.2. Kết quả kiểm thử và kiểm tra chất lượng || Kết quả thực nghiệm của tác giả
 WIDTHS: 6,2.6,2.6,2.6
 | Nội dung | Tập phát triển | Tập kiểm tra | Môi trường vận hành |
 | Kiểm thử dbt đạt | 158/158 | 158/158 | 158/158 |
@@ -74,7 +74,7 @@ WIDTHS: 6,2.6,2.6,2.6
 
 ### 5.2.3. Hiệu năng
 
-TABLE: Bảng 5.3. Thời gian chạy của từng bước
+TABLE: Bảng 5.3. Thời gian chạy của từng bước || Kết quả thực nghiệm của tác giả
 WIDTHS: 4,4.4,4.4
 | Bước | Dựng toàn bộ một tập (182 ngày, trên máy) | Một ngày mới (trong Docker, qua Airflow) |
 | Sinh dữ liệu nguồn | khoảng 3,5 phút | khoảng 2 giây |
@@ -106,7 +106,7 @@ Thử nghiệm có hai giới hạn. Thứ nhất, các tình huống do tác gi
 
 ### 5.3.1. Kết quả tổng hợp
 
-TABLE: Bảng 5.4. Kết quả của phương pháp đề xuất trên hai tập (ngưỡng điểm 3,5)
+TABLE: Bảng 5.4. Kết quả của phương pháp đề xuất trên hai tập (ngưỡng điểm 3,5) || Kết quả thực nghiệm của tác giả
 WIDTHS: 5,3,3
 | Độ đo | Tập phát triển | Tập kiểm tra |
 | Sự cố bắt được | 5/6 | 4/6 |
@@ -123,11 +123,11 @@ Trên tập kiểm tra, hệ thống bắt được bốn trên sáu sự cố; 
 
 Hình 5.1 đặt từng cảnh báo cạnh vùng thời gian của các sự cố. Ở cả hai tập, cảnh báo đúng tập trung trong vùng sự cố đang diễn ra; báo động giả nằm rải rác ở các chi nhánh hạng C và ở CN10, CN6; hai sự cố bị bỏ sót trên tập kiểm tra là H4 và H5, thể hiện bằng hai dải không có điểm nào.
 
-IMAGE: figures/c5_ban_do.png || Hình 5.1. Cảnh báo của bộ phát hiện đặt cạnh thời gian các sự cố, theo chi nhánh × tuần (ngưỡng điểm 3,5) || 16
+IMAGE: figures/c5_ban_do.png || Hình 5.1. Cảnh báo của bộ phát hiện đặt cạnh thời gian các sự cố, theo chi nhánh × tuần (ngưỡng điểm 3,5) || 16 || Kết quả thực nghiệm của tác giả
 
 ### 5.3.2. Kết quả theo từng bộ phát hiện
 
-TABLE: Bảng 5.5. Kết quả theo từng loại sự cố
+TABLE: Bảng 5.5. Kết quả theo từng loại sự cố || Kết quả thực nghiệm của tác giả
 WIDTHS: 3.2,2.2,1.9,1.4,2.2,1.9,1.4
 | Bộ phát hiện | Phát triển: sự cố | Phát triển: cảnh báo đúng / tổng | Phát triển: trễ (ngày) | Kiểm tra: sự cố | Kiểm tra: cảnh báo đúng / tổng | Kiểm tra: trễ (ngày) |
 | P1a. Hoa hồng sai hợp đồng | S1 bắt được | 3/3 | 6 | H1 bắt được | 2/2 | 6 |
@@ -142,13 +142,13 @@ Cột "cảnh báo đúng / tổng" tính theo nguyên nhân mà hệ thống g�
 
 Hình 5.2 cho thấy vì sao bốn bộ phát hiện bắt được sự cố trên tập phát triển: ở mỗi bộ, tín hiệu của chi nhánh hoặc thu ngân có sự cố tách hẳn khỏi dải của các đối tượng còn lại đúng trong thời gian sự cố. Tín hiệu hao hụt ở hình (c) lộ ra ở lần kiểm kê ngay sau sự cố, đúng như thiết kế đánh giá theo kỳ kiểm kê.
 
-IMAGE: figures/c5_tin_hieu.png || Hình 5.2. Tín hiệu của bốn bộ phát hiện quanh sự cố trên tập phát triển || 16
+IMAGE: figures/c5_tin_hieu.png || Hình 5.2. Tín hiệu của bốn bộ phát hiện quanh sự cố trên tập phát triển || 16 || Kết quả thực nghiệm của tác giả
 
 ### 5.3.3. Phân tích lỗi
 
 Phần này thực hiện sau khi biết đáp án, chỉ để giải thích kết quả.
 
-TABLE: Bảng 5.6. Các sự cố bị bỏ sót hoặc gán sai nguyên nhân
+TABLE: Bảng 5.6. Các sự cố bị bỏ sót hoặc gán sai nguyên nhân || Kết quả thực nghiệm của tác giả
 WIDTHS: 2.6,2,1.4,8
 | Sự cố | Điểm cao nhất của nguyên nhân đúng | Hạng | Giải thích |
 | S5 thất thoát kho CN9 | 2,8 | 1 | Ở mức theo dõi, dưới ngưỡng 3,5. Tồn kho mỗi nguyên liệu chỉ đủ 2–4 ngày, nên mất 1,5% lượng tồn mỗi ngày chỉ làm hao hụt nhóm giá trị cao tăng 1–2 điểm % |
@@ -166,7 +166,7 @@ Bảy báo động giả trên tập kiểm tra gồm ba nhóm. Bốn tuần ở
 
 Sự cố S4 của tập phát triển làm CN2 thiếu nhân viên bếp ca tối từ 06/05 đến 19/05. Bảng 5.7 trình bày cây KPI và các tín hiệu vận hành của CN2 trong tuần đầu sự cố, đúng như trang Truy vết ở Hình 4.6 hiển thị.
 
-TABLE: Bảng 5.7. Truy vết CN2, tuần 06/05–12/05/2024 (tập phát triển)
+TABLE: Bảng 5.7. Truy vết CN2, tuần 06/05–12/05/2024 (tập phát triển) || Kết quả thực nghiệm của tác giả
 WIDTHS: 5.6,2.6,2.6,2,1.4
 | Nút của cây KPI hoặc tín hiệu | Thực tế | Kỳ vọng | Chênh lệch | z |
 | Doanh thu thuần | 233,4 triệu đ | 281,7 triệu đ | −17,2% | −2,8 |
@@ -185,7 +185,7 @@ Cây KPI cho thấy chênh lệch nằm chủ yếu ở số đơn, không ở g
 
 Hậu quả kéo dài sau sự cố cũng được ghi nhận. Ở tuần 20/05, khi nhân sự đã trở lại bình thường với 26 ca bếp tối và thời gian chuẩn bị 13,3 phút, doanh thu GrabFood của CN2 vẫn thấp hơn kỳ vọng 22,1% với số đơn thấp hơn 18,8% và điểm đánh giá 4,3 so với 4,5. Hệ thống xếp tuần này ở mức theo dõi. Đây đúng là chuỗi nhân quả trễ qua thứ hạng sàn đã mô tả ở mục 3.3.4: tín hiệu nhân sự đã hết nhưng doanh thu sàn vẫn chịu ảnh hưởng, như Hình 5.3 cho thấy.
 
-IMAGE: figures/c5_truy_vet_cn2.png || Hình 5.3. Doanh thu thuần và số ca bếp tối của CN2 so với mức kỳ vọng; vùng tô là thời gian sự cố S4 || 16
+IMAGE: figures/c5_truy_vet_cn2.png || Hình 5.3. Doanh thu thuần và số ca bếp tối của CN2 so với mức kỳ vọng; vùng tô là thời gian sự cố S4 || 16 || Kết quả thực nghiệm của tác giả
 
 ### 5.4.2. Khả năng chỉ đúng nguyên nhân
 
@@ -195,7 +195,7 @@ Trên tập phát triển, cả năm sự cố bắt được đều được ch
 
 Bảng 5.8 xét các tuần có biến động chung lớn trên toàn chuỗi: tuần có ngày lễ, tuần điều chỉnh giá và tuần mưa nhiều nhất.
 
-TABLE: Bảng 5.8. Cảnh báo trong các tuần có biến động bình thường lớn
+TABLE: Bảng 5.8. Cảnh báo trong các tuần có biến động bình thường lớn || Kết quả thực nghiệm của tác giả
 WIDTHS: 4.8,3.2,2.3,4.4
 | Tuần (tập) | Biến động chung | Doanh thu chuỗi so với tuần trước | Cảnh báo trong tuần |
 | 29/04 (phát triển), lễ 30/4–1/5 | Hai ngày lễ | +10,0% | 0 |
@@ -215,13 +215,13 @@ Trong các tuần này, không cảnh báo nào được gán cho biến động
 
 Ngưỡng điểm điều chỉnh sự đánh đổi giữa bỏ sót và báo động giả, như Hình 5.4. Ở ngưỡng 2,0 hệ thống bắt cả sáu sự cố nhưng có 26 báo động giả; ở ngưỡng 2,5 vẫn bắt đủ sáu sự cố với 15 báo động giả, bằng số cảnh báo đúng. Ngưỡng 3,5 cho F1 cao nhất là 0,79, với precision 0,72, recall theo tuần 0,87 và 5 báo động giả, nên được chốt; từ 4,0 trở lên recall giảm nhanh vì bắt thêm ít sự cố hơn. Ở mọi ngưỡng, khi đã bắt được, nguyên nhân hạng một đều đúng. Trên thực tế, ngưỡng này nên do người quản lý chọn theo khả năng xử lý cảnh báo của bộ phận mình; vì vậy ứng dụng cho phép thay đổi ngưỡng trên trang Trung tâm cảnh báo, còn kết quả chính thức luôn được báo cáo ở ngưỡng đã chốt.
 
-IMAGE: figures/c5_nguong.png || Hình 5.4. Precision, recall theo tuần và F1 trên tập phát triển theo ngưỡng điểm cảnh báo; hai dòng phía trên là số sự cố bắt được và số báo động giả || 16
+IMAGE: figures/c5_nguong.png || Hình 5.4. Precision, recall theo tuần và F1 trên tập phát triển theo ngưỡng điểm cảnh báo; hai dòng phía trên là số sự cố bắt được và số báo động giả || 16 || Kết quả thực nghiệm của tác giả
 
 ### 5.5.2. So sánh với phương án cơ sở
 
 Hai phương án cơ sở được chạy trên cùng dữ liệu Gold. Phương án thứ nhất chỉ theo dõi doanh thu: cảnh báo khi |z| doanh thu thuần từ 3, tức cách làm phổ biến khi chỉ có báo cáo doanh thu. Phương án thứ hai là Isolation Forest (Liu và cộng sự, 2008), một phương pháp phát hiện bất thường không giám sát, chạy trên vector z của cả 24 chỉ số giám sát và được phép đưa ra đúng số cảnh báo như phương pháp đề xuất, để so sánh công bằng.
 
-TABLE: Bảng 5.9. So sánh với các phương án cơ sở
+TABLE: Bảng 5.9. So sánh với các phương án cơ sở || Kết quả thực nghiệm của tác giả
 WIDTHS: 4.4,1.6,1.6,1.6,1.6,1.6,1.6
 | Phương pháp | Phát triển: sự cố | Phát triển: precision | Phát triển: F1 | Kiểm tra: sự cố | Kiểm tra: precision | Kiểm tra: F1 |
 | Đề xuất: bộ chỉ số giám sát và dấu vân tay nguyên nhân | 5/6 | 0,72 | 0,79 | 4/6 | 0,50 | 0,52 |
@@ -234,7 +234,7 @@ Theo dõi doanh thu gần như không phát hiện được sự cố nào. Lý 
 
 Mục này kiểm tra từng lựa chọn trong cách tính mức kỳ vọng ở mục 3.7.2. Mỗi lần chỉ thay một lựa chọn, giữ nguyên mọi phần khác và ngưỡng điểm 3,5, rồi chấm lại trên tập phát triển. Chương trình `analytics/sensitivity.py` tính lại bảng mức kỳ vọng bằng Python; trước khi thay đổi bất cứ gì, bản tính lại được đối chiếu với bảng do dbt sinh ra và khớp tuyệt đối trên 8.954 dòng. Tập kiểm tra không được dùng, vì nó đã được đánh giá một lần với cấu hình đã chốt.
 
-TABLE: Bảng 5.10. Độ nhạy theo cách tính mức kỳ vọng (tập phát triển, ngưỡng điểm 3,5)
+TABLE: Bảng 5.10. Độ nhạy theo cách tính mức kỳ vọng (tập phát triển, ngưỡng điểm 3,5) || Kết quả thực nghiệm của tác giả
 WIDTHS: 4.4,1.3,1.3,1.4,1.8,2.3,1.5,1.1
 | Phương án | Sự cố bắt được | Số cảnh báo | Báo động giả | Trong đó do lệch doanh thu, nhân sự | Precision | Recall tuần | F1 |
 | Đề xuất: nhóm cùng hạng, trung vị và MAD 8 tuần, có sàn độ dao động | 5/6 | 18 | 5 | 2 | 0,72 | 0,87 | 0,79 |
@@ -254,7 +254,7 @@ Cột "trong đó do lệch doanh thu, nhân sự" đếm các báo động gi�
 
 Cuối cùng, lập luận ở mục 3.7.3 về việc dùng luật thay vì điểm z cho P1a cũng được kiểm tra. Chuỗi chênh lệch hoa hồng GrabFood của CN4 được sửa theo giả định rằng sàn tính thừa 5 điểm % từ tuần 13/5 đến hết kỳ, tức 17 tuần, thay vì ba tuần. Luật đối soát cảnh báo cả 17 tuần. Điểm z tính theo đúng cách hiện tại chỉ vượt 3 ở bốn tuần đầu; ở tuần thứ năm z còn 0,67, và từ tuần thứ sáu bằng 0, vì mức nền trung vị tám tuần đã gồm phần lớn các tuần bị tính sai. Như vậy, với phương pháp thống kê dựa trên lịch sử, một sai lệch kéo dài dần trở thành "bình thường"; với bài toán tuân thủ hợp đồng, luật so trực tiếp với tỷ lệ cam kết mới là công cụ đúng, như Hình 5.5 minh họa.
 
-IMAGE: figures/c5_luat_z.png || Hình 5.5. Điểm bằng chứng P1a theo luật đối soát và theo điểm z khi sai lệch hoa hồng kéo dài 17 tuần (giả định trên dữ liệu CN4) || 16
+IMAGE: figures/c5_luat_z.png || Hình 5.5. Điểm bằng chứng P1a theo luật đối soát và theo điểm z khi sai lệch hoa hồng kéo dài 17 tuần (giả định trên dữ liệu CN4) || 16 || Kết quả thực nghiệm của tác giả
 
 ## 5.6. Các phát hiện kinh doanh
 
@@ -262,7 +262,7 @@ Các số liệu trong mục này được tính hoàn toàn từ kho dữ liệ
 
 ### 5.6.1. Cơ cấu chi phí theo hạng chi nhánh
 
-IMAGE: figures/c5_nhan_cong.png || Hình 5.6. Labor% và số đơn mỗi giờ công của từng chi nhánh × tuần, theo hạng chi nhánh (tập phát triển) || 16
+IMAGE: figures/c5_nhan_cong.png || Hình 5.6. Labor% và số đơn mỗi giờ công của từng chi nhánh × tuần, theo hạng chi nhánh (tập phát triển) || 16 || Kết quả thực nghiệm của tác giả
 
 Doanh thu bình quân mỗi chi nhánh mỗi tuần là 261,2 triệu đồng ở ba chi nhánh hạng A, 113,1 triệu ở năm chi nhánh hạng B và 33,8 triệu ở ba chi nhánh hạng C. COGS% định mức như nhau ở cả ba hạng, đều 31,0%, nhưng Labor% của hạng C là 29,1%, cao gấp khoảng 3,4 lần mức 8,6% của hạng A; hạng B ở giữa với 12,4%. Đây là phát hiện về cấu trúc chứ không phải sự cố. Một chi nhánh phải có số người tối thiểu cho mỗi ca dù lượng đơn ít, nên năng suất ở hạng C chỉ 1,04 đơn mỗi giờ công so với 3,44 ở hạng A, kéo theo tỷ lệ chi phí nhân công chênh lệch lớn; Hình 5.6 cho thấy ba hạng tạo thành ba cụm tách biệt trên cùng một đường cong. Hệ quả cho việc giám sát là không thể dùng một ngưỡng Labor% chung cho mọi chi nhánh; so sánh phải theo nhóm cùng hạng, như cách hệ thống đang làm. Cần lưu ý Labor% ở đây chỉ gồm lương giờ trực tiếp theo chấm công, chưa gồm lương cố định của quản lý và bảo hiểm, nên thấp hơn mức thường được nêu trong thực tiễn. COGS% định mức giống nhau giữa các chi nhánh vì cùng công thức và cùng cơ cấu món; khác biệt về giá vốn thực tế chỉ lộ ra qua hao hụt so với định mức mà P2 và P4 theo dõi.
 
@@ -274,7 +274,7 @@ Tại quầy chiếm 52% doanh thu thuần, ứng dụng riêng 22%, GrabFood 16
 
 Áp dụng phương pháp menu engineering (Kasavana & Smith, 1982), mỗi món được xếp theo hai trục. Trục thứ nhất là mức phổ biến, so tỷ trọng số lượng bán với 70% mức bình quân 1/28; trục thứ hai là lãi gộp mỗi phần, so với bình quân có trọng số là 29.357 đồng.
 
-IMAGE: figures/c5_thuc_don.png || Hình 5.7. Ma trận thực đơn: tỷ trọng số lượng bán và lãi gộp mỗi phần của 28 món (tập phát triển) || 16
+IMAGE: figures/c5_thuc_don.png || Hình 5.7. Ma trận thực đơn: tỷ trọng số lượng bán và lãi gộp mỗi phần của 28 món (tập phát triển) || 16 || Kết quả thực nghiệm của tác giả
 
 Nhóm ngôi sao, tức món phổ biến và lãi cao, có 5 món, chiếm 23,2% số lượng và 35,6% lãi gộp, tiêu biểu là gà giòn combo 2 miếng và burger gà giòn phô mai. Nhóm ngựa kéo, phổ biến nhưng lãi thấp, có 5 món, chiếm 51,2% số lượng nhưng chỉ 33,3% lãi gộp; nhóm này gồm gà giòn miếng đơn với 23,3% số lượng, Pepsi lon, khoai tây chiên L. Nhóm câu đố, ít bán nhưng lãi cao, có 9 món với 13,3% số lượng và 25,5% lãi gộp, nổi bật là combo gia đình 4 người lãi 182.920 đồng mỗi phần. Nhóm chó, ít bán và lãi thấp, có 9 món với 12,4% số lượng và 5,7% lãi gộp, như trà sữa trân châu, nước suối, súp ngô và các món salad.
 
@@ -288,7 +288,7 @@ Sau điều chỉnh giá sáu món ngày 01/06, AOV hai tuần sau tăng 3,4% so
 
 ### 5.6.5. Thiệt hại ước tính của các sự cố được phát hiện
 
-TABLE: Bảng 5.11. Thiệt hại ước tính từ kho dữ liệu cho các sự cố được phát hiện (tập phát triển)
+TABLE: Bảng 5.11. Thiệt hại ước tính từ kho dữ liệu cho các sự cố được phát hiện (tập phát triển) || Kết quả thực nghiệm của tác giả
 WIDTHS: 3.4,4.6,2.6,4
 | Sự cố | Cách ước tính (mục 4.7) | Ước tính | Đối chiếu sau với tác động đo bởi bộ mô phỏng (Bảng 4.3) |
 | S1 hoa hồng GrabFood CN4 | Hoa hồng thu thừa lũy kế 3 tuần | 0,72 triệu đ | Khớp: sàn tính 30% thay vì 25% |

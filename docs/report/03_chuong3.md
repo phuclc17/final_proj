@@ -254,7 +254,7 @@ EQ: σ²(thêm) = σ²(vững) − 1 / λ̄ || (3.6)
 
 Kết quả σ(thêm) = 0,075, rất gần với giá trị 0,08 mà bộ mô phỏng đã giả định trước đó. Như vậy giả định ban đầu được dữ liệu thật xác nhận.
 
-TABLE: Bảng 3.13. Kết quả hiệu chỉnh tham số từ dữ liệu giao dịch thật
+TABLE: Bảng 3.13. Kết quả hiệu chỉnh tham số từ dữ liệu giao dịch thật || Tác giả tính toán từ dữ liệu The Bread Basket (OpenML, 2022)
 WIDTHS: 3.2,2.6,2.4,2.4,4.4
 | Quy luật thống kê | Dữ liệu thật | Giả định trước | Sau hiệu chỉnh | Chuyển giao sang bộ mô phỏng? |
 | Số món khác nhau mỗi đơn (1 / 2 / 3 / ≥4) | 41,7% / 32,3% / 15,5% / 10,4% | 55% / 30% / 12% / 3% | 42% / 32% / 16% / 10% | Có. Hành vi chọn món tại quầy (món chính kèm đồ uống, đồ ăn kèm) tương đồng giữa các loại hình phục vụ nhanh |

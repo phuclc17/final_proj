@@ -62,7 +62,7 @@ Từ đặc thù trên, khóa luận áp dụng một số nguyên tắc phân t
 - Phân biệt biến động bình thường với biến động do sự cố. Ngày trong tuần, ngày lễ, thời tiết và điều chỉnh giá tác động lên nhiều chi nhánh cùng lúc, còn sự cố vận hành thường chỉ xảy ra ở một chi nhánh, một kênh hoặc một nhân viên.
 - Quy mọi phát hiện ra tác động kinh doanh bằng tiền, đơn hàng hoặc khách hàng, kèm hành động đề xuất, không dừng ở mức “có bất thường”.
 
-TABLE: Bảng 2.1. Các chỉ số vận hành then chốt được sử dụng trong khóa luận
+TABLE: Bảng 2.1. Các chỉ số vận hành then chốt được sử dụng trong khóa luận || Tác giả tổng hợp
 WIDTHS: 3,5,5
 | Chỉ số | Định nghĩa | Ý nghĩa quản trị |
 | Doanh thu, số đơn, AOV | Doanh thu thuần, số đơn hoàn thành và giá trị trung bình mỗi đơn, theo kênh | Phân rã doanh thu thành lượng (số đơn) và giá (AOV) |
@@ -124,7 +124,7 @@ Khi kho dữ liệu có nhiều quy trình nghiệp vụ, như bán hàng, nhậ
 
 Thuộc tính của chiều có thể thay đổi theo thời gian: món ăn được điều chỉnh giá, nhân viên được thăng chức và tăng lương. Kỹ thuật *chiều thay đổi chậm* (Slowly Changing Dimension – SCD) xác định cách lưu các thay đổi này (Kimball & Ross, 2013).
 
-TABLE: Bảng 2.2. Các kiểu chiều thay đổi chậm phổ biến
+TABLE: Bảng 2.2. Các kiểu chiều thay đổi chậm phổ biến || Tác giả tổng hợp từ Kimball và Ross (2013)
 WIDTHS: 2,5,5
 | Kiểu | Cách xử lý | Hệ quả |
 | Kiểu 0 | Giữ nguyên giá trị ban đầu | Không phản ánh thay đổi |
@@ -140,7 +140,7 @@ WIDTHS: 2,5,5
 
 Chất lượng dữ liệu được hiểu là mức độ phù hợp của dữ liệu với mục đích sử dụng. Wang và Strong (1996) đề xuất khung chất lượng dữ liệu nhìn từ phía người sử dụng, gồm bốn nhóm: chất lượng nội tại, theo ngữ cảnh, biểu diễn và khả năng truy cập. Các nghiên cứu sau đó (Batini & Scannapieco, 2016) tổng hợp thành những chiều đo lường được, trong đó các chiều thường dùng trong kỹ thuật dữ liệu được trình bày ở Bảng 2.3.
 
-TABLE: Bảng 2.3. Các chiều chất lượng dữ liệu và ví dụ trong đề tài
+TABLE: Bảng 2.3. Các chiều chất lượng dữ liệu và ví dụ trong đề tài || Tác giả tổng hợp từ Wang và Strong (1996)
 WIDTHS: 2,4,6
 | Chiều | Định nghĩa | Ví dụ lỗi trong dữ liệu nguồn của đề tài |
 | Đầy đủ (completeness) | Dữ liệu cần có thì phải có | Nhân viên quên quẹt thẻ khi ra ca; phiếu kiểm kê bỏ trống ô; đơn sàn không được nhập vào POS |
@@ -220,7 +220,7 @@ Nguyên tắc lựa chọn công nghệ của khóa luận là tương xứng v�
 - FastAPI là thư viện Python để xây dựng API web, tự sinh tài liệu theo chuẩn OpenAPI (FastAPI, n.d.). Khóa luận dùng FastAPI để dựng API giả lập của phần mềm POS đám mây và ứng dụng đặt hàng, có xác thực, phân trang và giới hạn tần suất như API thật.
 - Python được dùng cho bộ mô phỏng, bước nạp dữ liệu, các bộ phát hiện và ứng dụng. Metabase là công cụ BI mã nguồn mở, dựng được bảng điều khiển bằng giao diện lập trình nên tái lập được (Metabase, n.d.). Streamlit dùng để xây dựng các trang phân tích cần logic riêng như cảnh báo và truy vết (Streamlit, n.d.).
 
-TABLE: Bảng 2.4. Lựa chọn công nghệ và lý do
+TABLE: Bảng 2.4. Lựa chọn công nghệ và lý do || Tác giả tổng hợp
 WIDTHS: 3,3,6
 | Nhu cầu | Công nghệ chọn | Lý do và phương án không chọn |
 | Tính toán và lưu trữ của đường ống | DuckDB | Dữ liệu cỡ trăm MB, một máy; truy vấn phân tích theo cột nhanh, không cần máy chủ; không cần cụm Spark |

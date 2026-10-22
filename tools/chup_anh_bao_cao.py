@@ -2,16 +2,18 @@
 
     .venv/Scripts/python tools/chup_anh_bao_cao.py phat_trien    # Tong quan, Trung tam canh bao, Truy vet CN2 tuan 06/05
     .venv/Scripts/python tools/chup_anh_bao_cao.py mo_phong      # Bo mo phong, CN2 ngay 11/05/2024 (Hinh 4.7)
+    .venv/Scripts/python tools/chup_anh_bao_cao.py phu_luc       # Phu luc H: sau trang con lai, tap phat trien
     .venv/Scripts/python tools/chup_anh_bao_cao.py chay_7_ngay   # dua 7 ngay moi vao tap van hanh thu roi chup trang
                                                                  # Van hanh hang ngay; SAU DO chay tools/chuan_bi_demo.py --khoi-phuc
 Anh chup o ty le 2x; cat le tren/duoi bang PIL truoc khi dung (xem lich su: cat 50-60 px CSS phia tren)."""
+import os
 import sys
 import time
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
-URL = "http://localhost:8501"
+URL = os.environ.get("FASTFAT_APP_URL", "http://localhost:8501")
 OUT = Path(r"D:/khoaluan/docs/report/figures")
 W = 900          # khung hep: anh thu ve rong 16 cm van doc duoc (chu in khoang 8-9 pt)
 
@@ -79,6 +81,16 @@ def between(pg, top_text, bottom_text, pad_top=24, pad_bottom=8, exact=True):
     return int(top - pad_top), int(bottom - top + pad_top - pad_bottom)
 
 
+def upto(pg, top_text, selector, pad_top=24, pad_bottom=12):
+    """Toa do (y0, chieu cao) tu dong chu top_text toi het phan tu cuoi cung khop selector."""
+    to_top(pg)
+    main = pg.locator('[data-testid="stMain"]')
+    top = main.get_by_text(top_text, exact=True).first.bounding_box()["y"]
+    bottom = pg.evaluate("""(sel) => { const e = [...document.querySelectorAll(sel)].filter(x => x.offsetParent);
+        const r = e[e.length - 1].getBoundingClientRect(); return r.bottom; }""", selector)
+    return int(top - pad_top), int(bottom - top + pad_top + pad_bottom)
+
+
 step = sys.argv[1]
 with sync_playwright() as p:
     b = p.chromium.launch()
@@ -86,7 +98,7 @@ with sync_playwright() as p:
     pg.goto(URL, wait_until="networkidle")
     pg.locator('[data-testid="stSidebarNav"]').wait_for(timeout=120000)
     idle(pg, 2)
-    if step in ("phat_trien", "mo_phong"):   # hinh bao cao chup tren tap phat trien (moi truong mac dinh la van hanh)
+    if step in ("phat_trien", "mo_phong", "phu_luc"):   # hinh bao cao chup tren tap phat trien (moi truong mac dinh la van hanh)
         select(pg, '[data-testid="stSidebar"]', "Môi trường dữ liệu", "tập phát")
     if step == "phat_trien":
         pg.set_viewport_size({"width": 1000, "height": 2400})
@@ -124,6 +136,35 @@ with sync_playwright() as p:
         time.sleep(2)
         y0, h = between(pg, "1. Sự thật của ngày", "Đơn bị cửa hàng hủy", exact=False, pad_bottom=-3)
         shot(pg, "h4_7_mo_phong", h, y0=y0)
+    elif step == "phu_luc":    # Phu luc H: cac trang chua co o Chuong 4
+        def page(name, tab=None):
+            expand(pg)
+            nav(pg, name)
+            if tab:
+                pg.locator('[data-testid="stMain"]').get_by_text(tab, exact=True).first.click()
+                idle(pg, 2)
+            collapse(pg)
+            time.sleep(2)
+        page("Sơ đồ hệ thống")
+        y0, h = upto(pg, "Sơ đồ hệ thống", ".ff-grid")
+        shot(pg, "ph_so_do", h, y0=y0)
+        page("Tệp nguồn")
+        y0, h = upto(pg, "Tệp nguồn", '[data-testid="stDataFrame"]')
+        shot(pg, "ph_tep_nguon", h, y0=y0)
+        page("Kho dữ liệu", "Truy vấn SQL")
+        pg.get_by_role("button", name="Chạy truy vấn").click()
+        idle(pg, 3)
+        y0, h = upto(pg, "Kho dữ liệu", '[data-testid="stDataFrame"]')
+        shot(pg, "ph_kho_sql", h, y0=y0)
+        page("Mô hình và phả hệ")
+        y0, h = between(pg, "Mô hình và phả hệ", "Mũi tên đi từ", exact=False, pad_bottom=-24)
+        shot(pg, "ph_pha_he", h, y0=y0)
+        page("Chất lượng dữ liệu", "Kiểm thử dữ liệu")
+        y0, h = between(pg, "Chất lượng dữ liệu", "Toàn bộ kiểm thử", pad_bottom=10)
+        shot(pg, "ph_kiem_thu", h, y0=y0)
+        page("Đánh giá bộ phát hiện")
+        y0, h = between(pg, "Đánh giá bộ phát hiện", "Tập phát triển · ngưỡng", exact=False, pad_bottom=14)
+        shot(pg, "ph_danh_gia", h, y0=y0)
     elif step == "van_hanh":
         select(pg, '[data-testid="stSidebar"]', "Môi trường dữ liệu", "Vận hành")
         nav(pg, "Vận hành hằng ngày")

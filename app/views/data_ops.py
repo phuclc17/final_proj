@@ -44,22 +44,21 @@ with tab_test:
         when = pd.Timestamp(rr["metadata"]["generated_at"]).tz_convert("Asia/Ho_Chi_Minh")
         c1, c2, c3 = st.columns(3)
         c1.metric("Kiểm thử đạt", f"{len(tests) - len(failed)}/{len(tests)}", border=True)
-        c2.metric("Lần chạy", f"{when:%d/%m/%Y %H:%M}", border=True)
+        c2.metric("Lần chạy", f"{when:%d/%m/%Y}", border=True)
         c3.metric("Bảng được kiểm thử", tests["Bảng"].nunique(), border=True)
         if not failed.empty:
             ui.note(f"{len(failed)} kiểm thử không đạt", "Xem danh sách đầy đủ ở cuối thẻ.", "Cảnh báo")
         kind = {"not_null": ("Không rỗng", "Dựng sẵn của dbt"), "unique": ("Duy nhất", "Dựng sẵn của dbt"),
                 "relationships": ("Toàn vẹn tham chiếu", "Dựng sẵn của dbt"),
                 "accepted_values": ("Giá trị hợp lệ", "Dựng sẵn của dbt"),
-                "unique_combination": ("Duy nhất theo tổ hợp cột", "Kiểm thử tổng quát viết bằng macro"),
+                "unique_combination": ("Duy nhất theo tổ hợp cột", "Macro dùng chung"),
                 "singular": ("Luật nghiệp vụ", "Câu SQL trong dbt/tests")}
         tests["Nhóm"] = tests["Loại"].map(lambda k: kind.get(k, (k, ""))[0])
         tests["Cách hiện thực"] = tests["Loại"].map(lambda k: kind.get(k, (k, ""))[1])
-        c1, c2 = st.columns(2)
         groups = tests.groupby(["Loại", "Nhóm", "Cách hiện thực"]).size().rename("Số kiểm thử").reset_index()
         groups = groups.sort_values("Loại", key=lambda c: c.map(list(kind).index))
-        c1.dataframe(groups.drop(columns="Loại"), hide_index=True, width="stretch")
-        c2.dataframe(tests[tests["Loại"] == "singular"][["Kiểm thử", "Trạng thái", "Giây"]], hide_index=True,
+        st.dataframe(groups.drop(columns="Loại"), hide_index=True, width="stretch")
+        st.dataframe(tests[tests["Loại"] == "singular"][["Kiểm thử", "Trạng thái", "Giây"]], hide_index=True,
                      width="stretch")
         st.caption("Luật nghiệp vụ là các câu SQL trả về dòng vi phạm, đạt khi kết quả rỗng: số dòng Bronze bằng Silver "
                    "cộng cách ly cộng dòng cấu trúc, tạm tính POS bằng tổng dòng món, tiền thực nhận của sàn khớp công "

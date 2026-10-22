@@ -1,6 +1,6 @@
 # CHƯƠNG 6. KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN
 
-Chương này tổng kết kết quả của khóa luận theo các mục tiêu đã đặt ra, nêu những điều chỉnh so với đề cương, các hạn chế còn tồn tại và hướng phát triển.
+Chương này tổng kết kết quả của khóa luận theo các mục tiêu đã đặt ra, rút ra hàm ý quản trị cho các chuỗi F&B, nêu những điều chỉnh so với đề cương, các hạn chế còn tồn tại và hướng phát triển.
 
 ## 6.1. Kết quả đạt được
 
@@ -15,7 +15,23 @@ Chương này tổng kết kết quả của khóa luận theo các mục tiêu 
 
 Về mặt học thuật, khóa luận đóng góp một cách tiếp cận đánh giá có kiểm soát cho bài toán phát hiện sự cố vận hành trên dữ liệu đa nguồn, trong đó dữ liệu mô phỏng nhất quán nhân quả và tập kịch bản kiểm tra độc lập cho phép đo lường định lượng thay vì chỉ minh họa. Về mặt thực tiễn, nền tảng minh họa rằng một chuỗi F&B quy mô vừa có thể xây dựng hệ thống dữ liệu tuân theo các nguyên tắc kỹ thuật dữ liệu chuẩn mực bằng công cụ mã nguồn mở, chạy trên một máy tính cá nhân; kết quả đánh giá cũng cho thấy nhìn doanh thu tổng hợp gần như không phát hiện được sự cố vận hành nào, trong khi đối chiếu chéo các nguồn thì có.
 
-## 6.2. Điều chỉnh so với đề cương
+## 6.2. Hàm ý quản trị
+
+Các kết quả ở Chương 5 được rút ra từ dữ liệu mô phỏng, nên những hàm ý dưới đây cần được hiểu là định hướng cho một chuỗi F&B quy mô vừa có cơ cấu vận hành tương tự, và cần được kiểm chứng lại trên dữ liệu của chính doanh nghiệp trước khi áp dụng.
+
+Thứ nhất, nhà quản lý không nên chỉ theo dõi doanh thu tổng hợp. Phương án chỉ giám sát doanh thu không phát hiện được sự cố nào trên tập phát triển và chỉ một trên sáu sự cố trên tập kiểm tra, trong khi việc đối chiếu chéo các nguồn phát hiện được phần lớn sự cố. Nguyên nhân là nhiều sự cố gây thiệt hại thật mà doanh thu gần như không đổi, như sàn thu thừa hoa hồng hay nguyên liệu hao hụt quá định mức. Vì vậy, báo cáo vận hành hằng tuần nên đặt doanh thu cạnh các chỉ số đối chiếu giữa các hệ thống: số đơn sàn so với số đơn ghi nhận trên POS, tỷ lệ hoa hồng thực tế so với hợp đồng, hao hụt so với định mức theo từng nguyên liệu, số ca làm việc so với lượng đơn, và tỷ lệ hủy, hoàn tiền theo từng thu ngân.
+
+Thứ hai, đối soát với sàn giao đồ ăn nên được làm hằng tuần theo điều khoản hợp đồng, thay vì chỉ kiểm tra khi số tiền thực nhận giảm bất thường. Phí mà sàn giữ lại chiếm khoảng một phần tư doanh thu món, nên một sai lệch vài điểm phần trăm của tỷ lệ hoa hồng tuy nhỏ mỗi tuần nhưng có thể kéo dài nhiều tháng. Thí nghiệm ở mục 5.5.3 cho thấy một quy tắc so thẳng với hợp đồng phát hiện được sai lệch trong suốt thời gian nó tồn tại, còn cách so với lịch sử chỉ nhận ra trong vài tuần đầu. Việc đối soát này có thể tự động hóa hoàn toàn từ báo cáo sàn gửi về hằng tuần.
+
+Thứ ba, định biên nhân sự tối thiểu cho từng ca cần được bảo vệ, kể cả khi doanh nghiệp muốn giảm chi phí nhân công. Trong các sự cố được phát hiện, thiếu nhân sự bếp ca tối là sự cố gây thiệt hại lớn nhất, ước tính 94,6 triệu đồng doanh thu trong hai tuần, gấp hơn mười lần các sự cố còn lại, và còn ảnh hưởng đến doanh thu cả sau khi nhân sự đã trở lại bình thường. Thời gian chuẩn bị món và tỷ lệ đơn ứng dụng bị cửa hàng hủy là hai chỉ báo sớm nên được theo dõi cùng số ca làm việc. Khi đánh giá chi phí nhân công, Labor% của chi nhánh nhỏ cần được so với các chi nhánh cùng hạng, vì chi nhánh hạng C có Labor% gấp khoảng 3,4 lần hạng A chỉ do phải duy trì số người tối thiểu mỗi ca.
+
+Thứ tư, kiểm soát nội bộ cần dựa trên dữ liệu nhưng không kết luận chỉ từ thống kê. Tỷ lệ hủy, hoàn tiền và giảm giá theo từng thu ngân là căn cứ để chọn ca cần xem lại hóa đơn và camera, chứ không đủ để kết luận gian lận. Với hàng tồn kho, nhịp kiểm kê hai tuần không đủ để phát hiện thất thoát ở các nguyên liệu tồn kho chỉ vài ngày; doanh nghiệp nên kiểm kê hằng tuần, hoặc kiểm kê đột xuất, cho nhóm nguyên liệu giá trị cao như thịt bò, thịt gà và phô mai.
+
+Thứ năm, chiến lược kênh và thực đơn nên tính theo biên đóng góp chứ không theo doanh thu. Sau phí sàn và giá vốn, mỗi 100 đồng bán qua GrabFood chỉ còn khoảng 41 đồng so với khoảng 69 đồng tại quầy, nên việc kéo khách giao hàng sang ứng dụng riêng mang lại lợi ích rõ, nhất là vào ngày mưa khi tỷ trọng đơn giao hàng tăng mạnh. Về thực đơn, món bán chạy nhất có lãi mỗi phần dưới bình quân, nên gợi ý bán kèm để chuyển khách sang các combo có lãi cao là hướng tác động hiệu quả hơn tăng giá.
+
+Cuối cùng, để thực hiện được các điều trên, doanh nghiệp cần coi dữ liệu vận hành là một tài sản được quản lý. Các bước nền tảng gồm thống nhất mã chi nhánh, mã nhân viên và tên nguyên liệu giữa các hệ thống; yêu cầu đối tác và nhà cung cấp phần mềm xuất dữ liệu theo một khuôn dạng cố định; và lưu lại toàn bộ dữ liệu gốc để mọi con số trong báo cáo đều truy ngược được về hóa đơn hay phiếu kho ban đầu. Khóa luận cho thấy các bước này làm được bằng công cụ mã nguồn mở trên một máy tính, nên không đòi hỏi đầu tư hạ tầng lớn ở giai đoạn đầu. Khi cảnh báo được đưa ra, thứ tự xử lý nên dựa trên thiệt hại ước tính kèm theo mỗi cảnh báo, để nguồn lực kiểm tra tập trung vào nơi gây mất mát nhiều nhất.
+
+## 6.3. Điều chỉnh so với đề cương
 
 Mục tiêu tổng quát, câu hỏi nghiên cứu và phạm vi giữ nguyên như đề cương; riêng mục tiêu cụ thể thứ sáu được bổ sung lớp báo cáo kinh doanh. Những nội dung đề cương đã xếp ngoài phạm vi vẫn nằm ngoài phạm vi, gồm dữ liệu thật của doanh nghiệp, gửi cảnh báo qua kênh nhắn tin, triển khai trên hạ tầng đám mây và mô hình dự báo nhu cầu. Phần bổ sung so với đề cương gồm năm nội dung.
 
@@ -27,7 +43,7 @@ Mục tiêu tổng quát, câu hỏi nghiên cứu và phạm vi giữ nguyên n
 
 Nguyên tắc của các điều chỉnh là ưu tiên chất lượng của đường ống và của đánh giá, chỉ thêm một thành phần khi nó giải quyết một nhu cầu cụ thể của người dùng, không thêm công nghệ chỉ để có mặt.
 
-## 6.3. Hạn chế
+## 6.4. Hạn chế
 
 - Hạn chế lớn nhất là dữ liệu mô phỏng. Nền tảng chưa được kiểm chứng trên dữ liệu vận hành thật của một doanh nghiệp. Một số quy luật hành vi mua hàng đã được hiệu chỉnh từ dữ liệu giao dịch thật công khai, nhưng dữ liệu đó thuộc loại hình và bối cảnh khác; các tham số vận hành còn lại là giả định, chưa được hiệu chỉnh bằng dữ liệu quan sát. Một số kết luận kinh doanh, như số đơn không giảm sau điều chỉnh giá, phản ánh giả định của bộ mô phỏng hơn là hành vi khách hàng.
 - Một số khía cạnh của dữ liệu chưa đủ để phân tích. Nhu cầu theo giờ là giả định hai cao điểm dạng bậc thang và nhân viên chỉ làm hai ca cố định, nên chưa phân tích được phân ca theo giờ; hành vi khách hàng ứng dụng là ngẫu nhiên, không có rời bỏ hay phản ứng với chất lượng dịch vụ, nên chưa phân tích được giữ chân khách. Hai phân tích này cần dữ liệu ca làm và lịch sử khách hàng thật, như đã nêu ở mục 3.3.9.
@@ -39,7 +55,7 @@ Nguyên tắc của các điều chỉnh là ưu tiên chất lượng của đ�
 - Kiểm thử còn thiên về dữ liệu. Kiểm thử dbt kiểm tra kết quả sau khi dựng trên dữ liệu thật của từng tập, chưa có kiểm thử đơn vị cho logic biến đổi của từng mô hình SQL với dữ liệu đầu vào và kết quả mong đợi viết sẵn; một lỗi logic chỉ được phát hiện nếu nó làm vi phạm một luật đã khai báo. Chức năng kiểm thử đơn vị của dbt có thể được dùng cho các mô hình phức tạp nhất như hợp nhất hai phiên bản POS, ghép lượt chấm công và tính hao hụt. Ngoài ra, tầng Silver và Gold được dựng lại toàn bộ mỗi lượt; cách này phù hợp với quy mô hiện tại nhưng cần chuyển sang cập nhật tăng dần theo ngày khi dữ liệu lớn hơn nhiều lần (mục 3.5.5).
 - Quy mô và triển khai còn giới hạn. Hệ thống được thiết kế và kiểm chứng cho quy mô một chuỗi vừa trên một máy; DuckDB chỉ cho một tiến trình ghi nên mỗi lúc chỉ chạy một lượt đường ống. Ứng dụng chưa có đăng nhập và phân quyền; dashboard Metabase được nhúng bằng liên kết công khai, chỉ phù hợp trong mạng nội bộ.
 
-## 6.4. Hướng phát triển
+## 6.5. Hướng phát triển
 
 - Áp dụng trên dữ liệu thật. Nền tảng cần được kết nối với hệ thống của một doanh nghiệp đối tác sau khi có thỏa thuận về quyền truy cập và bảo mật dữ liệu. Công việc gồm viết bộ kết nối cho API của nhà cung cấp POS cụ thể theo cùng khuôn của bộ kết nối hiện có, chuyển các nguồn tệp sang thư mục dùng chung hoặc hộp thư nhận báo cáo, bổ sung hợp đồng dữ liệu cho các mẫu tệp thật; hiệu chỉnh lại tham số của các bộ phát hiện trên dữ liệu đó, và bổ sung các biến thể lỗi mới vào quy tắc làm sạch.
 - Cải thiện bộ phát hiện. Các hướng cụ thể gồm gộp bằng chứng P3 theo trọng số, ưu tiên tín hiệu gốc là số ca bếp; cộng dồn bằng chứng thu ngân qua nhiều tuần bằng tổng tích lũy CUSUM để gian lận nhẹ kéo dài được phát hiện sớm; kiểm kê hằng tuần cho nhóm nguyên liệu giá trị cao; thay trung vị nhóm hạng C bằng mô hình kỳ vọng có biến quy mô; thử cửa sổ mức nền dài hơn tám tuần. Mọi cải tiến cần được đánh giá trên một tập kiểm tra mới, vì tập kiểm tra hiện tại đã được xem kết quả.

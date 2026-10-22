@@ -442,6 +442,8 @@ Các kịch bản của cả hai tập được tóm tắt ở Bảng 3.12. Tậ
 
 ## Phụ lục E. Hướng dẫn cài đặt và chạy
 
+Toàn bộ mã nguồn của nền tảng, gồm bộ mô phỏng, đường ống, dự án dbt, các bộ phát hiện, ứng dụng và cấu hình Docker, được lưu tại kho mã https://github.com/phuclc17/final_proj. Dữ liệu không nằm trong kho mã vì sinh lại được bằng các lệnh dưới đây.
+
 Hình E.1 cho thấy mã nguồn và dữ liệu của dự án được tổ chức theo ranh giới kiến trúc: bộ mô phỏng đóng vai các hệ thống nguồn và tách biệt với đường ống; các mũi tên liền là luồng dữ liệu chính, mũi tên đứt là đường đọc đáp án chỉ dùng khi đánh giá.
 
 IMAGE: figures/h4_1_ma_nguon.png || Hình E.1. Tổ chức mã nguồn và dữ liệu của dự án || 16
@@ -582,3 +584,31 @@ WIDTHS: 4.6,7.4
 | Phiếu kiểm kê CN3 ngày 22/09 đếm lại | Nạp lại, thay toàn bộ bản cũ (22 dòng) |
 | Phiếu nhập CN1 ngày 22/09 gửi muộn | Nạp 4 dòng; Silver và Gold tính lại kỳ đó |
 | API POS đám mây trả thêm trường `loyalty_tier` | Kéo về, nạp bình thường; cửa chặn cảnh báo trường mới |
+
+## Phụ lục H. Giao diện sản phẩm
+
+Phụ lục này trình bày các trang của ứng dụng chưa được đưa vào Chương 4. Các trang Tải tệp lên, Kết nối nguồn, Tổng quan, Trung tâm cảnh báo, Truy vết nguyên nhân, Vận hành hằng ngày và Bộ mô phỏng được trình bày ở Hình 4.2 đến Hình 4.8. Các ảnh dưới đây chụp trên tập phát triển.
+
+Trang Sơ đồ hệ thống là trang chủ của ứng dụng, tóm tắt tám thành phần theo dòng dữ liệu, mỗi thẻ hiển thị số liệu hiện tại của thành phần đó (Hình H.1).
+
+IMAGE: figures/ph_so_do.png || Hình H.1. Trang Sơ đồ hệ thống || 15
+
+Trang Tệp nguồn cho xem nội dung nguyên trạng của mọi tệp trong vùng tiếp nhận, trước bất kỳ bước xử lý nào. Phần đầu trang thống kê số tệp và dung lượng theo từng hệ thống nguồn (Hình H.2).
+
+IMAGE: figures/ph_tep_nguon.png || Hình H.2. Trang Tệp nguồn với bản đồ các hệ thống nguồn và một tệp POS || 15
+
+Trang Kho dữ liệu cho xem từng bảng của Bronze, Silver, Gold và chạy truy vấn SQL chỉ đọc. Ví dụ ở Hình H.3 truy vấn tầng Bronze cho thấy hai phiên bản phần mềm POS ghi tổng tiền ở hai cột khác nhau và định dạng thời gian khác nhau.
+
+IMAGE: figures/ph_kho_sql.png || Hình H.3. Trang Kho dữ liệu với một truy vấn SQL trên tầng Bronze || 15
+
+Trang Mô hình và phả hệ sinh tự động từ metadata của dbt, cho biết một bảng được dựng từ những bảng nào và được dùng ở đâu (Hình H.4).
+
+IMAGE: figures/ph_pha_he.png || Hình H.4. Phả hệ dữ liệu của bảng fact_order || 11
+
+Trang Chất lượng dữ liệu tổng hợp kết quả cửa chặn chất lượng đầu vào, kiểm thử dbt, đối soát số dòng và độ mới của từng nguồn. Hình H.5 là thẻ kiểm thử dữ liệu theo nhóm và cách hiện thực.
+
+IMAGE: figures/ph_kiem_thu.png || Hình H.5. Trang Chất lượng dữ liệu, thẻ kiểm thử dữ liệu || 15
+
+Trang Đánh giá bộ phát hiện trình bày quy trình đánh giá và kết quả trên hai tập, đọc từ tệp kết quả của chương trình đánh giá (Hình H.6).
+
+IMAGE: figures/ph_danh_gia.png || Hình H.6. Trang Đánh giá bộ phát hiện, kết quả trên tập kiểm tra || 15

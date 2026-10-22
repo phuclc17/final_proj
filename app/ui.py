@@ -29,7 +29,7 @@ h2, h3 {{letter-spacing: -0.01em;}}
 .ff-card {{background: #fff; border: 1px solid {LINE}; border-radius: 8px; padding: 14px 16px; min-width: 0;}}
 .ff-card .k {{font-size: 12.5px; color: {MUTED}; font-weight: 500;}}
 .ff-card .v {{font-size: 22px; font-weight: 600; color: {INK}; line-height: 1.25; margin-top: 6px;
-             font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}}
+             font-variant-numeric: tabular-nums; overflow-wrap: anywhere;}}
 .ff-card .d {{font-size: 13px; color: {MUTED}; margin-top: 4px; line-height: 1.45;}}
 .ff-card .n {{font-size: 11.5px; color: #9CA3AF; font-weight: 500; float: right;}}
 .ff-dot {{display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 7px;
