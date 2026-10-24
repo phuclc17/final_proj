@@ -18,7 +18,7 @@ from uml import (Activity, Sequence, artifact, bfd, node3d, page, poly, text,  #
                  INK, MUTED)
 
 SRC = Path(__file__).resolve().parent / "src"
-LABEL = "#7a2e2e"
+LABEL = "#000000"
 
 
 def save(name, html):
@@ -316,8 +316,8 @@ def h4_trien_khai():
 
     s.append(node3d(20, 26, 210, 66, "Trình duyệt web", "device"))
     s.append(text(30, 80, "người dùng, giảng viên", 12, "start", color=MUTED))
-    s.append(node3d(14, 140, 800, 482, "Máy chủ Linux hoặc máy cá nhân", "device", fill="#fbfcfd", right=True))
-    s.append(node3d(32, 206, 762, 400, "Docker Engine, Docker Compose", "execution environment", fill="#f2f5f9", right=True))
+    s.append(node3d(14, 140, 800, 482, "Máy chủ Linux hoặc máy cá nhân", "device", fill="#ffffff", right=True))
+    s.append(node3d(32, 206, 762, 400, "Docker Engine, Docker Compose", "execution environment", fill="#ffffff", right=True))
     # hang 1
     s.append(node3d(52, 280, 150, 96, "caddy", "container", dash=True))
     a, _ = artifact(62, 330, 130, "HTTPS tự động,\nchỉ trên máy chủ", 11.5)
@@ -348,7 +348,7 @@ def h4_trien_khai():
     link([(160, 280), (160, 252), (532, 252), (532, 280)], "HTTP qua mạng nội bộ", (346, 244))
     link([(127, 376), (127, 458)], "HTTP", (133, 420), anchor="start")
     link([(382, 318), (442, 318)], "REST", (412, 310))
-    link([(632, 318), (662, 318)], "HTTP", (647, 334))
+    link([(632, 318), (662, 318)], "HTTP", (647, 306))
     link([(300, 376), (300, 466)], "đọc, chỉ đọc", (306, 420), anchor="start")
     link([(470, 400), (470, 430), (410, 430), (410, 466)], "ghi kho", (440, 422))
     link([(590, 400), (590, 458)], "publish", (596, 432), anchor="start")

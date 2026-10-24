@@ -91,7 +91,7 @@ def gen_erd():
         for n in row:
             if n == "@conformed":
                 cells.append('<div class="cg">' + table("dim_date") + table("dim_branch") +
-                             '<div class="nt">Chiều dùng chung: nối với cả 6 bảng sự kiện qua các khóa màu xanh; '
+                             '<div class="nt">Chiều dùng chung: nối với cả 6 bảng sự kiện qua các khóa in nghiêng; '
                              'không vẽ đường để hình dễ đọc.</div></div>')
             else:
                 cells.append(table(n))
@@ -107,22 +107,21 @@ ERD_PAGE = """<!doctype html><html><head><meta charset="utf-8"><link rel="styles
 <style>
 #fig { width: 800px; padding: 4px 26px; box-sizing: border-box; position: relative; }
 .g { display: grid; grid-template-columns: 210px 236px 222px; column-gap: 27px; row-gap: 26px; align-items: start; }
-.t { border: 1.3px solid #9aa5b1; font-family: Arial, sans-serif; font-size: 13px; background: #fff; }
-.t .h { color: #fff; font-weight: 700; padding: 3px 7px; }
-.t.f { background: #fff8dc; } .t.f .h { background: #e0b100; }
-.t.d { background: #f3f7fb; } .t.d .h { background: #5b7fa6; }
-.t .k, .t .x { padding: 2px 7px; line-height: 17px; white-space: nowrap; }
-.t .x { color: #52606d; }
-.t .cf { color: #3b6fb6; } .t .cf b { color: #3b6fb6; }
+.t { border: 1px solid #000; font-family: "Times New Roman", Times, serif; font-size: 14.5px; background: #fff;
+     color: #000; }
+.t .h { color: #000; font-weight: 700; padding: 2px 7px; border-bottom: 1px solid #000; }
+.t.f .h { background: #d9d9d9; } .t.d .h { background: #f2f2f2; }
+.t .k, .t .x { padding: 1px 7px; line-height: 17px; white-space: nowrap; }
+.t .cf { font-style: italic; }
 .cg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.cg .nt { grid-column: 1 / -1; font-size: 12px; color: #3e4c59; line-height: 1.35; border: 1px dashed #9aa5b1;
-          border-radius: 6px; padding: 4px 7px; background: #fff; }
-.lg { margin-top: 14px; font-size: 12px; color: #3e4c59; }
+.cg .nt { grid-column: 1 / -1; font-family: "Times New Roman", Times, serif; font-size: 14px; color: #000;
+          line-height: 1.3; padding: 2px 0; }
+.lg { margin-top: 12px; font-family: "Times New Roman", Times, serif; font-size: 14px; color: #000; }
 </style></head><body><div id="fig"><div class="g">
 @@CELLS@@
 </div>
-<div class="lg">Nét liền: khóa ngoại có kiểm thử relationships trong dbt · Nét đứt: khóa nối theo ma trận bus ·
-  Chân quạ ở phía bảng sự kiện (nhiều), gạch ở phía bảng chiều (một)</div>
+<div class="lg">Nét liền: khóa ngoại có kiểm thử relationships trong dbt; nét đứt: khóa nối theo ma trận bus;
+  chân quạ ở phía bảng sự kiện (nhiều), gạch ở phía bảng chiều (một).</div>
 </div>
 <script>
 const fig = document.getElementById("fig"), F = fig.getBoundingClientRect();
@@ -133,8 +132,8 @@ fig.appendChild(svg);
 const rect = id => document.getElementById(id).getBoundingClientRect();
 function path(d, dash) {
   const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  p.setAttribute("d", d); p.setAttribute("fill", "none"); p.setAttribute("stroke", "#6b7785");
-  p.setAttribute("stroke-width", 1.3); if (dash) p.setAttribute("stroke-dasharray", "5 4"); svg.appendChild(p);
+  p.setAttribute("d", d); p.setAttribute("fill", "none"); p.setAttribute("stroke", "#000");
+  p.setAttribute("stroke-width", 1); if (dash) p.setAttribute("stroke-dasharray", "5 4"); svg.appendChild(p);
 }
 // many: chan qua; one: gach doc. s = +1 neu duong di ra ben phai cua bang
 function many(x, y, s) { path(`M${x + s * 11},${y} L${x},${y - 6} M${x + s * 11},${y} L${x},${y} M${x + s * 11},${y} L${x},${y + 6}`); }
@@ -253,10 +252,11 @@ def gen_raw():
 
     page = f"""<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_style.css">
 <style>
-#fig {{ width: 790px; display: grid; grid-template-columns: 474px 1fr; gap: 12px; }}
-.p {{ border: 1.3px solid #c5cdd5; border-radius: 9px; padding: 7px 9px 8px 9px; background: #fafbfc; min-width: 0; }}
-.p h5 {{ margin: 0 0 5px 0; font-size: 13px; color: #1f2933; }} .p h5 span {{ font-weight: 400; color: #52606d; font-family: Consolas, monospace; font-size: 11.5px; }}
-.p .note {{ font-size: 11.8px; color: #3e4c59; margin-top: 5px; line-height: 1.35; }}
+#fig {{ width: 790px; display: grid; grid-template-columns: 474px 1fr; gap: 16px 14px; }}
+body, #fig {{ font-family: "Times New Roman", Times, serif; color: #000; }}
+.p {{ min-width: 0; }}
+.p h5 {{ margin: 0 0 4px 0; font-size: 14.5px; color: #000; }} .p h5 span {{ font-weight: 400; color: #000; font-family: Consolas, monospace; font-size: 11.5px; }}
+.p .note {{ font-size: 14px; color: #000; margin-top: 4px; line-height: 1.3; font-style: italic; }}
 .full {{ grid-column: 1 / -1; }}
 .xl {{ border-collapse: collapse; font-family: Calibri, "Segoe UI", Arial, sans-serif; font-size: 12px; background: #fff; }}
 .xl th {{ background: #eef1f4; color: #6b7785; font-weight: 400; border: 1px solid #d5dbe1; padding: 0 4px; font-size: 10.5px; }}
@@ -265,7 +265,7 @@ def gen_raw():
 .hl {{ background: #fff1a8 !important; }}
 pre {{ margin: 0; font-family: Consolas, "Cascadia Mono", monospace; font-size: 11.3px; line-height: 1.38; background: #fff;
        border: 1px solid #e3e7ec; padding: 5px 7px; white-space: pre; overflow: hidden; }}
-.k {{ color: #7a3e9d; }} .s {{ color: #2f7d32; }} .n {{ color: #1d5fa8; }}
+.k, .s, .n {{ color: #000; }}
 .two {{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }} .two pre {{ white-space: pre-wrap; }}
 .ids td {{ font-size: 12px; padding: 1px 10px 1px 0; white-space: nowrap; }} .ids td.mono {{ font-size: 11.8px; }}
 </style></head><body><div id="fig">

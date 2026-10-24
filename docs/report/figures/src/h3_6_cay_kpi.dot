@@ -1,42 +1,18 @@
 digraph G {
-  rankdir=LR; nodesep=0.12; ranksep=0.3; fontname="Arial"; newrank=true;
-  node [shape=box, style="rounded,filled", fontname="Arial", fontsize=13, color="#9AA5B1", fillcolor="#FFFFFF", margin="0.1,0.06"];
-  edge [color="#7A869A", penwidth=1.3, arrowhead=none, fontname="Arial", fontsize=14, fontcolor="#1F2933"];
+  rankdir=LR; splines=ortho; nodesep=0.16; ranksep=0.55; fontname="Times-Roman"; bgcolor="white";
+  node [shape=box, fontname="Times-Roman", fontsize=15, color="black", penwidth=1, margin="0.12,0.06"];
+  edge [color="black", penwidth=1, arrowhead=none];
 
-  root [label="Lợi nhuận\ngộp vận\nhành", fillcolor="#FDF1C7", color="#D4A500", penwidth=1.8, fontsize=14];
-  rev  [label="Doanh thu\nthuần", fillcolor="#E3EDF9", color="#3B6FB6", penwidth=1.6];
+  root [label="Lợi nhuận gộp\nvận hành"];
+  rev  [label="(+) Doanh thu thuần\n= tổng bốn kênh"];
+  cogs [label=<(−) Giá vốn<BR/><I>P2 hao hụt hàng tươi</I><BR/><I>P4 thất thoát hàng giá trị cao</I>>];
+  lab  [label=<(−) Chi phí nhân công<BR/><I>giờ công × lương giờ</I>>];
+  fee  [label=<(−) Phí hoa hồng sàn<BR/><I>P1a tỷ lệ sai hợp đồng</I>>];
+  walk [label=<Tại quầy = số đơn × AOV<BR/><I>P3 khách bỏ về; P5 hủy, hoàn</I>>];
+  app  [label=<App riêng = số đơn × AOV<BR/><I>P3 chuẩn bị lâu, tự hủy đơn</I>>];
+  grab [label=<GrabFood = số đơn × AOV<BR/><I>P1b đơn không vào POS; P3 tụt hạng</I>>];
+  shop [label=<ShopeeFood = số đơn × AOV<BR/><I>P1b đơn không vào POS; P3 tụt hạng</I>>];
 
-  node [shape=plaintext, style="", margin=0];
-  cogs [label=<<TABLE BORDER="1" COLOR="#9AA5B1" CELLBORDER="0" CELLPADDING="3" STYLE="rounded" BGCOLOR="#FFFFFF">
-    <TR><TD ALIGN="LEFT"><B>Giá vốn</B></TD></TR>
-    <TR><TD ALIGN="LEFT"><FONT COLOR="#C8102E"><B>P2</B></FONT>&#160;hao hụt hàng tươi</TD></TR>
-    <TR><TD ALIGN="LEFT"><FONT COLOR="#C8102E"><B>P4</B></FONT>&#160;hao hụt hàng giá trị cao</TD></TR></TABLE>>];
-  lab [label=<<TABLE BORDER="1" COLOR="#9AA5B1" CELLBORDER="0" CELLPADDING="3" STYLE="rounded" BGCOLOR="#FFFFFF">
-    <TR><TD ALIGN="LEFT"><B>Chi phí nhân công</B></TD></TR>
-    <TR><TD ALIGN="LEFT"><FONT COLOR="#52606D">giờ công, số ca theo ca</FONT></TD></TR></TABLE>>];
-  fee [label=<<TABLE BORDER="1" COLOR="#9AA5B1" CELLBORDER="0" CELLPADDING="3" STYLE="rounded" BGCOLOR="#FFFFFF">
-    <TR><TD ALIGN="LEFT"><B>Phí hoa hồng sàn</B></TD></TR>
-    <TR><TD ALIGN="LEFT"><FONT COLOR="#C8102E"><B>P1a</B></FONT>&#160;hoa hồng hiệu dụng</TD></TR>
-    <TR><TD ALIGN="LEFT">      so với hợp đồng</TD></TR></TABLE>>];
-  walk [label=<<TABLE BORDER="1" COLOR="#9AA5B1" CELLBORDER="0" CELLPADDING="3" STYLE="rounded" BGCOLOR="#FFFFFF">
-    <TR><TD ALIGN="LEFT"><B>Tại quầy</B>&#160;= đơn × AOV</TD></TR>
-    <TR><TD ALIGN="LEFT"><FONT COLOR="#C8102E"><B>P3</B></FONT>&#160;ca bếp tối, khách bỏ về</TD></TR>
-    <TR><TD ALIGN="LEFT"><FONT COLOR="#C8102E"><B>P5</B></FONT>&#160;hủy, hoàn theo thu ngân</TD></TR></TABLE>>];
-  app [label=<<TABLE BORDER="1" COLOR="#9AA5B1" CELLBORDER="0" CELLPADDING="3" STYLE="rounded" BGCOLOR="#FFFFFF">
-    <TR><TD ALIGN="LEFT"><B>App riêng</B>&#160;= đơn × AOV</TD></TR>
-    <TR><TD ALIGN="LEFT"><FONT COLOR="#C8102E"><B>P3</B></FONT>&#160;chuẩn bị lâu, tự hủy đơn</TD></TR></TABLE>>];
-  grab [label=<<TABLE BORDER="1" COLOR="#9AA5B1" CELLBORDER="0" CELLPADDING="3" STYLE="rounded" BGCOLOR="#FFFFFF">
-    <TR><TD ALIGN="LEFT"><B>GrabFood</B>&#160;= đơn × AOV</TD></TR>
-    <TR><TD ALIGN="LEFT"><FONT COLOR="#C8102E"><B>P1b</B></FONT>&#160;đơn sàn không vào POS</TD></TR>
-    <TR><TD ALIGN="LEFT"><FONT COLOR="#C8102E"><B>P3</B></FONT>&#160;trễ: đánh giá, thứ hạng</TD></TR></TABLE>>];
-  shop [label=<<TABLE BORDER="1" COLOR="#9AA5B1" CELLBORDER="0" CELLPADDING="3" STYLE="rounded" BGCOLOR="#FFFFFF">
-    <TR><TD ALIGN="LEFT"><B>ShopeeFood</B>&#160;= đơn × AOV</TD></TR>
-    <TR><TD ALIGN="LEFT"><FONT COLOR="#C8102E"><B>P1b</B></FONT>&#160;đơn sàn không vào POS</TD></TR>
-    <TR><TD ALIGN="LEFT"><FONT COLOR="#C8102E"><B>P3</B></FONT>&#160;trễ: đánh giá, thứ hạng</TD></TR></TABLE>>];
-  norm [shape=box, style="rounded,filled,dashed", fillcolor="#E1F3E5", color="#2F9E44", fontsize=12, margin="0.1,0.05",
-        label="Biến động bình thường (cuối tuần,\nlễ, mưa, đổi giá): tác động cả\nnhóm cùng hạng, bị trừ khi tính\nmức kỳ vọng của từng nhánh"];
-
-  root -> rev [label="+"]; root -> cogs [label="−"]; root -> lab [label="−"]; root -> fee [label="−"];
+  root -> rev; root -> cogs; root -> lab; root -> fee;
   rev -> walk; rev -> app; rev -> grab; rev -> shop;
-  root -> norm [style=dotted, color="#2F9E44"];
 }

@@ -44,7 +44,7 @@ WIDTHS: 4,2,2,5
 
 Tập phát triển chứa 445.153 lượt nhu cầu, trong đó 435.279 đơn được phục vụ với tổng giá trị khoảng 38,67 tỷ đồng, AOV 88.844 đồng; gồm 227.182 đơn tại quầy, 93.664 đơn ứng dụng, 68.742 đơn GrabFood và 45.691 đơn ShopeeFood. Phần không được phục vụ gồm 1.149 lượt khách bỏ về, 2.096 đơn bị cửa hàng hủy và 4.797 đơn bị khách hủy. Tập kiểm tra có 384.918 đơn được phục vụ, khoảng 34,15 tỷ đồng. Hình 4.1 trích nguyên văn dữ liệu thô của một số nguồn, cho thấy mức độ không đồng nhất mà đường ống phải xử lý.
 
-IMAGE: figures/h4_2_du_lieu_tho.png || Hình 4.1. Ví dụ dữ liệu thô của các hệ thống nguồn, trích nguyên văn từ tệp của tập phát triển || 13 || Trích từ tệp nguồn của tập phát triển
+IMAGE: figures/h4_2_du_lieu_tho.png || Hình 4.1. Ví dụ dữ liệu thô của các hệ thống nguồn, trích nguyên văn từ tệp của tập phát triển || 14 || Trích từ tệp nguồn của tập phát triển
 
 ### 4.2.3. Kiểm chứng bộ mô phỏng
 
@@ -234,7 +234,7 @@ IMAGE: figures/h4_7_mo_phong.png || Hình 4.10. Trang Bộ mô phỏng: sự th�
 
 Tệp `docker-compose.yml` dựng năm dịch vụ là Airflow, PostgreSQL, Metabase, ứng dụng và API giả lập phía nguồn; toàn bộ hệ thống bật bằng một lệnh `docker compose up -d`. Hình 4.11 là sơ đồ triển khai: mọi thành phần chạy trong container trên cùng một máy, giao tiếp qua mạng nội bộ của Docker; kho DuckDB nằm trong thư mục dự án, gắn vào container airflow để ghi và vào container app để đọc. Cấu hình cho máy chủ trong `deploy/` thêm một container Caddy đứng trước để cấp HTTPS và chuyển tiếp tới ba giao diện web; các cổng khác, kể cả PostgreSQL và API giả lập, không mở ra ngoài.
 
-IMAGE: figures/h4_trien_khai.png || Hình 4.11. Sơ đồ triển khai của nền tảng trên Docker Compose || 13 || Đề xuất của nghiên cứu
+IMAGE: figures/h4_trien_khai.png || Hình 4.11. Sơ đồ triển khai của nền tảng trên Docker Compose || 15 || Đề xuất của nghiên cứu
 
 ### 4.9.2. Hai DAG và cơ chế kích hoạt theo dữ liệu
 

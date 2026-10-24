@@ -50,9 +50,9 @@ WIDTHS: 1,3,8
 
 ### 3.1.3. Ca sử dụng
 
-Sơ đồ ca sử dụng ở Hình 3.1, theo ký hiệu UML 2.5 (Object Management Group, 2017), có bốn tác nhân là người và hai tác nhân là hệ thống. Các ca sử dụng hợp thành ba luồng. Luồng phân tích dành cho quản lý và kế toán: từ danh sách cảnh báo sắp theo thiệt hại ước tính, người dùng đi vào truy vết gồm kết luận, đề xuất xử lý, doanh thu so với mức kỳ vọng, cây KPI và cuối cùng là bản ghi gốc, vì một kết luận thống kê chỉ có giá trị khi kiểm tra lại được trên dữ liệu thật. Luồng đưa dữ liệu vào: phần lớn dữ liệu đến tự động qua API hoặc tệp xuất theo lịch, còn báo cáo sàn, sổ kho và phiếu kiểm kê do người gửi; hệ thống tự xác định tệp thuộc nguồn nào, đúng hợp đồng không, là bản mới, bản sửa hay bản trùng, và báo ngay lý do nếu từ chối. Luồng vận hành tự động: khi có dữ liệu mới, đường ống tự chạy từ thu thập đến kho phục vụ; nếu dữ liệu thiếu nghiêm trọng hoặc một kiểm thử thất bại, lượt chạy dừng và người dùng tiếp tục thấy bản kết quả trước, không bao giờ thấy kết quả dở dang.
+Sơ đồ ca sử dụng ở Hình 3.1 dùng ký hiệu UML 2.5 (Object Management Group, 2017). Quản lý vận hành, quản lý chi nhánh và kế toán dùng chung các chức năng phân tích và gửi tệp, nên được khái quát thành tác nhân người dùng nghiệp vụ; bên cạnh đó là kỹ sư dữ liệu và hai tác nhân hệ thống là hệ thống nguồn và Airflow. Các ca sử dụng hợp thành ba luồng. Luồng phân tích dành cho quản lý và kế toán: từ danh sách cảnh báo sắp theo thiệt hại ước tính, người dùng đi vào truy vết gồm kết luận, đề xuất xử lý, doanh thu so với mức kỳ vọng, cây KPI và cuối cùng là bản ghi gốc, vì một kết luận thống kê chỉ có giá trị khi kiểm tra lại được trên dữ liệu thật. Luồng đưa dữ liệu vào: phần lớn dữ liệu đến tự động qua API hoặc tệp xuất theo lịch, còn báo cáo sàn, sổ kho và phiếu kiểm kê do người gửi; hệ thống tự xác định tệp thuộc nguồn nào, đúng hợp đồng không, là bản mới, bản sửa hay bản trùng, và báo ngay lý do nếu từ chối. Luồng vận hành tự động: khi có dữ liệu mới, đường ống tự chạy từ thu thập đến kho phục vụ; nếu dữ liệu thiếu nghiêm trọng hoặc một kiểm thử thất bại, lượt chạy dừng và người dùng tiếp tục thấy bản kết quả trước, không bao giờ thấy kết quả dở dang.
 
-IMAGE: figures/h3_1_use_case.png || Hình 3.1. Sơ đồ ca sử dụng của hệ thống || 13
+IMAGE: figures/h3_1_use_case.png || Hình 3.1. Sơ đồ ca sử dụng của hệ thống || 16
 
 ## 3.2. Kiến trúc tổng thể
 
@@ -110,7 +110,7 @@ Các tham số không ghi hiệu chỉnh là giả định cho một chuỗi đ�
 
 Phần quan trọng nhất của bộ mô phỏng là chuỗi nhân quả nối nhân sự với doanh thu (Hình 3.3). Mỗi nhân viên có ca ưu tiên, sáng từ 6h45 đến 14h hoặc tối từ 13h45 đến 22h, và đi làm với xác suất cao hơn vào cuối tuần; quản lý luôn gọi người bù nếu ca có ít hơn số nhân viên bếp tối thiểu, lần lượt 3, 2 và 1 người với chi nhánh hạng A, B và C. Kịch bản thiếu nhân sự được áp dụng sau bước này, tức là thiếu người do điều phối sai chứ không do vắng ngẫu nhiên.
 
-IMAGE: figures/h3_3_chuoi_nhan_qua.png || Hình 3.3. Chuỗi nhân quả vận hành trong bộ mô phỏng || 12.5
+IMAGE: figures/h3_3_chuoi_nhan_qua.png || Hình 3.3. Chuỗi nhân quả vận hành trong bộ mô phỏng || 15
 
 Với mỗi giờ $h$, mức tải bếp $u(h)$ bằng số đơn $n(h)$ chia năng lực bếp, tức số nhân viên bếp có mặt $e(h)$ nhân năng lực $c_{b}$ của một người, tính bằng số đơn mỗi giờ. Năng lực $c_{b}$ được hiệu chỉnh riêng cho từng chi nhánh sao cho giờ cao điểm của ngày đông nhất, với số nhân viên bếp tối thiểu, có tải 95%; khi vận hành bình thường tải dưới 1 và chỉ vượt 1 khi thiếu người. Thời gian chuẩn bị tăng phi tuyến khi tải tiến gần năng lực, theo dạng của mô hình hàng đợi ở mục 2.6, với $\rho = \min(u;\ 0{,}97)$:
 
@@ -188,7 +188,7 @@ Các tham số hành vi còn lại, như hệ số ngày lễ, mức giảm khá
 
 Tầng thu thập theo bốn nguyên tắc. Thứ nhất, ba kênh API, tệp xuất tự động và tải lên ghi vào cùng một vùng tiếp nhận, mỗi nguồn một thư mục, nên phần phía sau không phụ thuộc dữ liệu đến bằng kênh nào. Thứ hai, mỗi nguồn có một hợp đồng dữ liệu khai báo định dạng, cột hoặc khóa bắt buộc và cách đọc chi nhánh, ngày từ nội dung; tệp được nhận dạng theo nội dung chứ không theo tên, và tệp sai hợp đồng bị từ chối kèm lý do. Tệp phải khớp hợp đồng trước khi được tính vị trí chuẩn, rồi mới so với tệp đang có ở vị trí đó để phân biệt bản sửa với bản trùng; tệp có nội dung giống hệt tệp khác nhưng rơi vào vị trí khác, như gửi nhầm tên ngày, bị từ chối vì nạp thêm sẽ đếm doanh thu hai lần. Thứ ba, dữ liệu API được kéo tăng dần theo mốc, như Hình 3.4: bộ kết nối lưu ngày kinh doanh cuối cùng đã lấy đủ, mỗi lượt lấy các ngày sau mốc và lấy lại chính ngày mốc để nhận hóa đơn đồng bộ trễ, xử lý lỗi tạm thời và giới hạn tần suất bằng chờ tăng dần, và chỉ ghi dữ liệu, dời mốc khi số bản ghi khớp tổng do API báo; lượt bị gián đoạn vì vậy làm tiếp đúng từ ngày chưa lấy đủ. Thứ tư, lỗi của một nguồn không làm dừng nguồn khác: API không phản hồi không chặn các nguồn tệp, phần dữ liệu thiếu được cửa chặn chất lượng phát hiện (mục 3.6) và bộ phát hiện không kết luận trên phần đó (mục 3.7.3).
 
-IMAGE: figures/h3_seq_api.png || Hình 3.4. Sơ đồ tuần tự của bộ kết nối khi kéo dữ liệu qua API nguồn || 12.5
+IMAGE: figures/h3_seq_api.png || Hình 3.4. Sơ đồ tuần tự của bộ kết nối khi kéo dữ liệu qua API nguồn || 15
 
 ### 3.4.2. Tầng Bronze
 
@@ -301,7 +301,7 @@ NOINDENT: trong đó $\hat{x}_{b,t}$ là mức kỳ vọng, $s_{b,t}$ là độ 
 
 Mỗi lựa chọn có lý do riêng. Ngày lễ, mưa hay điều chỉnh giá tác động lên cả nhóm cùng hạng nên đi vào $m_{g,t}$ và tự triệt tiêu khỏi $r_{b,t}$. Trung vị và MAD được dùng để một tuần bất thường trong quá khứ không kéo lệch mức nền các tuần sau. Sàn độ dao động tránh trường hợp tám tuần quá đều làm $z_{b,t}$ bị thổi phồng. Một chỉ số chỉ được đánh giá khi đã có ít nhất bốn tuần lịch sử.
 
-IMAGE: figures/h3_6_cay_kpi.png || Hình 3.6. Cây KPI dùng để truy vết biến động doanh thu và lợi nhuận || 12.5
+IMAGE: figures/h3_6_cay_kpi.png || Hình 3.6. Cây KPI dùng để truy vết biến động doanh thu và lợi nhuận || 15
 
 Truy vết một chi nhánh trong một tuần đi theo cây KPI ở Hình 3.6 qua bốn bước. Bước một so doanh thu thuần với mức kỳ vọng theo (3.7): |z| từ 3 là bất thường, từ 2 là cần theo dõi. Bước hai tách doanh thu theo kênh theo (2.9), mỗi kênh thành số đơn và AOV, mỗi nút có mức kỳ vọng riêng; vì ln(doanh thu) = ln(số đơn) + ln(AOV), độ lệch của một kênh xấp xỉ tổng độ lệch hai thành phần, nên dễ thấy biến động nằm ở lượng hay giá. Bước ba đối chiếu các chỉ số vận hành gắn với nhánh đó trong cùng tuần và các tuần trước, vì một số tác động đến trễ qua thứ hạng sàn; chẳng hạn số đơn sàn giảm kèm thời gian chuẩn bị tăng, cửa hàng tự hủy đơn tăng và số ca bếp tối giảm là dấu hiệu của P3. Bước bốn xếp hạng các giả thuyết P1–P5 bằng các bộ phát hiện ở mục 3.7.3. Các nhánh chi phí như giá vốn và phí sàn không làm đổi doanh thu bán hàng, nên được giám sát trực tiếp bằng P1a, P2 và P4.
 
@@ -341,7 +341,7 @@ Sau mỗi lượt chạy thành công, tầng Gold cùng bảng cảnh báo và 
 
 Điều phối gồm hai đồ thị tác vụ Airflow theo đúng vai trò trong doanh nghiệp (Hình 3.7). DAG `fastfat_nguon` đóng vai hệ thống nguồn, lúc 23 giờ ghi dữ liệu của ngày kinh doanh vừa kết thúc rồi báo cập nhật một Dataset. DAG `fastfat_pipeline` là đường ống, chạy ngay khi Dataset cập nhật và tự kiểm tra thêm mỗi giờ để kéo dữ liệu API và nhận tệp do người gửi; không có tệp mới thì lượt kết thúc ngay ở bước kiểm tra. Cửa chặn chất lượng giữa Bronze và Silver kiểm tra độ mới, khối lượng so với trung vị 14 ngày, độ đầy đủ theo chi nhánh, tệp bị từ chối và thay đổi cấu trúc; mức chặn gồm nguồn hằng ngày chậm từ bốn ngày, một ngày không có dòng nào, và từ một phần ba số chi nhánh cùng thiếu. Có mục ở mức chặn hoặc một kiểm thử dbt thất bại thì các bước sau không chạy, nên không có cảnh báo hay báo cáo nào từ dữ liệu sai; API không phản hồi chỉ là cảnh báo, không chặn các nguồn tệp. Vì DuckDB chỉ cho một tiến trình ghi, mỗi lúc chỉ một lượt đường ống được chạy.
 
-IMAGE: figures/h3_7_dag.png || Hình 3.7. Hai đồ thị tác vụ: hệ thống nguồn và đường ống dữ liệu kích hoạt theo dữ liệu mới || 12
+IMAGE: figures/h3_7_dag.png || Hình 3.7. Hai đồ thị tác vụ: hệ thống nguồn và đường ống dữ liệu kích hoạt theo dữ liệu mới || 16
 
 ## 3.9. Tiểu kết chương
 

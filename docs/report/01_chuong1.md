@@ -60,7 +60,7 @@ Khóa luận tiếp cận theo hướng nghiên cứu khoa học thiết kế (D
 
 Hình 1.1 tóm tắt quy trình nghiên cứu gồm chín bước. Ba bước đầu xác định vấn đề, tổng hợp lý thuyết và thiết kế; ba bước tiếp theo xây dựng bộ mô phỏng, đường ống dữ liệu và lớp phân tích. Bước 6 và 7 được lặp trên tập phát triển cho tới khi chọn xong phương pháp và tham số; sau khi cấu hình được chốt, bước 8 chạy trên tập kiểm tra đúng một lần và kết quả được báo cáo nguyên trạng.
 
-IMAGE: figures/h1_1_quy_trinh.png || Hình 1.1. Quy trình nghiên cứu của khóa luận || 13 || Phát triển từ Peffers et al. (2007)
+IMAGE: figures/h1_1_quy_trinh.png || Hình 1.1. Quy trình nghiên cứu của khóa luận || 16 || Phát triển từ Peffers et al. (2007)
 
 ## 1.7. Đóng góp của đề tài
 

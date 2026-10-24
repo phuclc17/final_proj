@@ -10,11 +10,11 @@ Moi ham tra ve mot trang HTML (div#fig chua SVG) de render.py xuat PNG. Chu 13-1
 """
 from html import escape
 
-FONT = "'Segoe UI', Arial, sans-serif"
-INK, MUTED, LINE = "#1f2933", "#52606d", "#7b8794"
-BLUE, BLUE_BG = "#3b6fb6", "#eef4fb"
+FONT = "'Times New Roman', Times, serif"
+INK, MUTED, LINE = "#000000", "#000000", "#000000"
+BLUE, BLUE_BG = "#000000", "#ffffff"
 FILL = "#ffffff"
-LANE_BG = ["#f7f9fb", "#ffffff"]
+LANE_BG = ["#ffffff", "#ffffff"]
 
 
 def page(svg, w, h, extra_css=""):
@@ -34,8 +34,9 @@ DEFS = f"""<defs>
 
 def text(x, y, s, size=13.5, anchor="middle", weight="normal", color=INK, italic=False, lh=None, halo=False):
     """Chu nhieu dong (tach bang \\n), y la tam theo chieu doc cua ca khoi chu."""
+    size = round(size * 1.1, 1)
     lines = s.split("\n")
-    lh = lh or size * 1.3
+    lh = lh or size * 1.25
     y0 = y - lh * (len(lines) - 1) / 2 + size * 0.35
     style = ' font-style="italic"' if italic else ""
     if halo:   # vien trang quanh chu de chu nam tren duong ke van doc duoc
@@ -115,14 +116,14 @@ class Activity:
         h = 14 + n * size * 1.3
         f = 10
         x0, y0 = x - w / 2, y - h / 2
-        s = (f'<path d="M{x0},{y0} H{x0 + w - f} L{x0 + w},{y0 + f} V{y0 + h} H{x0} z" fill="#fffbe6" '
-             f'stroke="#b59b3c" stroke-width="1.1"/><path d="M{x0 + w - f},{y0} V{y0 + f} H{x0 + w}" fill="none" '
-             f'stroke="#b59b3c" stroke-width="1.1"/>' + text(x, y, label, size, color=MUTED))
+        s = (f'<path d="M{x0},{y0} H{x0 + w - f} L{x0 + w},{y0 + f} V{y0 + h} H{x0} z" fill="#ffffff" '
+             f'stroke="#000000" stroke-width="1.1"/><path d="M{x0 + w - f},{y0} V{y0 + f} H{x0 + w}" fill="none" '
+             f'stroke="#000000" stroke-width="1.1"/>' + text(x, y, label, size, color=MUTED))
         if attach:
             ax, ay = self.port(attach[0], attach[1])
             ex = x0 if ax < x0 else x0 + w if ax > x0 + w else x
             ey = y if ax < x0 or ax > x0 + w else (y0 if ay < y0 else y0 + h)
-            s = poly([(ex, ey), (ax, ay)], dash=True, arrow=None, color="#b59b3c", width=1.1) + s
+            s = poly([(ex, ey), (ax, ay)], dash=True, arrow=None, color="#000000", width=1.1) + s
         self.svg_nodes.append(s)
 
     # ---- canh
@@ -157,7 +158,7 @@ class Activity:
                     lx, ly, anchor = (x0 + x1) / 2, y0 - 9, "middle"
                 else:
                     lx, ly, anchor = x0 + 7, y0 + 15, "start"
-            self.svg_edges.append(text(lx, ly, label, 13, anchor, color="#7a2e2e", halo=True))
+            self.svg_edges.append(text(lx, ly, label, 13, anchor, color="#000000", halo=True))
 
     def render(self):
         s = []
@@ -165,7 +166,7 @@ class Activity:
             for i, (title, x0, x1) in enumerate(self.lanes):
                 s.append(f'<rect x="{x0}" y="0" width="{x1 - x0}" height="{self.h}" fill="{LANE_BG[i % 2]}" '
                          f'stroke="{LINE}" stroke-width="1.2"/>')
-                s.append(f'<rect x="{x0}" y="0" width="{x1 - x0}" height="{self.lane_head}" fill="#e9eef4" '
+                s.append(f'<rect x="{x0}" y="0" width="{x1 - x0}" height="{self.lane_head}" fill="#ffffff" '
                          f'stroke="{LINE}" stroke-width="1.2"/>')
                 s.append(text((x0 + x1) / 2, self.lane_head / 2, title, 14, weight="600"))
         return page("".join(s + self.svg_edges + self.svg_nodes), self.w, self.h)
@@ -263,8 +264,8 @@ class Sequence:
                 bw = max(len(t) for t in label.split("\n")) * 7.4 + 22
                 bh = 16 + lines * 16
                 s.append(f'<rect x="{x - bw / 2}" y="{self.top + self.head - bh}" width="{bw}" height="{bh}" '
-                         f'fill="{BLUE_BG}" stroke="{BLUE}" stroke-width="1.4" rx="3"/>')
-                s.append(text(x, self.top + self.head - bh / 2, label, 13, weight="600"))
+                         f'fill="{BLUE_BG}" stroke="{BLUE}" stroke-width="1.4" />')
+                s.append(text(x, self.top + self.head - bh / 2, label, 13))
         # khung ket hop (ve truoc thong diep)
         late = []   # chu dieu kien ve sau cung, nam tren thanh kich hoat
         for kind, a, b, y0, y1, guards, pad, rpad in self.frames:
@@ -278,7 +279,7 @@ class Sequence:
                 if gy is not None:
                     s.append(f'<line x1="{xa}" y1="{gy}" x2="{xb}" y2="{gy}" stroke="{MUTED}" stroke-dasharray="6 4"/>')
                 late.append(text(xa + tw + 8 if gy is None else xa + 10, (y0 + 10) if gy is None else gy + 12, g, 13,
-                                 "start", color="#7a2e2e", halo=True))
+                                 "start", color="#000000", halo=True))
         # thanh kich hoat
         for pid in list(self.open):
             while self.open[pid]:
@@ -331,7 +332,7 @@ def bfd(root, groups, w=820, col_w=None, leaf_h=40, gap=10, size=13):
 def node3d(x, y, w, h, title, stereo=None, fill="#fff", d=10, size=13.5, dash=False, right=False):
     """Nut UML dang khoi hop: mat truoc + mat tren + mat ben; tieu de o goc trai tren. dash: nut tuy chon."""
     da = ' stroke-dasharray="6 4"' if dash else ""
-    s = (f'<path d="M{x},{y} L{x + d},{y - d} H{x + w + d} V{y + h - d} L{x + w},{y + h}" fill="#e3e8ee" '
+    s = (f'<path d="M{x},{y} L{x + d},{y - d} H{x + w + d} V{y + h - d} L{x + w},{y + h}" fill="#ffffff" '
          f'stroke="{INK}" stroke-width="1.3"{da}/><path d="M{x + w},{y} L{x + w + d},{y - d}" stroke="{INK}" '
          f'stroke-width="1.3"/><rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{fill}" stroke="{INK}" '
          f'stroke-width="1.3"{da}/>')
