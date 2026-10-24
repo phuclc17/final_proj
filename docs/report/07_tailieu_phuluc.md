@@ -180,5 +180,3 @@ WIDTHS: 3.6,10.4
 | Nội dung | Đường dẫn |
 | Kho mã nguồn | https://github.com/phuclc17/final_proj |
 | Hướng dẫn cài đặt và chạy | https://github.com/phuclc17/final_proj/blob/main/README.md |
-
-TODO: bổ sung các đường dẫn khác (video trình diễn, bản trình diễn trực tuyến) vào Bảng A.1.
