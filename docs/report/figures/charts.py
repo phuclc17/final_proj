@@ -437,8 +437,91 @@ def c5_diem_su_co():
     save(fig, "c5_diem_su_co")
 
 
+# ---------------------------------------------------------------- 11. kham pha du lieu tho: can cu nguong lam sach
+def log_hist(ax, values, lo, hi, color, n=60):
+    bins = np.logspace(np.log10(lo), np.log10(hi), n)
+    ax.hist(np.clip(values, lo, hi), bins=bins, color=color, lw=0)
+    ax.set_xscale("log")
+    ax.set_yscale("log")
+    ax.xaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: vn(v, 1 if v < 1 else 0)))
+    ax.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: vn(v)))
+
+
+def c4_nguong_lam_sach():
+    """Hai phan phoi tren du lieu tho (tap phat trien) cho thay ngưỡng làm sạch nằm trong khoảng trống giữa hai cụm."""
+    inv = gold("calibration", """select quantity / median_qty as r from silver_work.checked_inventory__receipts
+                                 where median_qty > 0""")
+    gap = gold("calibration", """select date_diff('second', lag(event_at) over (partition by staff_id, event_type order by event_at),
+                                        event_at) / 60.0 as m
+                                 from silver_work.base_timekeeping__punches where event_at is not null""").dropna()
+    fig, (a, b) = plt.subplots(1, 2, figsize=(W_IN, 2.35))
+    log_hist(a, inv.r, 0.1, 3000, NAVY)
+    a.axvline(C_INV_RATIO, color=RED, ls="--", lw=1)
+    a.text(C_INV_RATIO * 1.15, a.get_ylim()[1] * 0.35, "ngưỡng 20 lần", color=RED, fontsize=8.5)
+    a.set_title("(a) Số lượng nhập chia trung vị nguyên liệu")
+    a.set_xlabel("tỷ số, thang logarit")
+    a.set_ylabel("số dòng, thang logarit")
+    log_hist(b, gap.m, 0.05, 30000, TEAL)
+    b.axvline(5, color=RED, ls="--", lw=1)
+    b.text(5 * 1.2, b.get_ylim()[1] * 0.35, "ngưỡng 5 phút", color=RED, fontsize=8.5)
+    b.set_title("(b) Cách lượt quẹt cùng loại trước đó")
+    b.set_xlabel("phút, thang logarit")
+    fig.tight_layout(w_pad=1.5)
+    save(fig, "c4_nguong_lam_sach")
+
+
+C_INV_RATIO = 20      # trung voi quy tac cach ly "nghi_go_gam_vao_cot_kg" o dbt/models/staging/inventory
+
+
+# ---------------------------------------------------------------- 12. kham pha du lieu da lam sach
+def c4_kham_pha():
+    end = "date '2024-09-08'"
+    day = gold("calibration", f"select store_class, orders, kitchen_evening, app_avg_prep_min from gold.mart_branch_daily "
+                              f"where date_day <= {end}")
+    order = gold("calibration", f"select net_sales from gold.fact_order where is_completed and date_day <= {end}")
+    cash = gold("calibration", f"select voids from gold.mart_cashier_weekly where week_start <= {end} and receipts >= 30")
+    fig, axs = plt.subplots(2, 2, figsize=(W_IN, 4.9))
+    a, b, c, d = axs.ravel()
+    tiers = ["A", "B", "C"]
+    bp = a.boxplot([day.loc[day.store_class == t, "orders"] for t in tiers], widths=0.5, patch_artist=True,
+                   medianprops={"color": "black", "lw": 1.2}, flierprops={"marker": "o", "ms": 2.5, "alpha": 0.5})
+    for patch, t in zip(bp["boxes"], tiers):
+        patch.set_facecolor(TIER[t])
+        patch.set_alpha(0.75)
+    a.set_xticks([1, 2, 3], [f"hạng {t}" for t in tiers])
+    a.set_title("(a) Số đơn mỗi chi nhánh mỗi ngày")
+    vn_axis(a)
+    v = order.net_sales / 1000
+    b.hist(v.clip(upper=400), bins=np.arange(0, 405, 10), color=NAVY, lw=0)
+    for x, lab, ls in ((v.median(), f"trung vị {vn(v.median())}", "-"), (v.mean(), f"trung bình {vn(v.mean())}", "--")):
+        b.axvline(x, color=RED, ls=ls, lw=1)
+    b.legend(handles=[Line2D([], [], color=RED, ls="-", label=f"trung vị {vn(v.median())}"),
+                      Line2D([], [], color=RED, ls="--", label=f"trung bình {vn(v.mean())}")], loc="upper right")
+    b.set_title("(b) Giá trị đơn hoàn thành, nghìn đồng")
+    vn_axis(b)
+    k = cash.voids.clip(upper=8).value_counts().sort_index()
+    c.bar(k.index, k.values, color=TEAL, width=0.7)
+    c.set_xticks(range(9), [str(i) for i in range(8)] + ["≥8"])
+    c.set_title("(c) Hóa đơn bị hủy của một thu ngân trong tuần")
+    c.set_xlabel("số hóa đơn bị hủy")
+    c.set_ylabel("số thu ngân × tuần")
+    vn_axis(c)
+    for t in tiers:
+        g = day[day.store_class == t].dropna(subset=["app_avg_prep_min"]).groupby("kitchen_evening").app_avg_prep_min
+        s = g.mean()[g.size() >= 5]
+        d.plot(s.index, s.values, marker="o", ms=4, color=TIER[t], lw=1.6, label=f"hạng {t}")
+    d.set_title("(d) Thời gian chuẩn bị đơn App theo số bếp ca tối")
+    d.set_xlabel("số nhân viên bếp ca tối")
+    d.set_ylabel("phút")
+    d.set_xticks(range(1, 6))
+    d.yaxis.set_major_locator(matplotlib.ticker.MultipleLocator(2))
+    d.legend(loc="upper right")
+    fig.tight_layout(h_pad=1.2, w_pad=1.5)
+    save(fig, "c4_kham_pha")
+
+
 ALL = {f.__name__: f for f in (c5_ban_do, c5_tin_hieu, c5_truy_vet_cn2, c5_nguong, c5_luat_z, c5_thuc_don, c5_nhan_cong,
-                               c5_so_sanh, c5_do_nhay, c5_diem_su_co)}
+                               c5_so_sanh, c5_do_nhay, c5_diem_su_co, c4_nguong_lam_sach, c4_kham_pha)}
 
 if __name__ == "__main__":
     for name in sys.argv[1:] or ALL:

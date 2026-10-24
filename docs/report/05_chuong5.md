@@ -43,7 +43,7 @@ Lỗi kỹ thuật như quẹt trùng, gõ nhầm đơn vị được tách kh�
 
 ### 5.2.2. Đối soát giữa các tầng và hiệu năng
 
-Đối soát Bronze–Silver ở Bảng 4.7 cho phần không giải thích được bằng 0 ở cả bảy nguồn trên cả hai tập. Doanh thu thuần ở Gold khớp tuyệt đối với tổng tính từ Silver theo từng chi nhánh × ngày, với 37.899.868.200 đồng ở tập phát triển và 33.302.131.300 đồng ở tập kiểm tra. Ở bước đưa sang kho phục vụ, số dòng của cả 22 bảng được so giữa DuckDB và PostgreSQL trước khi đổi lược đồ, và mọi lượt trong nhật ký đều khớp (Bảng 5.2).
+Đối soát Bronze–Silver ở Bảng 4.8 cho phần không giải thích được bằng 0 ở cả bảy nguồn trên cả hai tập. Doanh thu thuần ở Gold khớp tuyệt đối với tổng tính từ Silver theo từng chi nhánh × ngày, với 37.899.868.200 đồng ở tập phát triển và 33.302.131.300 đồng ở tập kiểm tra. Ở bước đưa sang kho phục vụ, số dòng của cả 22 bảng được so giữa DuckDB và PostgreSQL trước khi đổi lược đồ, và mọi lượt trong nhật ký đều khớp (Bảng 5.2).
 
 TABLE: Bảng 5.2. Kết quả kiểm thử và kiểm tra chất lượng
 WIDTHS: 6,2.6,2.6,2.6
@@ -65,7 +65,7 @@ WIDTHS: 4,4.4,4.4
 | Bộ phát hiện | khoảng 1 giây | 2,0 giây |
 | Đưa sang kho phục vụ | khoảng 38 giây, lần đầu | 8,9 giây |
 
-Xử lý một ngày mới qua bảy bước mất khoảng 80 giây (Bảng 5.3), đáp ứng NFR7; phần chậm nhất là liệt kê và đọc tệp qua thư mục gắn vào Docker, đã phân tích ở mục 4.9.3.
+Xử lý một ngày mới qua bảy bước mất khoảng 80 giây (Bảng 5.3), đáp ứng NFR7; phần chậm nhất là liệt kê và đọc tệp qua thư mục gắn vào Docker, đã phân tích ở mục 4.11.3.
 
 ### 5.2.3. Độ bền trước dữ liệu bất thường và sự cố nguồn
 
@@ -150,7 +150,7 @@ Bảy báo động giả trên tập kiểm tra gồm bốn tuần ở chi nhán
 
 ### 5.4.1. Ví dụ truy vết: thiếu nhân sự ở CN2
 
-Sự cố S4 làm CN2 thiếu nhân viên bếp ca tối từ 06/05 đến 19/05. Bảng 5.8 trình bày cây KPI và tín hiệu vận hành của CN2 trong tuần đầu sự cố, đúng như trang Truy vết ở Hình 4.8 hiển thị.
+Sự cố S4 làm CN2 thiếu nhân viên bếp ca tối từ 06/05 đến 19/05. Bảng 5.8 trình bày cây KPI và tín hiệu vận hành của CN2 trong tuần đầu sự cố, đúng như trang Truy vết ở Hình 4.10 hiển thị.
 
 TABLE: Bảng 5.8. Truy vết CN2, tuần 06/05–12/05/2024 (tập phát triển)
 WIDTHS: 5.6,2.6,2.6,2,1.4
@@ -253,7 +253,7 @@ IMAGE: figures/c5_thuc_don.png || Hình 5.10. Ma trận thực đơn: tỷ trọ
 
 TABLE: Bảng 5.11. Thiệt hại ước tính từ kho dữ liệu cho các sự cố được phát hiện (tập phát triển)
 WIDTHS: 3.4,4.6,2.6,4
-| Sự cố | Cách ước tính (mục 4.6) | Ước tính | Đối chiếu sau với tác động đo bởi bộ mô phỏng (Bảng 4.3) |
+| Sự cố | Cách ước tính (mục 4.8) | Ước tính | Đối chiếu sau với tác động đo bởi bộ mô phỏng (Bảng 4.3) |
 | S1 hoa hồng GrabFood CN4 | Hoa hồng thu thừa lũy kế 3 tuần | 0,72 triệu đ | Khớp: sàn tính 30% thay vì 25% |
 | S2 đơn sàn không vào POS CN6 | Đơn thiếu vượt mức thường × giá trị đơn sàn, 2 tuần | 7,12 triệu đ | 8,52 triệu đ |
 | S3 hao hụt CN7 | Hao hụt vượt mức thường của kỳ kiểm kê | 6,83 triệu đ | khoảng 7,5 triệu đ (682 nghìn đ/ngày × 11 ngày) |

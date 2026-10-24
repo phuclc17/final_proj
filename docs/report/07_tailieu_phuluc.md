@@ -1,5 +1,7 @@
 # TÀI LIỆU THAM KHẢO
 
+REF: Abedjan, Z., Golab, L., & Naumann, F. (2015). Profiling relational data: A survey. *The VLDB Journal, 24*(4), 557–581. https://doi.org/10.1007/s00778-015-0389-y
+
 REF: Agresti, A. (2013). *Categorical data analysis* (3rd ed.). Wiley.
 
 REF: Apache Software Foundation. (n.d.). *Apache Airflow documentation*. https://airflow.apache.org/docs/
@@ -155,6 +157,8 @@ REF: Sun, Y., Zhao, Y., Su, Y., Liu, D., Nie, X., Meng, Y., Cheng, S., Pei, D., 
 REF: Tatbul, N., Lee, T. J., Zdonik, S., Alam, M., & Gottschlich, J. (2018). Precision and recall for time series. In *Advances in Neural Information Processing Systems 31* (pp. 1920–1930).
 
 REF: Thompson, G. M. (1998). Labor scheduling, part 1: Forecasting demand. *Cornell Hotel and Restaurant Administration Quarterly, 39*(5), 22–31. https://doi.org/10.1177/001088049803900507
+
+REF: Tukey, J. W. (1977). *Exploratory data analysis*. Addison-Wesley.
 
 REF: Vanschoren, J., van Rijn, J. N., Bischl, B., & Torgo, L. (2013). OpenML: Networked science in machine learning. *ACM SIGKDD Explorations Newsletter, 15*(2), 49–60. https://doi.org/10.1145/2641190.2641198
 
