@@ -31,7 +31,7 @@ Tệp tải lên  ──────────┘   cửa chặn chất lượ
 | `pipeline/` | Thu thập (`extract.py`, `intake.py`, `contracts.py`), nạp Bronze (`ingest.py`), cửa chặn chất lượng, chạy dbt, publish, điều phối một lượt (`run_daily.py`) |
 | `dbt/` | Silver (làm sạch, cách ly, giải quyết định danh) và Gold (6 bảng sự kiện, 7 bảng chiều, 2 chiều SCD2, 5 bảng chỉ số); 158 kiểm thử dữ liệu |
 | `analytics/` | Bộ phát hiện, đề xuất xử lý, đánh giá, phân tích độ nhạy, trợ lý phân tích |
-| `app/` | Ứng dụng Streamlit 12 trang |
+| `app/` | Ứng dụng Streamlit 14 trang |
 | `airflow/`, `docker/`, `docker-compose.yml` | Điều phối và đóng gói |
 | `bi/` | Dựng dashboard Metabase bằng mã |
 | `deploy/` | Cấu hình chạy trên máy chủ (Caddy, HTTPS) |
@@ -80,7 +80,7 @@ docker compose up -d --build
 | http://localhost:3000 | Metabase |
 | http://localhost:8600/docs | API nguồn giả lập |
 
-Hướng dẫn đầy đủ, gồm môi trường vận hành hằng ngày và dựng dashboard: Phụ lục E của báo cáo và [HUONG_DAN_CHAY.txt](HUONG_DAN_CHAY.txt). Mật khẩu trong `docker-compose.yml` là giá trị mặc định cho máy cá nhân; khi chạy trên máy chủ, `deploy/cai_dat.sh` sinh mật khẩu ngẫu nhiên.
+Hướng dẫn đầy đủ, gồm môi trường vận hành hằng ngày và dựng dashboard: [HUONG_DAN_CHAY.txt](HUONG_DAN_CHAY.txt). Mật khẩu trong `docker-compose.yml` là giá trị mặc định cho máy cá nhân; khi chạy trên máy chủ, `deploy/cai_dat.sh` sinh mật khẩu ngẫu nhiên.
 
 ## Giới hạn
 
