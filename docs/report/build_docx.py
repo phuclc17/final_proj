@@ -163,6 +163,22 @@ def source_line(src, keep_next=False):
                 keep_next=keep_next)
 
 
+CAPTION = re.compile(r"^((?:Bảng|Hình) [0-9A-Z]+\.\d+\.)\s*(.*)$")
+NUMBER = re.compile(r"(?:[\d\s.,%/×≈<>+−\-–—~()]*\d[\d\s.,%/×≈<>+−\-–—~()]*"
+                    r"(?: (?:giây|phút|giờ|ngày|tuần|MB|GB|đ|đồng|triệu đ|tỷ đ|nghìn đ|dòng|tệp|lần|đơn|ca|bước))?)|[—–]")
+
+
+def caption_runs(text):
+    """Nhan "Bang 3.1." / "Hinh 3.1." in dam, ten bang/hinh chu thuong (nhu Table 1. / Fig. 1. cua bai bao mau)."""
+    m = CAPTION.match(text)
+    return run(m.group(1) + " ", bold=True) + inline(m.group(2)) if m else inline(text)
+
+
+def is_number(text):
+    """O chi gom so lieu (0,72; 5/6; 158/158; −17,2%; —) thi can giua cho de so theo cot."""
+    return bool(NUMBER.fullmatch(text.strip()))
+
+
 def table(caption, rows, widths=None, source=None):
     ncol = max(len(r) for r in rows)
     rows = [r + [""] * (ncol - len(r)) for r in rows]
@@ -172,22 +188,29 @@ def table(caption, rows, widths=None, source=None):
         w = [max(4.0, min(40.0, max(len(r[c]) for r in rows) ** 0.8)) for c in range(ncol)]
     cols = [int(TEXT_W * x / sum(w)) for x in w]
     cols[-1] += TEXT_W - sum(cols)
-    borders = "".join(f'<w:{b} w:val="single" w:sz="4" w:space="0" w:color="808080"/>'
-                      for b in ("top", "left", "bottom", "right", "insideH", "insideV"))
-    xml = [para(inline(caption), style="ChuThichBang", keep_next=True) if caption else "",
+    # kieu ba duong ngang cua bai bao khoa hoc: duong dam tren cung va duoi cung, duong mong duoi dong tieu de,
+    # khong ke doc; giua cac dong chi co net xam rat mong de de doc o co nhieu dong
+    borders = ('<w:top w:val="single" w:sz="12" w:space="0" w:color="000000"/>'
+               '<w:bottom w:val="single" w:sz="12" w:space="0" w:color="000000"/>'
+               '<w:left w:val="nil"/><w:right w:val="nil"/><w:insideV w:val="nil"/>'
+               '<w:insideH w:val="single" w:sz="2" w:space="0" w:color="BFBFBF"/>')
+    xml = [para(caption_runs(caption), style="ChuThichBang", keep_next=True) if caption else "",
            f'<w:tbl><w:tblPr><w:tblStyle w:val="TableGrid"/><w:tblW w:w="{TEXT_W}" w:type="dxa"/>'
            f'<w:jc w:val="center"/><w:tblBorders>{borders}</w:tblBorders><w:tblLayout w:type="fixed"/>'
            f'<w:tblCellMar><w:left w:w="85" w:type="dxa"/><w:right w:w="85" w:type="dxa"/></w:tblCellMar>'
            f'<w:tblLook w:val="04A0" w:firstRow="1" w:lastRow="0" w:firstColumn="1" w:lastColumn="0" '
            f'w:noHBand="0" w:noVBand="1"/></w:tblPr><w:tblGrid>'
            + "".join(f'<w:gridCol w:w="{c}"/>' for c in cols) + "</w:tblGrid>"]
+    # cot so lieu (da so o la so) duoc can giua ca cot, ke ca o kem don vi nhu "6 ngay"
+    body = rows[1:]
+    num_col = [bool(body) and sum(is_number(r[c]) for r in body) >= 0.6 * len(body) for c in range(ncol)]
     for i, r in enumerate(rows):
         header = i == 0
         trpr = "<w:trPr><w:tblHeader/><w:cantSplit/></w:trPr>" if header else "<w:trPr><w:cantSplit/></w:trPr>"
         cells = []
         for c, text in enumerate(r):
-            shd = '<w:shd w:val="clear" w:color="auto" w:fill="DCE6F1"/>' if header else ""
-            jc = '<w:jc w:val="center"/>' if header else ""
+            shd = '<w:tcBorders><w:bottom w:val="single" w:sz="6" w:space="0" w:color="000000"/></w:tcBorders>' if header else ""
+            jc = '<w:jc w:val="center"/>' if header or num_col[c] or is_number(text) or text.strip() == "x" else ""
             # "<br>" trong o: tach thanh nhieu doan (vd cac buoc cua luong su kien trong bang dac ta ca su dung)
             paras = "".join(f'<w:p><w:pPr><w:pStyle w:val="TableText"/>{jc}</w:pPr>'
                             f'{inline(part.strip(), bold=header, code_size=18)}</w:p>'
@@ -257,7 +280,7 @@ def image(path, caption, width_cm, images, uid, source=None):
                f'<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic>'
                f'</wp:inline></w:drawing></w:r>')
     return (para(drawing, style="FigureBox", keep_next=True) + source_line(source or DEFAULT_SOURCE, keep_next=True)
-            + para(inline(caption), style="ChuThichHinh"))
+            + para(caption_runs(caption), style="ChuThichHinh"))
 
 
 # ------------------------------------------------------------------ chuyen markup -> XML
@@ -306,7 +329,7 @@ def convert(lines, images, numbering):
             caption, _, desc = s[7:].partition("||")
             box = run("[HÌNH SẼ CHÈN] ", bold=True, color="7F7F7F", size=22) + run(desc.strip(), italic=True, color="7F7F7F", size=22)
             out.append(para(box, style="FigurePlaceholder", keep_next=True))
-            out.append(para(inline(caption.strip()), style="ChuThichHinh"))
+            out.append(para(caption_runs(caption.strip()), style="ChuThichHinh"))
         elif s.startswith("IMAGE:"):
             path, caption, width, *source = [x.strip() for x in s[6:].split("||")]
             uid += 1
@@ -407,9 +430,9 @@ NEW_STYLES = [
     style("FrontTitle", "Tieu de phan dau", '<w:keepNext/><w:pageBreakBefore/><w:spacing w:before="0" w:after="360" '
           'w:line="360" w:lineRule="auto"/><w:jc w:val="center"/>', "<w:b/><w:bCs/>" + SZ(28)),
     style("ChuThichBang", "ChuThichBang", '<w:keepNext/><w:spacing w:before="120" w:after="80" w:line="300" '
-          'w:lineRule="auto"/><w:jc w:val="center"/>', "<w:i/><w:iCs/>" + SZ(24)),
+          'w:lineRule="auto"/><w:jc w:val="center"/>', SZ(24)),
     style("ChuThichHinh", "ChuThichHinh", '<w:spacing w:before="60" w:after="240" w:line="300" w:lineRule="auto"/>'
-          '<w:jc w:val="center"/>', "<w:i/><w:iCs/>" + SZ(24)),
+          '<w:jc w:val="center"/>', SZ(24)),
     style("NguonHinh", "Nguon hinh bang", '<w:spacing w:before="40" w:after="60" w:line="264" w:lineRule="auto"/>'
           '<w:jc w:val="right"/>', SZ(22)),
     style("TableText", "Chu trong bang", '<w:spacing w:before="20" w:after="20" w:line="264" w:lineRule="auto"/>', SZ(24)),

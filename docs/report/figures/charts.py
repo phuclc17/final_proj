@@ -340,7 +340,105 @@ def c5_nhan_cong():
     save(fig, "c5_nhan_cong")
 
 
-ALL = {f.__name__: f for f in (c5_ban_do, c5_tin_hieu, c5_truy_vet_cn2, c5_nguong, c5_luat_z, c5_thuc_don, c5_nhan_cong)}
+# ---------------------------------------------------------------- 8. so voi hai phuong an co so
+def c5_so_sanh():
+    methods = [("Đề xuất", NAVY), ("Chỉ theo dõi doanh thu", GRAY), ("Isolation Forest", SAND)]
+    metrics = [("precision", "Precision"), ("recall_tuan", "Recall theo tuần"), ("f1", "F1")]
+    fig, axes = plt.subplots(1, 2, figsize=(W_IN, 2.5), sharey=True, gridspec_kw={"wspace": 0.08})
+    for ax, (profile, title) in zip(axes, [("calibration", "(a) Tập phát triển"), ("holdout", "(b) Tập kiểm tra")]):
+        d = pd.read_csv(RES / f"{profile}_so_sanh.csv", encoding="utf-8-sig", index_col=0)
+        x = np.arange(len(metrics))
+        for k, (name, color) in enumerate(methods):
+            vals = [d.iloc[k][m] for m, _ in metrics]
+            bars = ax.bar(x + (k - 1) * 0.26, vals, 0.24, color=color, label=name)
+            for b, v in zip(bars, vals):
+                ax.text(b.get_x() + b.get_width() / 2, v + 0.02, vn(v, 2), ha="center", fontsize=7.5)
+        ax.set_xticks(x, [n for _, n in metrics])
+        ax.set_ylim(0, 1.05)
+        ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
+        vn_axis(ax, d=1)
+        ax.grid(axis="x", visible=False)
+        ax.set_title(title, pad=4)
+    axes[0].legend(loc="upper center", ncol=3, bbox_to_anchor=(1.04, -0.13))
+    save(fig, "c5_so_sanh")
+
+
+# ---------------------------------------------------------------- 9. do nhay theo cach tinh muc ky vong
+def c5_do_nhay():
+    d = pd.read_csv(RES / "calibration_do_nhay_phuong_phap.csv", encoding="utf-8-sig")
+    names = ["Đề xuất", "So với toàn chuỗi", "Chỉ lịch sử của chi nhánh", "Cửa sổ 4 tuần", "Cửa sổ 12 tuần",
+             "Trung bình và độ lệch chuẩn", "Bỏ sàn độ dao động"]
+    assert len(d) == len(names)
+    # ba bao dong gia do bang chung kho va doi soat giong nhau o moi phuong an (muc 5.5.3)
+    fixed = 3
+    assert (d.bao_dong_gia >= fixed).all()
+    y = np.arange(len(d))[::-1]
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(W_IN, 2.7), sharey=True, gridspec_kw={"wspace": 0.06})
+    colors = [NAVY if i == 0 else STEEL for i in range(len(d))]
+    a1.barh(y, d.f1, color=colors, height=0.6)
+    for yy, v in zip(y, d.f1):
+        a1.text(v + 0.012, yy, vn(v, 2), va="center", fontsize=8,
+                bbox=dict(fc="white", ec="none", pad=0.6))
+    a1.axvline(d.f1.iloc[0], color=NAVY, ls=":", lw=1, zorder=1)
+    a1.set_xlim(0, 1)
+    vn_axis(a1, "x", d=1)
+    a1.set_yticks(y, names)
+    a1.set_title("(a) F1", pad=4)
+    a2.barh(y, d.bao_dong_gia - fixed, color=RED, height=0.6, label="do lệch doanh thu, nhân sự")
+    a2.barh(y, [fixed] * len(d), left=d.bao_dong_gia - fixed, color=LIGHT, height=0.6, label="do bằng chứng kho, đối soát")
+    for yy, v in zip(y, d.bao_dong_gia):
+        a2.text(v + 0.2, yy, str(v), va="center", fontsize=8)
+    a2.set_xlim(0, 17)
+    a2.set_title("(b) Số báo động giả", pad=4)
+    for ax in (a1, a2):
+        ax.grid(axis="y", visible=False)
+        ax.tick_params(axis="y", length=0)
+    a2.legend(loc="upper center", ncol=2, bbox_to_anchor=(0.2, -0.1))
+    save(fig, "c5_do_nhay")
+
+
+# ---------------------------------------------------------------- 10. diem cua nguyen nhan dung o tung su co
+def c5_diem_su_co():
+    rows = []
+    for profile in ("calibration", "holdout"):
+        G = load_gold(profile)
+        scores = detect.score_all(G)
+        weeks = set(detect.usable_weeks(G))
+        done = pd.read_csv(RES / f"{profile}_theo_su_co.csv", encoding="utf-8-sig").set_index("Sự cố")
+        for r in evaluate.load_incidents(profile).itertuples():
+            last = r.end + pd.Timedelta(days=evaluate.GRACE_DAYS)
+            s = scores[(scores.branch_id == r.branch_id) & (scores.cause == r.cause) & scores.week_start.isin(weeks)
+                       & (scores.week_start <= last) & (scores.week_start + pd.Timedelta(days=6) >= r.start)]
+            rows.append((r.id, r.cause, s.score.max() if len(s) else 0.0, done.loc[r.id, "Bắt được"] == "có",
+                         str(done.loc[r.id, "Đúng nguyên nhân"]) == "True"))
+    d = pd.DataFrame(rows, columns=["id", "cause", "score", "caught", "right"]).set_index("id")
+    # tu kiem: khop cac diem da bao cao o Bang 5.6
+    for k, v in {"S5": 2.8, "H4": 2.82, "H6": 3.44}.items():
+        assert abs(d.loc[k, "score"] - v) < 0.01, (k, d.loc[k, "score"])
+    x = np.r_[np.arange(6), np.arange(7, 13)]
+    color = [NAVY if c and r else (SAND if c else GRAY) for c, r in zip(d.caught, d.right)]
+    fig, ax = plt.subplots(figsize=(W_IN, 2.4))
+    ax.bar(x, d.score, 0.62, color=color)
+    for xx, v in zip(x, d.score):
+        ax.text(xx, v + 0.12, vn(v, 2), ha="center", fontsize=8, bbox=dict(fc="white", ec="none", pad=0.5))
+    ax.axhline(C.SCORE_ALERT, color=RED, ls="--", lw=1)
+    ax.axhline(2.0, color=GRAY, ls=":", lw=1)
+    ax.set_xticks(x, [f"{i}\n{c}" for i, c in zip(d.index, d.cause)])
+    ax.set_ylim(0, 6.6)
+    ax.set_ylabel("điểm bằng chứng")
+    ax.grid(axis="x", visible=False)
+    tr = matplotlib.transforms.blended_transform_factory(ax.transData, ax.transAxes)
+    ax.text(2.5, 1.02, "tập phát triển", ha="center", fontsize=9, transform=tr)
+    ax.text(9.5, 1.02, "tập kiểm tra", ha="center", fontsize=9, transform=tr)
+    handles = [Patch(fc=NAVY, label="bắt được, đúng nguyên nhân"), Patch(fc=SAND, label="bắt được, nhãn chưa xác định"),
+               Patch(fc=GRAY, label="bỏ sót"), Line2D([], [], color=RED, ls="--", lw=1, label="ngưỡng cảnh báo 3,5"),
+               Line2D([], [], color=GRAY, ls=":", lw=1, label="mức theo dõi 2")]
+    ax.legend(handles=handles, loc="upper center", ncol=3, bbox_to_anchor=(0.5, -0.27))
+    save(fig, "c5_diem_su_co")
+
+
+ALL = {f.__name__: f for f in (c5_ban_do, c5_tin_hieu, c5_truy_vet_cn2, c5_nguong, c5_luat_z, c5_thuc_don, c5_nhan_cong,
+                               c5_so_sanh, c5_do_nhay, c5_diem_su_co)}
 
 if __name__ == "__main__":
     for name in sys.argv[1:] or ALL:
