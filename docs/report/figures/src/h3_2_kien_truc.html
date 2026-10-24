@@ -1,140 +1,134 @@
 <!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_style.css">
 <style>
-#fig { width: 820px; }
-.row { display: flex; gap: 10px; align-items: stretch; }
-.lane { border-radius: 12px; padding: 10px 12px 12px 12px; }
-.lane > .title { margin-bottom: 8px; }
-.src { background: #f4f6f8; border: 1.5px solid #c5cdd5; }
-.grp { flex: 1; border: 1.2px dashed #9aa5b1; border-radius: 9px; padding: 6px 7px 7px 7px; background: #fff; }
-.grp .gt { font-size: 12px; font-weight: 700; color: #52606d; margin-bottom: 5px; }
-.chip { flex: 1; text-align: center; background: #fff; border: 1.3px solid #9aa5b1; border-radius: 8px; padding: 5px 3px;
-        font-size: 12.6px; line-height: 1.3; }
-.chip small { display: block; color: #52606d; font-size: 11px; }
-.acq { background: #eef6ee; border: 1.6px solid #2f9e44; }
-.box { flex: 1; background: #fff; border: 1.3px solid #9aa5b1; border-radius: 8px; padding: 6px 9px; }
-.box h4 { margin: 0 0 2px 0; font-size: 14px; }
-.box p { margin: 0; font-size: 12.3px; line-height: 1.4; color: #3e4c59; }
-.land { background: #fdf3e7; border-color: #c97b3a; }
-.wh { background: #fbfcfd; border: 2px solid #52606d; }
-.layer { flex: 1; border-radius: 10px; padding: 9px 11px; border: 1.6px solid; }
-.layer h4 { margin: 0 0 3px 0; font-size: 15.5px; }
-.layer p, .lane p { margin: 0; font-size: 12.8px; line-height: 1.45; color: #3e4c59; }
-.bronze { background: var(--bronze-bg); border-color: var(--bronze); }
-.silver { background: var(--silver-bg); border-color: var(--silver); }
-.gold { background: var(--gold-bg); border-color: var(--gold); }
-.an { background: var(--red-bg); border: 1.6px solid var(--red); }
-.ui { background: var(--green-bg); border: 1.6px solid var(--green); }
-.af { background: var(--blue-bg); border: 1.6px solid var(--blue); }
-.sv { background: #efe9f8; border: 1.6px solid #6c4fb3; }
-.note { flex: 1; background: #fff; border: 1.6px dashed #9aa5b1; border-radius: 10px; padding: 8px 11px; }
-.note p { margin: 0; font-size: 12.5px; line-height: 1.45; color: #3e4c59; }
-.gap { width: 30px; flex: 0 0 30px; }
-.mini { font-size: 12.5px; color: #52606d; margin-top: 7px; }
-.steps { margin-top: 6px; font-size: 12.3px; line-height: 1.5; color: #3e4c59; }
-.steps span { display: block; background: #fff; border: 1px solid #a9c1e2; border-radius: 6px; padding: 0 6px; margin-bottom: 4px; }
-.steps b { display: block; font-size: 11.8px; color: #3b6fb6; margin: 6px 0 3px 0; }
+#fig { width: 820px; padding: 12px 12px 14px 12px; }
+.top { display: grid; grid-template-columns: 126px 1fr 274px; gap: 22px; align-items: stretch; margin-bottom: 12px; }
+.cols { display: grid; grid-template-columns: 126px 138px 170px 140px 134px; column-gap: 22px; }
+.hd { font-size: 11.5px; font-weight: 700; letter-spacing: 1.2px; color: #7b8794; text-align: center;
+      text-transform: uppercase; margin-bottom: 7px; }
+.col { display: flex; flex-direction: column; gap: 14px; }
+.b { border: 1.4px solid #9aa5b1; border-radius: 8px; padding: 6px 8px 7px 8px; background: #fff; }
+.b .n { font-size: 14px; font-weight: 700; color: #1f2933; line-height: 1.25; }
+.b .t { display: inline-block; font-family: Consolas, monospace; font-size: 11.5px; color: #3e4c59; background: #eef1f4;
+        border-radius: 4px; padding: 0 4px; margin: 2px 0 1px 0; }
+.b .d { font-size: 13px; line-height: 1.32; color: #3e4c59; margin-top: 2px; }
+.src { background: #f4f6f8; }
+.acq { border-color: #2f9e44; background: #f1f9f2; }
+.land { border-color: #c97b3a; background: #fdf3e7; }
+.wh { border: 2px solid #52606d; border-radius: 10px; padding: 7px 7px 6px 7px; background: #fbfcfd; }
+.wh .wt { font-size: 14px; font-weight: 700; text-align: center; color: #1f2933; margin-bottom: 7px; }
+.wh .b + .b, .wh .b + .gate, .wh .gate + .b { margin-top: 13px; }
+.bronze { border-color: var(--bronze); background: var(--bronze-bg); }
+.silver { border-color: var(--silver); background: var(--silver-bg); }
+.gold { border-color: var(--gold); background: var(--gold-bg); }
+.gate { border: 1.3px dashed #c97b3a; border-radius: 7px; padding: 4px 7px; font-size: 12.5px; line-height: 1.3;
+        color: #3e4c59; background: #fff; }
+.gate b { color: #1f2933; }
+.foot { font-size: 12.5px; color: #3e4c59; line-height: 1.3; margin-top: 8px; padding-top: 6px; border-top: 1px solid #d5dbe1;
+        text-align: center; }
+.an { border-color: var(--red); background: var(--red-bg); }
+.sv { border-color: #6c4fb3; background: #efe9f8; }
+.ui { border-color: var(--green); background: var(--green-bg); }
+.ext { border: 1.4px dashed #9aa5b1; border-radius: 8px; padding: 6px 8px; background: #fff; }
+.ext .n { font-size: 13.5px; font-weight: 700; color: #52606d; }
+.ext .d { font-size: 12.5px; line-height: 1.3; color: #52606d; margin-top: 2px; }
+.orch { margin-top: 22px; display: grid; grid-template-columns: 126px 1fr; column-gap: 22px; align-items: center; }
+.orch .lab { font-size: 14px; font-weight: 700; color: #3b6fb6; text-align: right; line-height: 1.25; }
+.orch .lab span { display: block; font-size: 12px; font-weight: 400; color: #52606d; }
+.bar { position: relative; height: 34px; }
+.bar .ln { position: absolute; left: 0; right: 10px; top: 16px; height: 3px; background: #3b6fb6; border-radius: 2px; }
+.bar .hd2 { position: absolute; right: 0; top: 9px; width: 0; height: 0; border-top: 8.5px solid transparent;
+            border-bottom: 8.5px solid transparent; border-left: 13px solid #3b6fb6; }
+.steps { position: absolute; left: 6px; right: 26px; top: 5px; display: flex; justify-content: space-between; }
+.steps span { font-family: Consolas, monospace; font-size: 12px; background: #fff; border: 1.3px solid #3b6fb6;
+              border-radius: 5px; padding: 1px 6px; color: #1f2933; }
+.cap { font-size: 12.5px; color: #3e4c59; line-height: 1.35; margin-top: 3px; }
+.legend { margin-top: 10px; font-size: 12px; color: #52606d; display: flex; gap: 22px; align-items: center; }
+.legend i { display: inline-block; width: 26px; height: 0; border-top: 2px solid #7a869a; vertical-align: middle; margin-right: 6px; }
+.legend i.ds { border-top: 2px dashed #9aa5b1; }
+.legend i.or { border-top: 3px solid #3b6fb6; }
 </style></head><body><div id="fig">
 
-<div class="lane src" id="srcl">
-  <div class="title">Hệ thống nguồn của doanh nghiệp</div>
-  <div class="row" style="gap:8px">
-    <div class="grp" id="g_api" style="flex:0 0 228px"><div class="gt">Có API, giữ dữ liệu trong phần mềm</div>
-      <div class="row" style="gap:5px">
-        <div class="chip">POS đám mây<small>8 chi nhánh</small></div>
-        <div class="chip">App riêng<small>đơn đặt</small></div>
-      </div></div>
-    <div class="grp" id="g_file"><div class="gt">Xuất tệp theo lịch, hoặc do người lập và gửi</div>
-      <div class="row" style="gap:5px">
-        <div class="chip">POS tại máy<small>3 CN, JSON</small></div>
-        <div class="chip">Chấm công<small>CSV</small></div>
-        <div class="chip">GrabFood<small>CSV tuần</small></div>
-        <div class="chip">ShopeeFood<small>Excel tuần</small></div>
-        <div class="chip">Kho, kiểm kê<small>Excel</small></div>
-        <div class="chip">Danh mục, thời tiết<small>CSV, JSON</small></div>
-      </div></div>
-  </div>
+<div class="top" style="position: relative">
+  <span id="anc" style="position:absolute; left: 22px; bottom: 0; width: 1px; height: 1px"></span>
+  <div class="ext" id="sim"><div class="n">Bộ mô phỏng</div>
+    <div class="d">đóng vai các hệ thống nguồn; đáp án lưu riêng</div></div>
+  <div></div>
+  <div class="ext" id="ev"><div class="n">Đánh giá</div>
+    <div class="d">so cảnh báo với đáp án, chỉ dùng để chấm điểm, không thuộc đường ống</div></div>
 </div>
 
-<div class="lane acq" id="acq" style="margin-top: 44px">
-  <div class="title" style="color:#2f9e44">Thu thập</div>
-  <div class="row" style="gap:12px">
-    <div class="box" id="ext" style="flex:0 0 228px"><h4>Bộ kết nối API</h4><p>mã xác thực, tăng dần theo mốc ngày, phân
-      trang, thử lại khi lỗi, đối chiếu tổng số bản ghi</p><p class="mono" style="margin-top:3px">pipeline/extract.py</p></div>
-    <div class="box" id="up"><h4>Tệp tự động, trang Tải tệp lên</h4><p>nhận dạng tệp theo nội dung, hợp đồng dữ liệu của từng
-      nguồn, từ chối kèm lý do, ghi nguyên tử</p><p class="mono" style="margin-top:3px">pipeline/contracts.py, intake.py</p></div>
-  </div>
-  <div class="row" style="margin-top: 20px">
-    <div class="box land" id="lz"><h4>Vùng tiếp nhận</h4><p>mỗi nguồn một thư mục, tên tệp chuẩn theo chi nhánh và ngày;
-      tệp ghi dở không bao giờ được đọc <span class="mono">data/&lt;tập&gt;/source_systems/</span></p></div>
-  </div>
+<div class="cols">
+  <div><div class="hd">Nguồn</div><div class="col">
+    <div class="b src" id="s1"><div class="n">POS đám mây, App đặt hàng</div><div class="d">dữ liệu nằm trong phần mềm, chỉ mở API</div></div>
+    <div class="b src" id="s2"><div class="n">POS tại máy, chấm công, danh mục</div><div class="d">xuất tệp JSON, CSV theo lịch</div></div>
+    <div class="b src" id="s3"><div class="n">Báo cáo sàn, sổ kho, kiểm kê</div><div class="d">tệp CSV, Excel do kế toán, cửa hàng gửi</div></div>
+  </div></div>
+
+  <div><div class="hd">Thu thập</div><div class="col">
+    <div class="b acq" id="c1"><div class="n">Bộ kết nối API</div><span class="t">Python</span>
+      <div class="d">kéo tăng dần theo mốc ngày, thử lại khi lỗi, đối chiếu tổng bản ghi</div></div>
+    <div class="b land" id="c3"><div class="n">Vùng tiếp nhận</div>
+      <div class="d">ba kênh về một chỗ, mỗi nguồn một thư mục</div></div>
+    <div class="b acq" id="c2"><div class="n">Hợp đồng dữ liệu</div><span class="t">Python</span>
+      <div class="d">nhận dạng tệp theo nội dung, chặn tệp sai ngay ở cửa</div></div>
+  </div></div>
+
+  <div><div class="hd">Lưu trữ, biến đổi</div>
+    <div class="wh" id="wh"><div class="wt">DuckDB + dbt</div>
+      <div class="b bronze" id="b"><div class="n">Bronze</div><span class="t">ingest.py</span>
+        <div class="d">bản gốc nguyên văn kèm tệp, dòng; nạp lại không trùng</div></div>
+      <div class="gate" id="q"><b>Cửa chặn chất lượng</b>: lô thiếu dữ liệu thì dừng, kho giữ bản cũ</div>
+      <div class="b silver" id="sv"><div class="n">Silver</div><span class="t">dbt staging</span>
+        <div class="d">làm sạch, khớp sáu hệ mã, cách ly dòng lỗi</div></div>
+      <div class="b gold" id="g"><div class="n">Gold</div><span class="t">dbt marts</span>
+        <div class="d">lược đồ hình sao, SCD loại 2, chỉ số và mức kỳ vọng</div></div>
+      <div class="foot">158 kiểm thử dbt, đối soát số dòng giữa các tầng</div>
+    </div></div>
+
+  <div><div class="hd">Phân tích</div><div class="col" style="margin-top: 30px">
+    <div class="b an" id="a1"><div class="n">Bộ phát hiện <span style="white-space:nowrap">P1–P5</span></div><span class="t">Python</span>
+      <div class="d">thống kê vững, kiểm định Poisson, luật đối soát cho điểm bằng chứng</div></div>
+    <div class="b an" id="a2"><div class="n">Truy vết, đề xuất</div>
+      <div class="d">cây KPI, bằng chứng gốc, thiệt hại ước tính</div></div>
+  </div></div>
+
+  <div><div class="hd">Phục vụ</div><div class="col">
+    <div class="b ui" id="p3"><div class="n">Streamlit</div><div class="d">một địa chỉ cho cảnh báo, truy vết, chất lượng dữ liệu</div></div>
+    <div class="b sv" id="p2"><div class="n">Metabase</div><div class="d">dashboard doanh thu, chi phí theo chi nhánh</div></div>
+    <div class="b sv" id="p1" style="margin-top: 96px"><div class="n">PostgreSQL</div><span class="t">publish.py</span>
+      <div class="d">bản sao đã đối soát cho nhiều người đọc cùng lúc</div></div>
+  </div></div>
 </div>
 
-<div class="row" style="gap: 30px; margin-top: 28px">
-  <div class="lane af" id="af" style="width: 124px; flex: 0 0 124px">
-    <div class="title" style="color:#3b6fb6">Airflow</div>
-    <p>Docker Compose</p>
-    <div class="steps"><b>DAG nguồn, 23:00</b><span>ghi ngày mới</span>
-      <b>DAG pipeline, khi có dữ liệu mới, mỗi giờ</b>
-      <span>extract</span><span>check</span><span>ingest</span><span>quality</span><span>dbt build</span><span>detect</span><span>publish</span></div>
-  </div>
-  <div style="flex:1">
-    <div class="lane wh" id="wh">
-      <div class="title">Kho dữ liệu DuckDB, máy tính toán của đường ống</div>
-      <div class="row" style="gap:0">
-        <div class="layer bronze" id="b"><h4>Bronze</h4><p>nạp nguyên văn, tăng dần theo mã băm tệp; tệp sai hợp đồng ghi lý do</p>
-          <p class="mono" style="margin-top:4px">pipeline/ingest.py</p></div>
-        <div class="gap"></div>
-        <div class="layer silver" id="s"><h4>Silver</h4><p>làm sạch, chuẩn hóa, định danh 6 hệ mã, cách ly dòng lỗi</p>
-          <p class="mono" style="margin-top:4px">dbt: staging</p></div>
-        <div class="gap"></div>
-        <div class="layer gold" id="g"><h4>Gold</h4><p>lược đồ hình sao, SCD loại 2, bảng chỉ số, mức kỳ vọng</p>
-          <p class="mono" style="margin-top:4px">dbt: marts</p></div>
-      </div>
-      <div class="mini">Cửa chặn chất lượng đầu vào chạy giữa Bronze và Silver (độ mới, khối lượng, đầy đủ theo chi nhánh, tệp
-        bị từ chối, cấu trúc); 211 bước dbt gồm 158 kiểm thử.</div>
-    </div>
-    <div class="row" style="gap: 42px; margin-top: 24px">
-      <div class="lane an" id="an" style="flex:1"><div class="title" style="color:#c8102e">Lớp phân tích</div>
-        <p>24 chỉ số giám sát, mức kỳ vọng theo nhóm cùng hạng, cây KPI, dấu vân tay nguyên nhân, đề xuất xử lý
-          → <span class="mono">ops.alerts</span></p>
-        <p class="mono" style="margin-top:4px">analytics/</p></div>
-      <div class="lane sv" id="pg" style="flex:1"><div class="title" style="color:#6c4fb3">Kho phục vụ PostgreSQL</div>
-        <p>bản sao Gold và ops sau mỗi lượt chạy, đối soát số dòng, tài khoản chỉ đọc cho công cụ BI</p>
-        <p class="mono" style="margin-top:4px">pipeline/publish.py</p></div>
-    </div>
-    <div class="row" style="gap: 42px; margin-top: 24px">
-      <div class="lane ui" id="ui" style="flex:1"><div class="title" style="color:#2f9e44">Ứng dụng Streamlit</div>
-        <p>kết nối nguồn, tải tệp lên, tổng quan, cảnh báo, truy vết, vận hành hằng ngày, chất lượng dữ liệu</p>
-        <p class="mono" style="margin-top:4px">app/</p></div>
-      <div class="lane sv" id="mb" style="flex:1"><div class="title" style="color:#6c4fb3">Metabase</div>
-        <p>dashboard kinh doanh dựng bằng mã, lọc theo chi nhánh và thời gian; nhúng vào trang Tổng quan</p>
-        <p class="mono" style="margin-top:4px">bi/metabase_setup.py</p></div>
-    </div>
-    <div class="row" style="gap: 64px; margin-top: 20px">
-      <div class="note" id="ev"><p><b style="color:#1f2933">Đánh giá</b> <span class="mono">analytics/evaluate.py</span>:
-        so cảnh báo với đáp án, chỉ dùng để chấm điểm</p></div>
-      <div class="note" id="sim"><p><b style="color:#1f2933">Bộ mô phỏng</b> <span class="mono">simulator/</span> đóng vai hệ thống
-        nguồn, phía API do <span class="mono">source_api/</span> phục vụ; đáp án ở <span class="mono">ground_truth/</span>,
-        đường ống không đọc</p></div>
-    </div>
+<div class="orch">
+  <div class="lab">Apache Airflow<span>trong Docker Compose</span></div>
+  <div>
+    <div class="bar" id="bar"><div class="ln"></div><div class="hd2"></div>
+      <div class="steps"><span>extract</span><span>check</span><span>ingest</span><span>quality</span><span>dbt build</span><span>detect</span><span>publish</span></div></div>
+    <div class="cap">Chạy ngay khi hệ thống nguồn báo có dữ liệu mới và tự kiểm tra mỗi giờ; bước lỗi thì các bước sau không chạy.</div>
   </div>
 </div>
+<div class="legend"><span><i></i>dòng dữ liệu</span><span><i class="ds"></i>kiểm chứng, nằm ngoài đường ống</span>
+  <span><i class="or"></i>thứ tự các bước điều phối</span></div>
 </div>
 <script src="_connect.js"></script>
 <script>
-connect("g_api", "ext", {align: "x", label: "API", dx: 8, dy: -22});
-connect("g_file", "up", {align: "x", label: "tệp JSON, CSV, Excel", dx: 8, dy: -22});
-connect("ext", "lz", {align: "x", ref: "ext"});
-connect("up", "lz", {align: "x", ref: "up"});
-connect("lz", "wh", {align: "x", ref: "b"});
-connect("b", "s", {align: "y"});
-connect("s", "g", {align: "y"});
-connect("wh", "an", {align: "x"});
-connect("wh", "pg", {align: "x", label: "publish", dx: 8, dy: 4});
-connect("an", "ui", {align: "x"});
-connect("pg", "mb", {align: "x"});
-connect("mb", "ui", {align: "y", label: "nhúng", dx: -16, dy: -8, size: 11.5});
-connect("af", "wh", {align: "y", dash: true, color: "#3b6fb6"});
-connect("af", "an", {align: "y", dash: true, color: "#3b6fb6"});
-connect("sim", "ev", {align: "y", dash: true, color: "#9aa5b1", label: "đáp án", dx: -19, dy: -7});
+connect("s1", "c1", {});
+connect("s2", "c2", {});
+connect("s3", "c2", {});
+connect("c1", "c3", {align: "x"});
+connect("c2", "c3", {align: "x"});
+connect("c3", "b", {from: "right", to: "left"});
+connect("b", "q", {align: "x"});
+connect("q", "sv", {align: "x"});
+connect("sv", "g", {align: "x"});
+connect("g", "a1", {from: "right", to: "left"});
+connect("a1", "a2", {align: "x"});
+connect("g", "p1", {from: "right", to: "left", label: "publish", dx: -22, dy: -7});
+connect("p1", "p2", {align: "x"});
+connect("p2", "p3", {align: "x", label: "nhúng", dx: 6, dy: 4, size: 11.5});
+connect("a2", "p3", {from: "right", to: "left"});
+connect("sim", "s1", {align: "x", ref: "anc", dash: true, color: "#9aa5b1"});
+connect("sim", "ev", {from: "right", to: "left", dash: true, color: "#9aa5b1", label: "đáp án, đường ống không đọc", dx: -84, dy: -6});
+connect("a1", "ev", {from: "top", to: "bottom", dash: true, color: "#9aa5b1"});
 </script></body></html>

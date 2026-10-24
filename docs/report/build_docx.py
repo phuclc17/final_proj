@@ -14,13 +14,14 @@ Cu phap file nguon (moi dong la mot doan van):
   TABLE: Bang 1.1. Ten bang [|| nguon]   (tuy chon dong ke tiep: WIDTHS: 2,3,5) roi cac dong | o | o |; "<br>" trong o = xuong doan
   FIGURE: Hinh 3.1. Ten hinh || mo ta noi dung hinh se chen
   IMAGE: duong/dan.png || Hinh 3.1. Ten hinh || chieu_rong_cm [|| nguon]
-                     moi bang/hinh co dong "Nguon: ..." can phai (mac dinh "Tác giả"), nhu quy uoc trinh bay cua UEH
-  EQ: cong thuc || (2.1)
+                     moi bang/hinh co dong "Nguon: ..." can phai; nguon mac dinh dat bang dong "NGUON: ..." (ap dung cho cac bang, hinh phia sau)
+  EQ: cong thuc LaTeX || (2.1)   -> phuong trinh Word (OMML), so hieu can phai; trong doan van: $cong thuc$
   TODO: noi dung     doan nen vang [CAN BO SUNG] - phai xoa het truoc khi nop
   CENTER: / RIGHT: / NOINDENT: / REF: (tai lieu tham khao, thut treo)
   CODE ... ENDCODE   khoi ma / cay thu muc
   PAGEBREAK
   Trong dong: **dam**, *nghieng*, `ma`
+Can: lxml, latex2mathml (cong thuc) va MML2OMML.XSL cua Microsoft Office.
 Chay: python docs/report/build_docx.py            (ban day du, con TODO)
       python docs/report/build_docx.py --de-cuong (de cuong: nguon docs/de_cuong/*.md -> docs/DeCuong_KhoaLuan.docx)
       python docs/report/build_docx.py --review   (ban cho giang vien xem: bo TODO/khung hinh, them trang tinh trang)
@@ -67,7 +68,36 @@ def run(text, bold=False, italic=False, code=False, size=None, color=None):
     return f'<w:r>{rpr}<w:t xml:space="preserve">{esc(text)}</w:t></w:r>'
 
 
-INLINE = re.compile(r"(\*\*.+?\*\*|`[^`]+?`|\*[^*\s][^*]*?\*)")
+INLINE = re.compile(r"(\*\*.+?\*\*|`[^`]+?`|\$[^$]+?\$|\*[^*\s][^*]*?\*)")
+
+# ------------------------------------------------------------------ cong thuc: LaTeX -> MathML -> OMML (phuong trinh that cua Word)
+MML2OMML = Path(r"C:\Program Files\Microsoft Office\root\Office16\MML2OMML.XSL")
+_XSLT = []
+SPACES = {r"\qquad": "\u2003\u2003", r"\quad": "\u2003", r"\;": "\u2005", r"\,": "\u2009"}
+TNR = '<w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/></w:rPr>'
+
+
+def omml(tex):
+    """Bang chuyen doi cua Word bo qua khoang trang (mspace) -> doi \\quad... thanh ky tu trang trong \\text{};
+    so thap phan "0{,}6" bi tach thanh 3 run -> gop lai; chu trong \\text{} dung Times New Roman nhu than bai."""
+    from lxml import etree
+    import latex2mathml.converter
+    if not _XSLT:
+        _XSLT.append(etree.XSLT(etree.parse(str(MML2OMML))))
+    for k, v in SPACES.items():
+        tex = tex.replace(k, r"\text{" + v + "}")
+    root = _XSLT[0](etree.fromstring(latex2mathml.converter.convert(tex))).getroot()
+    # \sum_i x: bang chuyen doi de than tong (m:e) rong va dat x ra ngoai -> Word chua o trong; dua phan sau vao than tong
+    M = "{http://schemas.openxmlformats.org/officeDocument/2006/math}"
+    for nary in reversed(list(root.iter(M + "nary"))):
+        body = nary.find(M + "e")
+        if body is not None and len(body) == 0:
+            for sib in list(nary.itersiblings()):
+                body.append(sib)
+    xml = etree.tostring(root, encoding="unicode")
+    xml = re.sub(r' xmlns:\w+="[^"]*"', "", xml)
+    xml = re.sub(r"(\d)</m:t></m:r><m:r><m:t>,</m:t></m:r><m:r><m:t>(\d)", r"\1,\2", xml)
+    return xml.replace("<m:rPr><m:nor/></m:rPr>", "<m:rPr><m:nor/></m:rPr>" + TNR)
 
 
 def inline(text, bold=False, italic=False, size=None, code_size=None):
@@ -75,7 +105,9 @@ def inline(text, bold=False, italic=False, size=None, code_size=None):
     for part in INLINE.split(text):
         if not part:
             continue
-        if part.startswith("**") and part.endswith("**"):
+        if part.startswith("$") and part.endswith("$") and len(part) > 2:
+            out.append(omml(part[1:-1]))
+        elif part.startswith("**") and part.endswith("**"):
             out.append(run(part[2:-2], bold=True, italic=italic, size=size))
         elif part.startswith("`") and part.endswith("`"):
             out.append(run(part[1:-1], code=True, bold=bold, size=code_size or (size and size - 2)))
@@ -123,7 +155,7 @@ def sect_pr(page_fmt, footer=True, margin=None):
 
 
 # ------------------------------------------------------------------ bang
-DEFAULT_SOURCE = "Tác giả"
+DEFAULT_SOURCE = "Đề xuất của nghiên cứu"
 
 
 def source_line(src, keep_next=False):
@@ -170,6 +202,25 @@ def table(caption, rows, widths=None, source=None):
     return "".join(xml)
 
 
+def equation(tex, number):
+    """Phuong trinh dong rieng, danh so ben phai: bang 3 cot khong vien (le trai | phuong trinh dang hien thi | so hieu).
+    oMathPara giu phan so co kich thuoc day du; oMath nam giua dong van ban se bi thu nho nhu cong thuc trong dong."""
+    side = 1000
+    cols = [side, TEXT_W - 2 * side, side]
+    nob = "".join(f'<w:{b} w:val="nil"/>' for b in ("top", "left", "bottom", "right", "insideH", "insideV"))
+    cell = lambda w, body, jc: (f'<w:tc><w:tcPr><w:tcW w:w="{w}" w:type="dxa"/><w:vAlign w:val="center"/></w:tcPr>'
+                                f'<w:p><w:pPr><w:pStyle w:val="Equation"/><w:jc w:val="{jc}"/></w:pPr>{body}</w:p></w:tc>')
+    math = f'<m:oMathPara><m:oMathParaPr><m:jc m:val="center"/></m:oMathParaPr>{omml(tex)}</m:oMathPara>'
+    return (f'<w:tbl><w:tblPr><w:tblW w:w="{TEXT_W}" w:type="dxa"/><w:jc w:val="center"/><w:tblBorders>{nob}</w:tblBorders>'
+            f'<w:tblLayout w:type="fixed"/><w:tblCellMar><w:left w:w="0" w:type="dxa"/><w:right w:w="0" w:type="dxa"/>'
+            f'</w:tblCellMar><w:tblLook w:val="0000"/></w:tblPr><w:tblGrid>' + "".join(f'<w:gridCol w:w="{c}"/>' for c in cols)
+            + '</w:tblGrid><w:tr><w:trPr><w:cantSplit/></w:trPr>'
+            + cell(cols[0], "", "left") + cell(cols[1], math, "center") + cell(cols[2], run(number), "right")
+            + "</w:tr></w:tbl>"
+            # doan rat thap sau bang: hai phuong trinh lien tiep khong bi Word gop thanh mot bang
+            + para("", spacing='<w:spacing w:before="0" w:after="0" w:line="20" w:lineRule="exact"/>'))
+
+
 # ------------------------------------------------------------------ hinh
 class Images:
     def __init__(self):
@@ -212,13 +263,16 @@ def image(path, caption, width_cm, images, uid, source=None):
 # ------------------------------------------------------------------ chuyen markup -> XML
 def convert(lines, images, numbering):
     out, i, uid = [], 0, 5000
+    src_default = DEFAULT_SOURCE  # doi bang dong "NGUON: ..." cho cac bang, hinh phia sau
     while i < len(lines):
         line = lines[i].rstrip("\n")
         s = line.strip()
         i += 1
         if not s or s.startswith("<!--"):
             continue
-        if s == "PAGEBREAK":
+        if s.startswith("NGUON:"):
+            src_default = s[6:].strip()
+        elif s == "PAGEBREAK":
             out.append('<w:p><w:r><w:br w:type="page"/></w:r></w:p>')
         elif s == "[[TOC]]":
             out.append(field('TOC \\o "1-3" \\h \\z \\u', "Mở file bằng Word, nhấn chuột phải vào đây → Update Field để cập nhật mục lục.", "TOC1"))
@@ -247,7 +301,7 @@ def convert(lines, images, numbering):
                 if not all(re.fullmatch(r"\s*:?-{2,}:?\s*", c) for c in cells):
                     rows.append([c.strip() for c in cells])
                 i += 1
-            out.append(table(caption, rows, widths, source))
+            out.append(table(caption, rows, widths, source or src_default))
         elif s.startswith("FIGURE:"):
             caption, _, desc = s[7:].partition("||")
             box = run("[HÌNH SẼ CHÈN] ", bold=True, color="7F7F7F", size=22) + run(desc.strip(), italic=True, color="7F7F7F", size=22)
@@ -256,11 +310,10 @@ def convert(lines, images, numbering):
         elif s.startswith("IMAGE:"):
             path, caption, width, *source = [x.strip() for x in s[6:].split("||")]
             uid += 1
-            out.append(image(HERE / path, caption, width, images, uid, source[0] if source else None))
+            out.append(image(HERE / path, caption, width, images, uid, source[0] if source else src_default))
         elif s.startswith("EQ:"):
             formula, _, number = s[3:].partition("||")
-            content = '<w:r><w:tab/></w:r>' + run(formula.strip(), italic=True) + '<w:r><w:tab/></w:r>' + run(number.strip())
-            out.append(para(content, style="Equation", tabs=[("center", TEXT_W // 2), ("right", TEXT_W)]))
+            out.append(equation(formula.strip(), number.strip()))
         elif s.startswith("TODO:"):
             out.append(para(run("[CẦN BỔ SUNG] ", bold=True) + inline(s[5:].strip()), style="TodoNote"))
         elif s.startswith("CENTER:"):

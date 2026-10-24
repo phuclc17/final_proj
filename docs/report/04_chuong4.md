@@ -1,10 +1,12 @@
 # CHƯƠNG 4. HIỆN THỰC HỆ THỐNG
 
+NGUON: Kết quả thực nghiệm
+
 Chương này trình bày việc cài đặt các thành phần đã thiết kế ở Chương 3 và kết quả kiểm chứng từng thành phần, theo đúng thứ tự dòng dữ liệu: bộ mô phỏng, tầng thu thập và Bronze, Silver, Gold, lớp chỉ số, bộ phát hiện, kho phục vụ, ứng dụng và điều phối. Các số liệu trong chương đều được đo trực tiếp trên hệ thống và có thể tái lập bằng các lệnh ở Phụ lục E.
 
 ## 4.1. Môi trường và cấu trúc mã nguồn
 
-TABLE: Bảng 4.1. Môi trường hiện thực
+TABLE: Bảng 4.1. Môi trường hiện thực || Cấu hình thực nghiệm
 WIDTHS: 4,8
 | Thành phần | Phiên bản, cấu hình |
 | Máy tính | AMD Ryzen 5 5600H, RAM 16 GB, Windows 11 Home |
@@ -25,7 +27,7 @@ Mã nguồn được tổ chức theo đúng ranh giới kiến trúc; sơ đồ
 
 ### 4.2.1. Tổ chức chương trình
 
-Bộ mô phỏng được viết bằng Python, gồm năm mô-đun chính. Mô-đun `config.py` tập trung toàn bộ tham số nghiệp vụ (Bảng 3.10 và mục 3.3.4), nhờ đó mọi giả định đều có thể truy vết và điều chỉnh tại một nơi. Mô-đun `world.py` chứa lớp `World` lưu trạng thái của thế giới: tồn kho từng nguyên liệu ở từng chi nhánh, lịch sử tiêu hao bảy ngày, điểm đánh giá và hệ số thứ hạng trên sàn, lịch sử mua của khách hàng ứng dụng, bộ sinh số ngẫu nhiên. Hàm `simulate_day()` của lớp này thực hiện tuần tự cho mỗi chi nhánh: giao hàng buổi sáng, xếp ca và sinh lượt quẹt thẻ, sinh nhu cầu theo kênh và giờ, tính tải bếp và sinh từng đơn hàng với kết quả phục vụ, tính tiêu hao và cập nhật tồn kho, kiểm kê khi đến kỳ, cộng dồn số liệu đối soát tuần. Mô-đun `views.py` chuyển các sự kiện thật thành bản ghi theo định dạng của từng hệ thống nguồn, và là nơi tạo ra các lỗi dữ liệu ở Bảng 3.11. Mô-đun `exporters.py` ghi tệp JSON, CSV và Excel; thư viện openpyxl được dùng để tạo cả các phiếu có dòng tiêu đề, ô gộp và định dạng số. Mô-đun `run.py` điều khiển một lần chạy: nạp trạng thái đã lưu, sinh số ngày yêu cầu, ghi tệp và lưu lại trạng thái. Các kịch bản sự cố được khai báo trong tệp JSON riêng của từng tập ở thư mục `simulator/scenarios/`.
+Bộ mô phỏng được viết bằng Python, gồm năm mô-đun chính. Mô-đun `config.py` tập trung toàn bộ tham số nghiệp vụ (Bảng 3.6 và mục 3.3.4), nhờ đó mọi giả định đều có thể truy vết và điều chỉnh tại một nơi. Mô-đun `world.py` chứa lớp `World` lưu trạng thái của thế giới: tồn kho từng nguyên liệu ở từng chi nhánh, lịch sử tiêu hao bảy ngày, điểm đánh giá và hệ số thứ hạng trên sàn, lịch sử mua của khách hàng ứng dụng, bộ sinh số ngẫu nhiên. Hàm `simulate_day()` của lớp này thực hiện tuần tự cho mỗi chi nhánh: giao hàng buổi sáng, xếp ca và sinh lượt quẹt thẻ, sinh nhu cầu theo kênh và giờ, tính tải bếp và sinh từng đơn hàng với kết quả phục vụ, tính tiêu hao và cập nhật tồn kho, kiểm kê khi đến kỳ, cộng dồn số liệu đối soát tuần. Mô-đun `views.py` chuyển các sự kiện thật thành bản ghi theo định dạng của từng hệ thống nguồn, và là nơi tạo ra các lỗi dữ liệu ở Bảng 3.7. Mô-đun `exporters.py` ghi tệp JSON, CSV và Excel; thư viện openpyxl được dùng để tạo cả các phiếu có dòng tiêu đề, ô gộp và định dạng số. Mô-đun `run.py` điều khiển một lần chạy: nạp trạng thái đã lưu, sinh số ngày yêu cầu, ghi tệp và lưu lại trạng thái. Các kịch bản sự cố được khai báo trong tệp JSON riêng của từng tập ở thư mục `simulator/scenarios/`.
 
 ### 4.2.2. Sinh dữ liệu tăng dần và khả năng tái lập
 
@@ -50,7 +52,7 @@ WIDTHS: 4,2,2,5
 
 Về nghiệp vụ, tập phát triển chứa 445.153 lượt nhu cầu đặt món, trong đó 435.279 đơn được phục vụ với tổng giá trị khoảng 38,67 tỷ đồng và giá trị trung bình 88.844 đồng mỗi đơn. Trong số đơn được phục vụ, 227.182 đơn tại quầy, 93.664 đơn qua ứng dụng riêng, 68.742 đơn GrabFood và 45.691 đơn ShopeeFood. Phần nhu cầu không được phục vụ gồm 1.149 lượt khách tại quầy bỏ về, 2.096 đơn bị cửa hàng hủy và 4.797 đơn bị khách hủy. Tập kiểm tra có 384.918 đơn được phục vụ, khoảng 34,15 tỷ đồng.
 
-IMAGE: figures/h4_2_du_lieu_tho.png || Hình 4.1. Ví dụ dữ liệu thô của các hệ thống nguồn, trích nguyên văn từ tệp của tập phát triển || 16
+IMAGE: figures/h4_2_du_lieu_tho.png || Hình 4.1. Ví dụ dữ liệu thô của các hệ thống nguồn, trích nguyên văn từ tệp của tập phát triển || 16 || Trích từ tệp nguồn của tập phát triển
 
 ### 4.2.4. Kiểm chứng bộ mô phỏng
 
@@ -95,7 +97,7 @@ Thiệt hại của các kịch bản thất thoát kho và gian lận tại qu�
 
 Danh mục nguồn và hợp đồng dữ liệu được khai báo một lần trong `pipeline/contracts.py` và dùng chung cho kênh tải lên, bước nạp và trang Kết nối nguồn. Mỗi nguồn có hệ thống, kênh ngoài thực tế, kênh trong hệ thống này, tần suất, định dạng, vị trí chuẩn và các cột hoặc khóa bắt buộc. Bảng 4.6 tóm tắt cách từng nguồn đến.
 
-TABLE: Bảng 4.6. Kênh thu thập của từng nguồn
+TABLE: Bảng 4.6. Kênh thu thập của từng nguồn || Đề xuất của nghiên cứu
 WIDTHS: 2.4,5,4.6,2.2
 | Nguồn | Ngoài thực tế thường đến bằng | Trong hệ thống này | Tần suất |
 | POS tại quầy | API của phần mềm POS đám mây; POS cài tại máy xuất tệp mỗi đêm | 8 chi nhánh dùng POS đám mây: bộ kết nối kéo qua API; CN5, CN7, CN10 dùng POS cài tại máy: tệp JSON xuất mỗi đêm | Hằng ngày |
@@ -109,11 +111,11 @@ Hàm nhận dạng đọc nội dung tệp chứ không dựa vào tên. Từ kh
 
 Kênh tải lên trong `pipeline/intake.py` cho bốn kết quả: đã nhận, thay bản cũ, trùng nên bỏ qua, và từ chối kèm lý do. Tệp được ghi ra tệp tạm rồi đổi tên trong một thao tác, nên bước nạp không bao giờ đọc phải tệp ghi dở; mọi lần gửi được ghi vào nhật ký tiếp nhận. Sau khi nhận, ứng dụng báo Airflow cập nhật Dataset nguồn để đường ống chạy ngay. Hình 4.2 là kết quả gửi chín tệp mẫu trong `samples/tep_mau/`, gồm cả các trường hợp sai: báo cáo GrabFood lưu nhầm thành Excel, tệp chấm công thiếu cột, bảng lương gửi nhầm, tệp của một máy POS chưa khai báo.
 
-IMAGE: figures/h4_tai_len.png || Hình 4.2. Trang Tải tệp lên sau khi gửi chín tệp mẫu (môi trường vận hành) || 16
+IMAGE: figures/h4_tai_len.png || Hình 4.2. Trang Tải tệp lên sau khi gửi chín tệp mẫu (môi trường vận hành) || 16 || Ảnh chụp giao diện hệ thống
 
 Trang Kết nối nguồn (Hình 4.3) cho người vận hành thấy mỗi nguồn đã đến tới ngày nào, có chậm so với nhịp của nó không, trạng thái của bộ kết nối API và các tệp đang bị từ chối hoặc không nhận dạng cần người xử lý.
 
-IMAGE: figures/h4_ket_noi.png || Hình 4.3. Trang Kết nối nguồn sau một lượt kéo bảy ngày qua API (môi trường vận hành) || 16
+IMAGE: figures/h4_ket_noi.png || Hình 4.3. Trang Kết nối nguồn sau một lượt kéo bảy ngày qua API (môi trường vận hành) || 16 || Ảnh chụp giao diện hệ thống
 
 ### 4.3.2. API nguồn và bộ kết nối
 
@@ -139,7 +141,9 @@ Trước khi đọc, mỗi tệp được kiểm tra theo hợp đồng của ng
 
 ### 4.3.4. Kết quả nạp
 
-Lần nạp đầu tiên của tập phát triển xử lý 6.273 tệp thành 17 bảng Bronze với khoảng 502 nghìn dòng, không có tệp lỗi. Số dòng mỗi bảng bằng đúng số bản ghi của nguồn tương ứng ở Bảng 4.2; riêng sổ nhập kho được nạp vào hai bảng theo hai mẫu, gồm 13.951 dòng mẫu A dạng phiếu và 4.473 dòng mẫu B dạng bảng, còn danh mục trụ sở được nạp vào 8 bảng `master_*` với 537 dòng. Bronze giữ nguyên mọi khác biệt của dữ liệu gốc, như hai định dạng thời gian và tiền của hai phiên bản POS, dòng “Tổng cộng” trong sổ kho mẫu A, giờ UTC của App; việc xử lý thuộc về tầng Silver ở mục 4.4.2.
+Lần nạp đầu tiên của tập phát triển xử lý 6.273 tệp thành 17 bảng Bronze với khoảng 502 nghìn dòng, không có tệp lỗi. Số dòng mỗi bảng bằng đúng số bản ghi của nguồn tương ứng ở Bảng 4.2; riêng sổ nhập kho được nạp vào hai bảng theo hai mẫu, gồm 13.951 dòng mẫu A dạng phiếu và 4.473 dòng mẫu B dạng bảng, còn danh mục trụ sở được nạp vào 8 bảng `master_*` với 537 dòng. Bronze giữ nguyên mọi khác biệt của dữ liệu gốc, như hai định dạng thời gian và tiền của hai phiên bản POS, dòng “Tổng cộng” trong sổ kho mẫu A, giờ UTC của App; việc xử lý thuộc về tầng Silver ở mục 4.4.2. Hình 4.4 là một truy vấn trên tầng Bronze ở trang Kho dữ liệu của ứng dụng: 281.695 hóa đơn của phiên bản 3.2.1 ghi tổng tiền ở cột `total_paid` và thời gian dạng ngày/tháng/năm, còn 59.979 hóa đơn của phiên bản 2.8.0 ghi ở cột `grand_total` với thời gian dạng ISO; tổng hai nhóm đúng bằng 341.674 hóa đơn POS của tập phát triển.
+
+IMAGE: figures/ph_kho_sql.png || Hình 4.4. Truy vấn trên tầng Bronze: hai phiên bản phần mềm POS ghi tổng tiền và thời gian theo hai cách (tập phát triển) || 14 || Ảnh chụp giao diện hệ thống
 
 ### 4.3.5. Kiểm chứng tính lũy đẳng và nạp tăng dần
 
@@ -166,7 +170,7 @@ Mỗi nguồn đi qua cùng một khuôn: `base_` gắn cột `dq_issue` cho dò
 
 ### 4.4.2. Xử lý các lỗi dữ liệu
 
-Các quy tắc ở Bảng 3.14 được hiện thực đúng theo hai hướng: lỗi kỹ thuật bị tách khỏi dữ liệu, còn tín hiệu nghiệp vụ được giữ lại kèm cờ. Hai phiên bản POS được nhận diện theo từng hóa đơn rồi đưa về một lược đồ chung. Chẳng hạn, hóa đơn đầu tiên ngày 12/4 của CN7, dùng bản 2.8, ghi thời gian “2024-04-12T07:10:59” và tổng tiền là chuỗi “89.000” ở cột `grand_total`, còn hóa đơn của CN8, dùng bản 3.2, ghi “12/04/2024 07:11:22” và số 90000 ở cột `total_paid`. Hóa đơn hủy và hoàn tiền được giữ lại, gắn cờ và tính số phút từ lúc thanh toán đến lúc hủy, vì đây là dữ liệu đầu vào của bộ phát hiện gian lận. Đơn App lưu giờ UTC được đổi sang giờ Việt Nam trước khi xác định ngày và ca; nếu không đổi, mọi đơn ca tối sẽ rơi vào ca sáng. Ở sổ nhập kho, số lượng lớn hơn 20 lần trung vị của cùng nguyên liệu bị cách ly với mã `nghi_go_gam_vao_cot_kg`, ví dụ cà chua 2.300 kg trong khi trung vị là 2,2 kg. Ở chấm công, lượt quẹt cùng loại lặp lại trong vòng 5 phút bị cách ly với mã `quet_trung`; ca thiếu lượt ra được gắn cờ `is_missing_checkout` mà không tự gán số giờ ở Silver; ô kiểm kê trống giữ giá trị thiếu kèm cờ `is_not_counted`, không thay bằng 0. Số dòng chịu tác động của từng quy tắc trên cả hai tập được trình bày ở Bảng 5.1.
+Các quy tắc ở Bảng 3.10 được hiện thực đúng theo hai hướng: lỗi kỹ thuật bị tách khỏi dữ liệu, còn tín hiệu nghiệp vụ được giữ lại kèm cờ. Hai phiên bản POS được nhận diện theo từng hóa đơn rồi đưa về một lược đồ chung. Chẳng hạn, hóa đơn đầu tiên ngày 12/4 của CN7, dùng bản 2.8, ghi thời gian “2024-04-12T07:10:59” và tổng tiền là chuỗi “89.000” ở cột `grand_total`, còn hóa đơn của CN8, dùng bản 3.2, ghi “12/04/2024 07:11:22” và số 90000 ở cột `total_paid`. Hóa đơn hủy và hoàn tiền được giữ lại, gắn cờ và tính số phút từ lúc thanh toán đến lúc hủy, vì đây là dữ liệu đầu vào của bộ phát hiện gian lận. Đơn App lưu giờ UTC được đổi sang giờ Việt Nam trước khi xác định ngày và ca; nếu không đổi, mọi đơn ca tối sẽ rơi vào ca sáng. Ở sổ nhập kho, số lượng lớn hơn 20 lần trung vị của cùng nguyên liệu bị cách ly với mã `nghi_go_gam_vao_cot_kg`, ví dụ cà chua 2.300 kg trong khi trung vị là 2,2 kg. Ở chấm công, lượt quẹt cùng loại lặp lại trong vòng 5 phút bị cách ly với mã `quet_trung`; ca thiếu lượt ra được gắn cờ `is_missing_checkout` mà không tự gán số giờ ở Silver; ô kiểm kê trống giữ giá trị thiếu kèm cờ `is_not_counted`, không thay bằng 0. Số dòng chịu tác động của từng quy tắc trên cả hai tập được trình bày ở Bảng 5.1.
 
 ### 4.4.3. Giải quyết định danh
 
@@ -212,9 +216,15 @@ WIDTHS: 4.2,1.8,7
 
 Các bảng chiều thay đổi chậm được dựng từ chuỗi ảnh chụp danh mục mà trụ sở xuất định kỳ. Với mỗi món, các ảnh chụp liên tiếp có cùng giá và giá vốn được gộp thành một phiên bản; khi giá đổi, phiên bản cũ được đóng ở ngày liền trước ảnh chụp mới (`valid_to`) và phiên bản mới mở từ ngày đó (`valid_from`). Ví dụ món Gà giòn miếng đơn có hai phiên bản: 35.000 đồng đến 31/05/2024 và 37.000 đồng từ 01/06/2024. Kiểm thử `assert_scd2_no_overlap` bảo đảm các phiên bản của cùng một món hay một nhân viên không chồng lấn thời gian. Nhờ vậy giá vốn định mức của một dòng món bán ngày 30/5 và ngày 2/6 được tính theo đúng hai bảng giá khác nhau.
 
+Vì mọi biến đổi được khai báo trong dbt, phả hệ của từng bảng được sinh trực tiếp từ metadata của dự án. Hình 4.5 là phả hệ của `fact_order` trên trang Mô hình và phả hệ: bảng được dựng từ hai bảng Bronze của POS và App qua các bước giải mã, gắn mã chi nhánh và làm sạch, lấy phiên bản nhân viên từ `dim_employee`, và là nguồn của các bảng chỉ số theo ngày, theo tuần, theo thu ngân cùng bảng mức kỳ vọng. Khi một con số ở tầng Gold cần được giải thích, phả hệ cho biết phải kiểm tra những bảng nào phía trước.
+
+IMAGE: figures/h4_pha_he.png || Hình 4.5. Phả hệ dữ liệu của bảng fact_order, sinh từ metadata dbt || 13 || Ảnh chụp giao diện hệ thống
+
 ### 4.5.2. Kiểm thử dữ liệu
 
-Dự án dbt có 158 kiểm thử theo các nhóm thiết kế ở Bảng 3.18. Phần lớn là kiểm thử dựng sẵn của dbt, khai báo trong tệp cấu hình của từng mô hình: 83 kiểm thử `not_null`, 36 `unique`, 18 `relationships` và 9 `accepted_values`. Năm bảng chỉ số dùng kiểm thử tổng quát `unique_combination` cho khóa ghép, viết một lần bằng macro trong thư mục `macros/`. Bảy kiểm thử còn lại là luật nghiệp vụ dạng câu SQL trong thư mục `tests/`: bảo toàn số dòng Bronze–Silver, tạm tính POS bằng tổng dòng món, tiền thực nhận của hai sàn khớp công thức, mỗi chi nhánh × tuần một dòng GrabFood, lịch sử SCD không chồng lấn và doanh thu thuần Gold bằng Silver. Danh sách đầy đủ ở Phụ lục C.2. Cả 158 kiểm thử đạt trên ba tập dữ liệu. Chẳng hạn, kiểm thử `assert_gold_net_sales_reconciles` so doanh thu thuần ở Gold với tổng tính trực tiếp từ Silver cho từng chi nhánh × ngày; trên tập phát triển, tổng 37.899.868.200 đồng khớp tuyệt đối giữa hai tầng. Một lần `dbt build` đầy đủ 211 bước mất từ 15 đến 25 giây trên máy phát triển, trong đó hai mô hình giải mã JSON chiếm phần lớn khi phải giải mã lại từ đầu.
+Dự án dbt có 158 kiểm thử theo các nhóm thiết kế ở Bảng 3.14. Phần lớn là kiểm thử dựng sẵn của dbt, khai báo trong tệp cấu hình của từng mô hình: 83 kiểm thử `not_null`, 36 `unique`, 18 `relationships` và 9 `accepted_values`. Năm bảng chỉ số dùng kiểm thử tổng quát `unique_combination` cho khóa ghép, viết một lần bằng macro trong thư mục `macros/`. Bảy kiểm thử còn lại là luật nghiệp vụ dạng câu SQL trong thư mục `tests/`: bảo toàn số dòng Bronze–Silver, tạm tính POS bằng tổng dòng món, tiền thực nhận của hai sàn khớp công thức, mỗi chi nhánh × tuần một dòng GrabFood, lịch sử SCD không chồng lấn và doanh thu thuần Gold bằng Silver. Danh sách đầy đủ ở Phụ lục C.2. Cả 158 kiểm thử đạt trên ba tập dữ liệu. Chẳng hạn, kiểm thử `assert_gold_net_sales_reconciles` so doanh thu thuần ở Gold với tổng tính trực tiếp từ Silver cho từng chi nhánh × ngày; trên tập phát triển, tổng 37.899.868.200 đồng khớp tuyệt đối giữa hai tầng. Một lần `dbt build` đầy đủ 211 bước mất từ 15 đến 25 giây trên máy phát triển, trong đó hai mô hình giải mã JSON chiếm phần lớn khi phải giải mã lại từ đầu. Hình 4.6 là kết quả lần chạy kiểm thử trên tập phát triển như trang Chất lượng dữ liệu hiển thị, chia theo nhóm và cách hiện thực, kèm trạng thái của bảy luật nghiệp vụ.
+
+IMAGE: figures/ph_kiem_thu.png || Hình 4.6. Kết quả kiểm thử dữ liệu theo nhóm trên trang Chất lượng dữ liệu (tập phát triển) || 14 || Ảnh chụp giao diện hệ thống
 
 Kiểm thử dbt kiểm tra dữ liệu sau khi dựng, nhưng không kiểm tra được phần mã Python của đường ống. Phần này có 89 kiểm thử tự động viết bằng pytest, chạy trên dữ liệu nhỏ dựng riêng trong thư mục tạm, không đụng tới kho thật. Bước nạp có 12 kiểm thử, trong đó có nạp lại không tạo dòng trùng, tệp sửa thay toàn bộ bản cũ, tệp hỏng không làm hỏng cả lô; hợp đồng dữ liệu có 10; bộ kết nối API có 10, gồm thử lại khi lỗi tạm thời, dừng ngay khi sai mã xác thực, lấy bổ sung hóa đơn đến trễ của ngày mốc và làm tiếp đúng chỗ sau một lượt bị gián đoạn; cửa chặn chất lượng có 20; bước kiểm tra tệp mới có 4. Phía phân tích có 4 kiểm thử cho các phép thống kê của bộ phát hiện, như đuôi phân phối Poisson và hiệu chỉnh Bonferroni, 5 kiểm thử cho phần đề xuất xử lý và 11 kiểm thử cho ô truy vấn SQL chỉ đọc. Phần còn lại kiểm tra cơ chế chờ khi kho đang bị khóa và trợ lý phân tích. Cả 89 kiểm thử đều đạt.
 
@@ -256,35 +266,41 @@ Con số ảnh hưởng giúp người quản lý xếp thứ tự xử lý. Tr�
 
 Chương trình `pipeline/publish.py` đưa 22 bảng từ DuckDB sang PostgreSQL 16 qua phần mở rộng postgres của DuckDB, gồm toàn bộ Gold và bốn bảng vận hành về cảnh báo, điểm cảnh báo, lượt chạy và kết quả cửa chặn. Kiểu số nguyên 128 bit của DuckDB được đổi sang `BIGINT` vì PostgreSQL không có kiểu tương ứng. Sau khi nạp vào lược đồ tạm `gold__new`, `ops__new`, chương trình so số dòng từng bảng với DuckDB; chỉ khi khớp hết mới đổi lược đồ trong một giao dịch, cấp quyền cho vai trò chỉ đọc `bi_reader`, tạo chỉ mục cho các cột hay được lọc như ngày, chi nhánh, tuần và ghi nhật ký vào `public.publish_log`. Với môi trường vận hành, mỗi lượt đưa khoảng 1,45 đến 1,5 triệu dòng trong 9 đến 15 giây.
 
-Metabase được dựng hoàn toàn bằng mã trong `bi/metabase_setup.py` qua giao diện lập trình của Metabase: tạo tài khoản quản trị lần đầu, kết nối ba cơ sở dữ liệu bằng tài khoản chỉ đọc, xóa dữ liệu mẫu, đặt định dạng số kiểu Việt Nam, tạo 15 câu hỏi SQL và một dashboard cho mỗi tập dữ liệu, kèm bộ lọc khoảng ngày và chi nhánh, rồi tạo liên kết công khai để nhúng. Chạy lại chương trình cho cùng kết quả. Trang Tổng quan của ứng dụng ở Hình 4.4 nhúng dashboard của tập đang chọn và truyền bộ lọc chi nhánh, thời gian ở thanh bên qua địa chỉ, nên người dùng không phải chọn lại ở hai nơi.
+Metabase được dựng hoàn toàn bằng mã trong `bi/metabase_setup.py` qua giao diện lập trình của Metabase: tạo tài khoản quản trị lần đầu, kết nối ba cơ sở dữ liệu bằng tài khoản chỉ đọc, xóa dữ liệu mẫu, đặt định dạng số kiểu Việt Nam, tạo 15 câu hỏi SQL và một dashboard cho mỗi tập dữ liệu, kèm bộ lọc khoảng ngày và chi nhánh, rồi tạo liên kết công khai để nhúng. Chạy lại chương trình cho cùng kết quả. Trang Tổng quan của ứng dụng ở Hình 4.7 nhúng dashboard của tập đang chọn và truyền bộ lọc chi nhánh, thời gian ở thanh bên qua địa chỉ, nên người dùng không phải chọn lại ở hai nơi.
 
-IMAGE: figures/h4_3_tong_quan.png || Hình 4.4. Trang Tổng quan: dashboard Metabase trên kho phục vụ, nhúng vào ứng dụng (tập phát triển, toàn chuỗi) || 16
+IMAGE: figures/h4_3_tong_quan.png || Hình 4.7. Trang Tổng quan: dashboard Metabase trên kho phục vụ, nhúng vào ứng dụng (tập phát triển, toàn chuỗi) || 16 || Ảnh chụp giao diện hệ thống
 
 ## 4.9. Ứng dụng
 
 ### 4.9.1. Tổ chức ứng dụng
 
-Ứng dụng Streamlit (`app/main.py`) có 14 trang gồm trang chủ và bốn nhóm Nguồn dữ liệu, Dữ liệu, Phân tích vận hành, Kiểm chứng, xếp theo dòng dữ liệu như thiết kế ở mục 3.8. Mỗi trang là một tệp trong `app/views/`; các thành phần giao diện dùng chung nằm trong `app/ui.py` và theme của Streamlit, theo một kiểu thống nhất: nền trắng, viền mảnh, một màu nhấn cho thao tác chính và mức cảnh báo, trạng thái thể hiện bằng chấm màu kèm chữ, mỗi trang mở đầu bằng tiêu đề và một câu mô tả. Phần dùng chung về dữ liệu như đọc Gold, bộ nhớ đệm, bộ lọc và định dạng số kiểu Việt Nam nằm trong `app/common.py`. Bộ nhớ đệm được khóa theo tập dữ liệu và thời điểm sửa của tệp kho, nên khi đường ống vừa ghi dữ liệu mới, ứng dụng tự đọc lại. Ứng dụng chỉ mở kho DuckDB ở chế độ đọc và đóng ngay sau mỗi lần đọc, để không giữ khóa tệp làm đường ống không ghi được. Mục này trình bày các trang chính; ảnh chụp các trang còn lại ở Phụ lục H.
+Ứng dụng Streamlit (`app/main.py`) có 14 trang gồm trang chủ và bốn nhóm Nguồn dữ liệu, Dữ liệu, Phân tích vận hành, Kiểm chứng, xếp theo dòng dữ liệu như thiết kế ở mục 3.8. Mỗi trang là một tệp trong `app/views/`; các thành phần giao diện dùng chung nằm trong `app/ui.py` và theme của Streamlit, theo một kiểu thống nhất: nền trắng, viền mảnh, một màu nhấn cho thao tác chính và mức cảnh báo, trạng thái thể hiện bằng chấm màu kèm chữ, mỗi trang mở đầu bằng tiêu đề và một câu mô tả. Phần dùng chung về dữ liệu như đọc Gold, bộ nhớ đệm, bộ lọc và định dạng số kiểu Việt Nam nằm trong `app/common.py`. Bộ nhớ đệm được khóa theo tập dữ liệu và thời điểm sửa của tệp kho, nên khi đường ống vừa ghi dữ liệu mới, ứng dụng tự đọc lại. Ứng dụng chỉ mở kho DuckDB ở chế độ đọc và đóng ngay sau mỗi lần đọc, để không giữ khóa tệp làm đường ống không ghi được. Trang chủ Sơ đồ hệ thống (Hình 4.8) tóm tắt các tầng theo dòng dữ liệu, mỗi thẻ hiển thị số liệu hiện tại của tầng đó, như số tệp nguồn, số dòng Bronze, số dòng bị cách ly ở Silver và số đơn ở Gold.
+
+IMAGE: figures/h4_so_do.png || Hình 4.8. Trang chủ Sơ đồ hệ thống với số liệu của từng tầng (tập phát triển) || 15 || Ảnh chụp giao diện hệ thống
 
 ### 4.9.2. Các trang phân tích vận hành
 
-Trang Trung tâm cảnh báo ở Hình 4.5 hiển thị bản đồ nhiệt mức cảnh báo theo chi nhánh × tuần và danh sách cảnh báo với nguyên nhân, điểm, bằng chứng, thiệt hại ước tính và người phụ trách, sắp theo thiệt hại. Người dùng có thể thay ngưỡng điểm để xem sự đánh đổi giữa bỏ sót và báo động giả; chọn một dòng sẽ mở trang Truy vết của đúng chi nhánh và tuần đó.
+Trang Trung tâm cảnh báo ở Hình 4.9 hiển thị bản đồ nhiệt mức cảnh báo theo chi nhánh × tuần và danh sách cảnh báo với nguyên nhân, điểm, bằng chứng, thiệt hại ước tính và người phụ trách, sắp theo thiệt hại. Người dùng có thể thay ngưỡng điểm để xem sự đánh đổi giữa bỏ sót và báo động giả; chọn một dòng sẽ mở trang Truy vết của đúng chi nhánh và tuần đó.
 
-Trang Truy vết nguyên nhân mở đầu bằng kết luận và đề xuất xử lý như Hình 4.6, tiếp theo là biểu đồ doanh thu thực tế so với kỳ vọng qua các tuần tương tự Hình 5.3, cây KPI theo kênh, số đơn và AOV, các tín hiệu theo từng giả thuyết và các yếu tố bình thường của tuần. Cuối trang là mục bằng chứng gốc, hiện thực yêu cầu FR8 và NFR3: tùy nguyên nhân, trang liệt kê các bản ghi làm căn cứ cùng tên tệp và số dòng gốc mà tầng Bronze đã lưu, và một nút mở thẳng tệp gốc ở trang Tệp nguồn với dòng đó được lọc sẵn. Ví dụ, từ cảnh báo gian lận ở CN8 tuần 01/07/2024, người dùng đi tới hóa đơn POS-08-03-20240701-00065 do thu ngân NV0093 thu tiền mặt lúc 14:13 và hủy 14,8 phút sau, nằm trong tệp `pos/POS-08/pos_export_2024-07-01.json`. Như vậy một cảnh báo truy ngược được tới đúng dòng dữ liệu thô mà hệ thống nguồn đã xuất.
+Trang Truy vết nguyên nhân mở đầu bằng kết luận và đề xuất xử lý như Hình 4.10, tiếp theo là biểu đồ doanh thu thực tế so với kỳ vọng qua các tuần tương tự Hình 5.3, cây KPI theo kênh, số đơn và AOV, các tín hiệu theo từng giả thuyết và các yếu tố bình thường của tuần. Cuối trang là mục bằng chứng gốc, hiện thực yêu cầu FR8 và NFR3: tùy nguyên nhân, trang liệt kê các bản ghi làm căn cứ cùng tên tệp và số dòng gốc mà tầng Bronze đã lưu, và một nút mở thẳng tệp gốc ở trang Tệp nguồn với dòng đó được lọc sẵn. Ví dụ, từ cảnh báo gian lận ở CN8 tuần 01/07/2024, người dùng đi tới hóa đơn POS-08-03-20240701-00065 do thu ngân NV0093 thu tiền mặt lúc 14:13 và hủy 14,8 phút sau, nằm trong tệp `pos/POS-08/pos_export_2024-07-01.json`. Như vậy một cảnh báo truy ngược được tới đúng dòng dữ liệu thô mà hệ thống nguồn đã xuất.
 
-IMAGE: figures/h4_4_canh_bao.png || Hình 4.5. Trang Trung tâm cảnh báo (tập phát triển) || 16
+IMAGE: figures/h4_4_canh_bao.png || Hình 4.9. Trang Trung tâm cảnh báo (tập phát triển) || 16 || Ảnh chụp giao diện hệ thống
 
-IMAGE: figures/h4_5_truy_vet.png || Hình 4.6. Phần kết luận và đề xuất xử lý của trang Truy vết nguyên nhân: CN2, tuần 06/05/2024 (tập phát triển) || 15
+IMAGE: figures/h4_5_truy_vet.png || Hình 4.10. Phần kết luận và đề xuất xử lý của trang Truy vết nguyên nhân: CN2, tuần 06/05/2024 (tập phát triển) || 15 || Ảnh chụp giao diện hệ thống
 
 ### 4.9.3. Các trang dữ liệu và kiểm chứng
 
-Trang Vận hành hằng ngày ở Hình 4.7 cho phép đưa dữ liệu của một hoặc bảy ngày kinh doanh mới vào môi trường vận hành bằng cách kích hoạt DAG nguồn, rồi theo dõi từng bước xử lý: số bản ghi kéo qua API, tệp mới, số dòng nạp, cửa chặn chất lượng, kiểm thử dbt, cảnh báo mới và lượt đưa sang kho phục vụ. Bước gặp sự cố nhưng không chặn các bước sau, như API nguồn không phản hồi, được hiện ở mức cảnh báo, tách khỏi mức lỗi. Trang Chất lượng dữ liệu tổng hợp kết quả cửa chặn, 158 kiểm thử dbt, đối soát số dòng, bảng cách ly và độ mới từng nguồn; trang Mô hình và phả hệ vẽ lineage và lược đồ hình sao trực tiếp từ metadata dbt, nên luôn khớp với mã nguồn.
+Trang Tệp nguồn (Hình 4.11) cho xem nội dung nguyên trạng của mọi tệp trong vùng tiếp nhận, trước mọi bước xử lý, kèm bảng tổng hợp số tệp, dung lượng và định dạng của từng hệ thống nguồn. Đây cũng là trang mà nút Mở tệp gốc ở trang Truy vết dẫn tới.
 
-IMAGE: figures/h4_6_van_hanh.png || Hình 4.7. Trang Vận hành hằng ngày sau khi đưa vào bảy ngày kinh doanh mới (môi trường vận hành) || 16
+IMAGE: figures/ph_tep_nguon.png || Hình 4.11. Trang Tệp nguồn: tổng hợp các hệ thống nguồn và một tệp POS nguyên trạng (tập phát triển) || 14 || Ảnh chụp giao diện hệ thống
 
-Trang Bộ mô phỏng ở Hình 4.8, thuộc nhóm Kiểm chứng, đặt các con số sự thật của một ngày cạnh những gì từng hệ thống ghi lại, lấy từ kho dữ liệu đúng như đường ống nhìn thấy. Ở ngày 11/05/2024 của CN2, giữa kịch bản thiếu nhân sự, 216 đơn tại quầy khớp với số hóa đơn POS còn hiệu lực và 92 đơn App khớp với App, nhưng 38 khách bỏ về không được hệ thống nào ghi nhận, và 5 đơn sàn không được nhập POS lộ ra đúng bằng phần thiếu ở hai dòng GrabFood, ShopeeFood. Trang còn mở được tệp gốc của ngày đó, liệt kê lỗi dữ liệu trong tệp cùng cách tầng Silver xử lý và vẽ dòng thời gian các kịch bản sự cố. Trang này đọc đáp án nên chỉ dùng để trình bày và kiểm chứng; đường ống và bộ phát hiện không dùng nó.
+Trang Vận hành hằng ngày ở Hình 4.12 cho phép đưa dữ liệu của một hoặc bảy ngày kinh doanh mới vào môi trường vận hành bằng cách kích hoạt DAG nguồn, rồi theo dõi từng bước xử lý: số bản ghi kéo qua API, tệp mới, số dòng nạp, cửa chặn chất lượng, kiểm thử dbt, cảnh báo mới và lượt đưa sang kho phục vụ. Bước gặp sự cố nhưng không chặn các bước sau, như API nguồn không phản hồi, được hiện ở mức cảnh báo, tách khỏi mức lỗi. Trang Chất lượng dữ liệu tổng hợp kết quả cửa chặn, 158 kiểm thử dbt, đối soát số dòng, bảng cách ly và độ mới từng nguồn; trang Mô hình và phả hệ vẽ lineage và lược đồ hình sao trực tiếp từ metadata dbt, nên luôn khớp với mã nguồn.
 
-IMAGE: figures/h4_7_mo_phong.png || Hình 4.8. Trang Bộ mô phỏng: sự thật của một ngày đặt cạnh những gì các hệ thống nguồn ghi lại (CN2, 11/05/2024, tập phát triển) || 15
+IMAGE: figures/h4_6_van_hanh.png || Hình 4.12. Trang Vận hành hằng ngày sau khi đưa vào bảy ngày kinh doanh mới (môi trường vận hành) || 16 || Ảnh chụp giao diện hệ thống
+
+Trang Bộ mô phỏng ở Hình 4.13, thuộc nhóm Kiểm chứng, đặt các con số sự thật của một ngày cạnh những gì từng hệ thống ghi lại, lấy từ kho dữ liệu đúng như đường ống nhìn thấy. Ở ngày 11/05/2024 của CN2, giữa kịch bản thiếu nhân sự, 216 đơn tại quầy khớp với số hóa đơn POS còn hiệu lực và 92 đơn App khớp với App, nhưng 38 khách bỏ về không được hệ thống nào ghi nhận, và 5 đơn sàn không được nhập POS lộ ra đúng bằng phần thiếu ở hai dòng GrabFood, ShopeeFood. Trang còn mở được tệp gốc của ngày đó, liệt kê lỗi dữ liệu trong tệp cùng cách tầng Silver xử lý và vẽ dòng thời gian các kịch bản sự cố. Trang này đọc đáp án nên chỉ dùng để trình bày và kiểm chứng; đường ống và bộ phát hiện không dùng nó. Trang Đánh giá bộ phát hiện, cũng thuộc nhóm Kiểm chứng, trình bày quy trình đánh giá và các bảng kết quả của Chương 5, đọc từ tệp kết quả của chương trình đánh giá.
+
+IMAGE: figures/h4_7_mo_phong.png || Hình 4.13. Trang Bộ mô phỏng: sự thật của một ngày đặt cạnh những gì các hệ thống nguồn ghi lại (CN2, 11/05/2024, tập phát triển) || 15 || Ảnh chụp giao diện hệ thống
 
 ### 4.9.4. Phần mở rộng: trợ lý phân tích
 
@@ -304,9 +320,9 @@ Tệp `docker-compose.yml` dựng năm dịch vụ.
 
 Thư mục dự án được gắn vào các dịch vụ Airflow và ứng dụng, nên mã nguồn và dữ liệu là một bản duy nhất trên máy; dịch vụ API chỉ được gắn thư mục dữ liệu ở chế độ chỉ đọc. Toàn bộ hệ thống được bật bằng một lệnh `docker compose up -d`.
 
-Hình 4.9 là sơ đồ triển khai của nền tảng. Mọi thành phần chạy trong các container trên cùng một máy và giao tiếp qua mạng nội bộ của Docker. Kho DuckDB nằm trong thư mục dự án, được gắn vào container airflow để ghi và vào container app để đọc; kho phục vụ PostgreSQL có volume riêng, Metabase đọc nó bằng tài khoản chỉ đọc. Khi chạy trên máy cá nhân, trình duyệt mở thẳng cổng của ứng dụng, Airflow và Metabase. Cấu hình cho máy chủ trong thư mục `deploy/` ghép thêm một container Caddy đứng trước, cấp HTTPS tự động và chuyển tiếp tới ba giao diện web đó; các cổng còn lại, kể cả PostgreSQL và API giả lập, không được mở ra ngoài.
+Hình 4.14 là sơ đồ triển khai của nền tảng. Mọi thành phần chạy trong các container trên cùng một máy và giao tiếp qua mạng nội bộ của Docker. Kho DuckDB nằm trong thư mục dự án, được gắn vào container airflow để ghi và vào container app để đọc; kho phục vụ PostgreSQL có volume riêng, Metabase đọc nó bằng tài khoản chỉ đọc. Khi chạy trên máy cá nhân, trình duyệt mở thẳng cổng của ứng dụng, Airflow và Metabase. Cấu hình cho máy chủ trong thư mục `deploy/` ghép thêm một container Caddy đứng trước, cấp HTTPS tự động và chuyển tiếp tới ba giao diện web đó; các cổng còn lại, kể cả PostgreSQL và API giả lập, không được mở ra ngoài.
 
-IMAGE: figures/h4_trien_khai.png || Hình 4.9. Sơ đồ triển khai của nền tảng trên Docker Compose || 16
+IMAGE: figures/h4_trien_khai.png || Hình 4.14. Sơ đồ triển khai của nền tảng trên Docker Compose || 16 || Đề xuất của nghiên cứu
 
 ### 4.10.2. Hai DAG và cơ chế kích hoạt theo dữ liệu
 
@@ -327,7 +343,7 @@ WIDTHS: 2,1.6,8
 | detect | 2,5 giây | Tuần 23/09/2024: 2 cảnh báo, CN1 P1a điểm 6,0; CN3 P3 điểm 4,8 |
 | publish | 8,6 giây | 22 bảng, 1.500.446 dòng sang PostgreSQL, đối soát số dòng khớp |
 
-Từ lúc bấm nút đến khi dữ liệu lên kho phục vụ mất 146 giây; các lượt khác đo được từ 152 đến 199 giây, và 328 giây khi máy đang chạy việc nặng khác. Phần lớn thời gian là liệt kê và đọc tệp qua thư mục gắn từ Windows vào Docker; để giảm phần này, bước nạp chỉ băm lại tệp có kích thước hoặc thời điểm sửa khác lần nạp trước, nhờ đó bước nạp một ngày trong Docker giảm từ 74 xuống 20 giây. Chi phí mỗi lượt tỷ lệ với lượng dữ liệu mới, đáp ứng yêu cầu NFR7. Hai cảnh báo trùng đúng hai sự cố đã cài, với số liệu y hệt khi POS đám mây và App còn đi đường tệp; riêng CN1 bị thu thừa 528.250 đồng. Từ trang Vận hành hằng ngày ở Hình 4.7, người dùng mở thẳng trang Truy vết của từng cảnh báo.
+Từ lúc bấm nút đến khi dữ liệu lên kho phục vụ mất 146 giây; các lượt khác đo được từ 152 đến 199 giây, và 328 giây khi máy đang chạy việc nặng khác. Phần lớn thời gian là liệt kê và đọc tệp qua thư mục gắn từ Windows vào Docker; để giảm phần này, bước nạp chỉ băm lại tệp có kích thước hoặc thời điểm sửa khác lần nạp trước, nhờ đó bước nạp một ngày trong Docker giảm từ 74 xuống 20 giây. Chi phí mỗi lượt tỷ lệ với lượng dữ liệu mới, đáp ứng yêu cầu NFR7. Hai cảnh báo trùng đúng hai sự cố đã cài, với số liệu y hệt khi POS đám mây và App còn đi đường tệp; riêng CN1 bị thu thừa 528.250 đồng. Từ trang Vận hành hằng ngày ở Hình 4.12, người dùng mở thẳng trang Truy vết của từng cảnh báo.
 
 ## 4.11. Tiểu kết chương
 

@@ -8,7 +8,7 @@ REF: Armbrust, M., Ghodsi, A., Xin, R., & Zaharia, M. (2021). Lakehouse: A new g
 
 REF: Batini, C., & Scannapieco, M. (2016). *Data and information quality: Dimensions, principles and techniques*. Springer.
 
-REF: Begen, E., Sayan, İ. U., Bayrak, A. T., & Yıldız, O. T. (2023). Point of sale fraud detection methods via machine learning. In *2023 International Conference on Innovations in Intelligent Systems and Applications (INISTA)*. IEEE. https://doi.org/10.1109/INISTA59065.2023.10310515
+REF: Begen, E., Sayan, İ. U., Bayrak, A. T., & Yıldız, O. T. (2023). Point of sale fraud detection methods via machine learning. In *2023 International Conference on Innovations in Intelligent Systems and Applications (INISTA)* (pp. 1–5). IEEE. https://doi.org/10.1109/INISTA59065.2023.10310515
 
 REF: Bhagwan, R., Kumar, R., Ramjee, R., Varghese, G., Mohapatra, S., Manoharan, H., & Shah, P. (2014). Adtributor: Revenue debugging in advertising systems. In *Proceedings of the 11th USENIX Symposium on Networked Systems Design and Implementation (NSDI 14)* (pp. 43–55). USENIX Association.
 
@@ -18,7 +18,7 @@ REF: Breck, E., Polyzotis, N., Roy, S., Whang, S. E., & Zinkevich, M. (2019). Da
 
 REF: Cawley, G. C., & Talbot, N. L. C. (2010). On over-fitting in model selection and subsequent selection bias in performance evaluation. *Journal of Machine Learning Research, 11*, 2079–2107.
 
-REF: Chandola, V., Banerjee, A., & Kumar, V. (2009). Anomaly detection: A survey. *ACM Computing Surveys, 41*(3), Article 15.
+REF: Chandola, V., Banerjee, A., & Kumar, V. (2009). Anomaly detection: A survey. *ACM Computing Surveys, 41*(3), Article 15. https://doi.org/10.1145/1541880.1541882
 
 REF: Chaudhuri, S., & Dayal, U. (1997). An overview of data warehousing and OLAP technology. *ACM SIGMOD Record, 26*(1), 65–74. https://doi.org/10.1145/248603.248616
 
@@ -34,25 +34,25 @@ REF: Docker Inc. (n.d.). *Docker Compose documentation*. https://docs.docker.com
 
 REF: Dopson, L. R., & Hayes, D. K. (2019). *Food and beverage cost control* (7th ed.). Wiley.
 
-REF: Dunn, O. J. (1961). Multiple comparisons among means. *Journal of the American Statistical Association, 56*(293), 52–64.
+REF: Dunn, O. J. (1961). Multiple comparisons among means. *Journal of the American Statistical Association, 56*(293), 52–64. https://doi.org/10.1080/01621459.1961.10482090
 
 REF: Elmagarmid, A. K., Ipeirotis, P. G., & Verykios, V. S. (2007). Duplicate record detection: A survey. *IEEE Transactions on Knowledge and Data Engineering, 19*(1), 1–16. https://doi.org/10.1109/TKDE.2007.250581
 
-REF: Emmott, A. F., Das, S., Dietterich, T., Fern, A., & Wong, W.-K. (2013). Systematic construction of anomaly detection benchmarks from real data. In *Proceedings of the ACM SIGKDD Workshop on Outlier Detection and Description (ODD ’13)* (pp. 16–21). ACM.
+REF: Emmott, A. F., Das, S., Dietterich, T., Fern, A., & Wong, W.-K. (2013). Systematic construction of anomaly detection benchmarks from real data. In *Proceedings of the ACM SIGKDD Workshop on Outlier Detection and Description (ODD ’13)* (pp. 16–21). ACM. https://doi.org/10.1145/2500853.2500858
 
 REF: FastAPI. (n.d.). *FastAPI documentation*. https://fastapi.tiangolo.com/
 
 REF: Feldman, P., Frazelle, A. E., & Swinney, R. (2023). Managing relationships between restaurants and food delivery platforms: Conflict, contracts, and coordination. *Management Science, 69*(2), 812–823. https://doi.org/10.1287/mnsc.2022.4390
 
-REF: Fellegi, I. P., & Sunter, A. B. (1969). A theory for record linkage. *Journal of the American Statistical Association, 64*(328), 1183–1210.
+REF: Fellegi, I. P., & Sunter, A. B. (1969). A theory for record linkage. *Journal of the American Statistical Association, 64*(328), 1183–1210. https://doi.org/10.1080/01621459.1969.10501049
 
 REF: Fielding, R. T. (2000). *Architectural styles and the design of network-based software architectures* [Doctoral dissertation, University of California, Irvine].
 
 REF: Golfarelli, M., & Rizzi, S. (2009). *Data warehouse design: Modern principles and methodologies*. McGraw-Hill.
 
-REF: Harris, C. R., Millman, K. J., van der Walt, S. J., Gommers, R., Virtanen, P., Cournapeau, D., … Oliphant, T. E. (2020). Array programming with NumPy. *Nature, 585*(7825), 357–362. https://doi.org/10.1038/s41586-020-2649-2
+REF: Harris, C. R., Millman, K. J., van der Walt, S. J., Gommers, R., Virtanen, P., Cournapeau, D., Wieser, E., Taylor, J., Berg, S., Smith, N. J., Kern, R., Picus, M., Hoyer, S., van Kerkwijk, M. H., Brett, M., Haldane, A., Fernández del Río, J., Wiebe, M., Peterson, P., … Oliphant, T. E. (2020). Array programming with NumPy. *Nature, 585*(7825), 357–362. https://doi.org/10.1038/s41586-020-2649-2
 
-REF: Hevner, A. R., March, S. T., Park, J., & Ram, S. (2004). Design science in information systems research. *MIS Quarterly, 28*(1), 75–105.
+REF: Hevner, A. R., March, S. T., Park, J., & Ram, S. (2004). Design science in information systems research. *MIS Quarterly, 28*(1), 75–105. https://doi.org/10.2307/25148625
 
 REF: Hodge, V. J., & Austin, J. (2004). A survey of outlier detection methodologies. *Artificial Intelligence Review, 22*(2), 85–126. https://doi.org/10.1023/B:AIRE.0000045502.10941.a9
 
@@ -78,7 +78,7 @@ REF: Kimball, R., & Caserta, J. (2004). *The data warehouse ETL toolkit*. Wiley.
 
 REF: Kimball, R., & Ross, M. (2013). *The data warehouse toolkit: The definitive guide to dimensional modeling* (3rd ed.). Wiley.
 
-REF: Kimes, S. E. (1999). Implementing restaurant revenue management: A five-step approach. *Cornell Hotel and Restaurant Administration Quarterly, 40*(3), 16–21.
+REF: Kimes, S. E. (1999). Implementing restaurant revenue management: A five-step approach. *Cornell Hotel and Restaurant Administration Quarterly, 40*(3), 16–21. https://doi.org/10.1177/001088049904000315
 
 REF: Kleinrock, L. (1975). *Queueing systems, Volume 1: Theory*. Wiley.
 
@@ -92,9 +92,9 @@ REF: Leys, C., Ley, C., Klein, O., Bernard, P., & Licata, L. (2013). Detecting o
 
 REF: Li, C., Mirosa, M., & Bremer, P. (2020). Review of online food delivery platforms and their impacts on sustainability. *Sustainability, 12*(14), 5528. https://doi.org/10.3390/su12145528
 
-REF: Lin, Q., Lou, J.-G., Zhang, H., & Zhang, D. (2016). iDice: Problem identification for emerging issues. In *Proceedings of the 38th International Conference on Software Engineering (ICSE ’16)*. ACM. https://doi.org/10.1145/2884781.2884795
+REF: Lin, Q., Lou, J.-G., Zhang, H., & Zhang, D. (2016). iDice: Problem identification for emerging issues. In *Proceedings of the 38th International Conference on Software Engineering (ICSE ’16)* (pp. 214–224). ACM. https://doi.org/10.1145/2884781.2884795
 
-REF: Liu, F. T., Ting, K. M., & Zhou, Z.-H. (2008). Isolation forest. In *2008 Eighth IEEE International Conference on Data Mining* (pp. 413–422). IEEE.
+REF: Liu, F. T., Ting, K. M., & Zhou, Z.-H. (2008). Isolation forest. In *2008 Eighth IEEE International Conference on Data Mining* (pp. 413–422). IEEE. https://doi.org/10.1109/ICDM.2008.17
 
 REF: Lopez-Rojas, E. A., Elmir, A., & Axelsson, S. (2016). PaySim: A financial mobile money simulator for fraud detection. In *Proceedings of the 28th European Modeling and Simulation Symposium (EMSS 2016)* (pp. 249–255).
 
@@ -116,15 +116,15 @@ REF: Object Management Group. (2017). *OMG Unified Modeling Language (OMG UML), 
 
 REF: OpenAPI Initiative. (2021). *OpenAPI Specification, Version 3.1.0*. https://spec.openapis.org/oas/v3.1.0
 
-REF: OpenML. (2022). *The-Bread-Basket* (Dataset ID 43422) [Data set]. Giấy phép CC0. https://www.openml.org/d/43422 (truy cập ngày 10/10/2026)
+REF: OpenML. (2022). *The-Bread-Basket* (Dataset ID 43422) [Data set]. https://www.openml.org/d/43422
 
 REF: Page, E. S. (1954). Continuous inspection schemes. *Biometrika, 41*(1–2), 100–115. https://doi.org/10.1093/biomet/41.1-2.100
 
 REF: Papargyropoulou, E., Wright, N., Lozano, R., Steinberger, J., Padfield, R., & Ujang, Z. (2016). Conceptual framework for the study of food waste generation and prevention in the hospitality sector. *Waste Management, 49*, 326–336. https://doi.org/10.1016/j.wasman.2016.01.017
 
-REF: Patki, N., Wedge, R., & Veeramachaneni, K. (2016). The synthetic data vault. In *2016 IEEE International Conference on Data Science and Advanced Analytics (DSAA)* (pp. 399–410). IEEE.
+REF: Patki, N., Wedge, R., & Veeramachaneni, K. (2016). The synthetic data vault. In *2016 IEEE International Conference on Data Science and Advanced Analytics (DSAA)* (pp. 399–410). IEEE. https://doi.org/10.1109/DSAA.2016.49
 
-REF: Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., … Duchesnay, É. (2011). Scikit-learn: Machine learning in Python. *Journal of Machine Learning Research, 12*, 2825–2830.
+REF: Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J., Passos, A., Cournapeau, D., Brucher, M., Perrot, M., & Duchesnay, É. (2011). Scikit-learn: Machine learning in Python. *Journal of Machine Learning Research, 12*, 2825–2830.
 
 REF: Peffers, K., Tuunanen, T., Rothenberger, M. A., & Chatterjee, S. (2007). A design science research methodology for information systems research. *Journal of Management Information Systems, 24*(3), 45–77. https://doi.org/10.2753/MIS0742-1222240302
 
@@ -132,13 +132,13 @@ REF: Pipino, L. L., Lee, Y. W., & Wang, R. Y. (2002). Data quality assessment. *
 
 REF: PostgreSQL Global Development Group. (n.d.). *PostgreSQL documentation*. https://www.postgresql.org/docs/
 
-REF: Raasveldt, M., & Mühleisen, H. (2019). DuckDB: An embeddable analytical database. In *Proceedings of the 2019 International Conference on Management of Data (SIGMOD ’19)* (pp. 1981–1984). ACM.
+REF: Raasveldt, M., & Mühleisen, H. (2019). DuckDB: An embeddable analytical database. In *Proceedings of the 2019 International Conference on Management of Data (SIGMOD ’19)* (pp. 1981–1984). ACM. https://doi.org/10.1145/3299869.3320212
 
 REF: Rahm, E., & Do, H. H. (2000). Data cleaning: Problems and current approaches. *IEEE Data Engineering Bulletin, 23*(4), 3–13.
 
 REF: Reis, J., & Housley, M. (2022). *Fundamentals of data engineering*. O’Reilly Media.
 
-REF: Rousseeuw, P. J., & Croux, C. (1993). Alternatives to the median absolute deviation. *Journal of the American Statistical Association, 88*(424), 1273–1283.
+REF: Rousseeuw, P. J., & Croux, C. (1993). Alternatives to the median absolute deviation. *Journal of the American Statistical Association, 88*(424), 1273–1283. https://doi.org/10.1080/01621459.1993.10476408
 
 REF: Saito, T., & Rehmsmeier, M. (2015). The precision-recall plot is more informative than the ROC plot when evaluating binary classifiers on imbalanced datasets. *PLoS ONE, 10*(3), e0118432. https://doi.org/10.1371/journal.pone.0118432
 
@@ -154,19 +154,21 @@ REF: Sun, Y., Zhao, Y., Su, Y., Liu, D., Nie, X., Meng, Y., Cheng, S., Pei, D., 
 
 REF: Tatbul, N., Lee, T. J., Zdonik, S., Alam, M., & Gottschlich, J. (2018). Precision and recall for time series. In *Advances in Neural Information Processing Systems 31* (pp. 1920–1930).
 
-REF: Thompson, G. M. (1998). Labor scheduling, part 1: Forecasting demand. *Cornell Hotel and Restaurant Administration Quarterly*. https://hdl.handle.net/1813/71869
+REF: Thompson, G. M. (1998). Labor scheduling, part 1: Forecasting demand. *Cornell Hotel and Restaurant Administration Quarterly, 39*(5), 22–31. https://doi.org/10.1177/001088049803900507
 
-REF: Vanschoren, J., van Rijn, J. N., Bischl, B., & Torgo, L. (2013). OpenML: Networked science in machine learning. *SIGKDD Explorations, 15*(2), 49–60.
+REF: Vanschoren, J., van Rijn, J. N., Bischl, B., & Torgo, L. (2013). OpenML: Networked science in machine learning. *ACM SIGKDD Explorations Newsletter, 15*(2), 49–60. https://doi.org/10.1145/2641190.2641198
 
 REF: Vassiliadis, P. (2009). A survey of extract–transform–load technology. *International Journal of Data Warehousing and Mining, 5*(3), 1–27. https://doi.org/10.4018/jdwm.2009070101
 
 REF: Vu, T. D., Nguyen, H. V., Vu, P. T., Tran, T. H. H., & Vu, V. H. (2023). Gen Z customers’ continuance intention in using food delivery application in an emerging market: Empirical evidence from Vietnam. *Sustainability, 15*(20), 14776. https://doi.org/10.3390/su152014776
 
-REF: Wang, R. Y., & Strong, D. M. (1996). Beyond accuracy: What data quality means to data consumers. *Journal of Management Information Systems, 12*(4), 5–33.
+REF: Wang, R. Y., & Strong, D. M. (1996). Beyond accuracy: What data quality means to data consumers. *Journal of Management Information Systems, 12*(4), 5–33. https://doi.org/10.1080/07421222.1996.11518099
 
 REF: Winkler, W. E. (1990). String comparator metrics and enhanced decision rules in the Fellegi–Sunter model of record linkage. In *Proceedings of the Section on Survey Research Methods* (pp. 354–359). American Statistical Association.
 
 # PHỤ LỤC
+
+NGUON: Đặc tả dữ liệu của bộ mô phỏng
 
 ## Phụ lục A. Đặc tả dữ liệu của các hệ thống nguồn
 
@@ -214,6 +216,8 @@ WIDTHS: 5,5,4
 - **Sổ nhập kho mẫu B** (CN3, CN6, CN9): tệp `receipts_CNxx_<ngày>.xlsx`; một bảng gồm date (yyyy-mm-dd), item (tên không dấu), quantity (số lượng dính đơn vị, ví dụ `53.6kg`), unit_price, supplier.
 - **Phiếu kiểm kê**: tệp `KiemKe_CNxx_<ngày>.xlsx`; bốn dòng tiêu đề (tên phiếu, chi nhánh, ngày kiểm kê, người kiểm); bảng gồm STT, Mã NL, Tên nguyên liệu, ĐVT, Tồn thực tế, Ghi chú.
 - **Chấm công**: tệp `punch_BRxx_<ngày>.csv`; các cột `employee_code`, `branch_code`, `event_type` (CHECK_IN, CHECK_OUT), `event_time`, `device_id`, `verification_method`.
+
+NGUON: Trích từ kho dữ liệu và metadata dbt của hệ thống
 
 ## Phụ lục B. Từ điển dữ liệu tầng Gold
 
@@ -526,6 +530,8 @@ WIDTHS: 6,8
 | `assert_shopee_payout_reconciles` | Như trên, cho ShopeeFood |
 | `assert_silver_rows_conserved` | Số dòng Bronze = Silver + cách ly + dòng cấu trúc cho mọi nguồn |
 
+NGUON: Đề xuất của nghiên cứu
+
 ## Phụ lục D. Cấu hình kịch bản sự cố
 
 Các tệp cấu hình kịch bản nằm trong thư mục `simulator/scenarios/`: `calibration.json` (tập phát triển), `holdout.json` (tập kiểm tra) và `live.json` (hai sự cố minh họa của môi trường vận hành, không dùng để đánh giá). Ví dụ một kịch bản trong tập phát triển:
@@ -536,7 +542,7 @@ CODE
  "story": "Quan ly dieu 55% nhan vien ca toi sang ca sang: toi qua tai, sang thua nguoi"}
 ENDCODE
 
-Các kịch bản của cả hai tập được tóm tắt ở Bảng 3.12. Tập phát triển dùng hạt giống ngẫu nhiên 2024, tập kiểm tra dùng hạt giống 777.
+Các kịch bản của cả hai tập được tóm tắt ở Bảng 3.8. Tập phát triển dùng hạt giống ngẫu nhiên 2024, tập kiểm tra dùng hạt giống 777.
 
 ## Phụ lục E. Hướng dẫn cài đặt và chạy
 
@@ -664,6 +670,8 @@ for (b, w), grp in cw.groupby(["branch_id", "week_start"]):
             z = p_to_z(p_adj)                     # đổi xác suất đuôi ra z, rồi cắt [0, 6]
 ENDCODE
 
+NGUON: Kết quả thực nghiệm
+
 ## Phụ lục G. Kết quả thử nghiệm dữ liệu bất thường
 
 Kết quả của lần chạy `tools/thu_tinh_huong.py` ngày 17/10/2026 trên môi trường vận hành (mục 5.2.4): 11 tình huống được cài cùng lúc, đường ống chạy hai lượt, lượt đầu khi API của POS đám mây và App không phản hồi, lượt sau khi API hoạt động lại.
@@ -682,31 +690,3 @@ WIDTHS: 4.6,7.4
 | Phiếu kiểm kê CN3 ngày 22/09 đếm lại | Nạp lại, thay toàn bộ bản cũ (22 dòng) |
 | Phiếu nhập CN1 ngày 22/09 gửi muộn | Nạp 4 dòng; Silver và Gold tính lại kỳ đó |
 | API POS đám mây trả thêm trường `loyalty_tier` | Kéo về, nạp bình thường; cửa chặn cảnh báo trường mới |
-
-## Phụ lục H. Giao diện sản phẩm
-
-Phụ lục này trình bày các trang của ứng dụng chưa được đưa vào Chương 4. Các trang Tải tệp lên, Kết nối nguồn, Tổng quan, Trung tâm cảnh báo, Truy vết nguyên nhân, Vận hành hằng ngày và Bộ mô phỏng được trình bày ở Hình 4.2 đến Hình 4.8. Các ảnh dưới đây chụp trên tập phát triển.
-
-Trang Sơ đồ hệ thống là trang chủ của ứng dụng, tóm tắt tám thành phần theo dòng dữ liệu, mỗi thẻ hiển thị số liệu hiện tại của thành phần đó (Hình H.1).
-
-IMAGE: figures/ph_so_do.png || Hình H.1. Trang Sơ đồ hệ thống || 15
-
-Trang Tệp nguồn cho xem nội dung nguyên trạng của mọi tệp trong vùng tiếp nhận, trước bất kỳ bước xử lý nào. Phần đầu trang thống kê số tệp và dung lượng theo từng hệ thống nguồn (Hình H.2).
-
-IMAGE: figures/ph_tep_nguon.png || Hình H.2. Trang Tệp nguồn với bản đồ các hệ thống nguồn và một tệp POS || 15
-
-Trang Kho dữ liệu cho xem từng bảng của Bronze, Silver, Gold và chạy truy vấn SQL chỉ đọc. Ví dụ ở Hình H.3 truy vấn tầng Bronze cho thấy hai phiên bản phần mềm POS ghi tổng tiền ở hai cột khác nhau và định dạng thời gian khác nhau.
-
-IMAGE: figures/ph_kho_sql.png || Hình H.3. Trang Kho dữ liệu với một truy vấn SQL trên tầng Bronze || 15
-
-Trang Mô hình và phả hệ sinh tự động từ metadata của dbt, cho biết một bảng được dựng từ những bảng nào và được dùng ở đâu (Hình H.4).
-
-IMAGE: figures/ph_pha_he.png || Hình H.4. Phả hệ dữ liệu của bảng fact_order || 11
-
-Trang Chất lượng dữ liệu tổng hợp kết quả cửa chặn chất lượng đầu vào, kiểm thử dbt, đối soát số dòng và độ mới của từng nguồn. Hình H.5 là thẻ kiểm thử dữ liệu theo nhóm và cách hiện thực.
-
-IMAGE: figures/ph_kiem_thu.png || Hình H.5. Trang Chất lượng dữ liệu, thẻ kiểm thử dữ liệu || 15
-
-Trang Đánh giá bộ phát hiện trình bày quy trình đánh giá và kết quả trên hai tập, đọc từ tệp kết quả của chương trình đánh giá (Hình H.6).
-
-IMAGE: figures/ph_danh_gia.png || Hình H.6. Trang Đánh giá bộ phát hiện, kết quả trên tập kiểm tra || 15
