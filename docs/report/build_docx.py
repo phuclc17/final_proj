@@ -226,22 +226,18 @@ def table(caption, rows, widths=None, source=None):
 
 
 def equation(tex, number):
-    """Phuong trinh dong rieng, danh so ben phai: bang 3 cot khong vien (le trai | phuong trinh dang hien thi | so hieu).
-    oMathPara giu phan so co kich thuoc day du; oMath nam giua dong van ban se bi thu nho nhu cong thuc trong dong."""
-    side = 1000
-    cols = [side, TEXT_W - 2 * side, side]
-    nob = "".join(f'<w:{b} w:val="nil"/>' for b in ("top", "left", "bottom", "right", "insideH", "insideV"))
-    cell = lambda w, body, jc: (f'<w:tc><w:tcPr><w:tcW w:w="{w}" w:type="dxa"/><w:vAlign w:val="center"/></w:tcPr>'
-                                f'<w:p><w:pPr><w:pStyle w:val="Equation"/><w:jc w:val="{jc}"/></w:pPr>{body}</w:p></w:tc>')
-    math = f'<m:oMathPara><m:oMathParaPr><m:jc m:val="center"/></m:oMathParaPr>{omml(tex)}</m:oMathPara>'
-    return (f'<w:tbl><w:tblPr><w:tblW w:w="{TEXT_W}" w:type="dxa"/><w:jc w:val="center"/><w:tblBorders>{nob}</w:tblBorders>'
-            f'<w:tblLayout w:type="fixed"/><w:tblCellMar><w:left w:w="0" w:type="dxa"/><w:right w:w="0" w:type="dxa"/>'
-            f'</w:tblCellMar><w:tblLook w:val="0000"/></w:tblPr><w:tblGrid>' + "".join(f'<w:gridCol w:w="{c}"/>' for c in cols)
-            + '</w:tblGrid><w:tr><w:trPr><w:cantSplit/></w:trPr>'
-            + cell(cols[0], "", "left") + cell(cols[1], math, "center") + cell(cols[2], run(number), "right")
-            + "</w:tr></w:tbl>"
-            # doan rat thap sau bang: hai phuong trinh lien tiep khong bi Word gop thanh mot bang
-            + para("", spacing='<w:spacing w:before="0" w:after="0" w:line="20" w:lineRule="exact"/>'))
+    """Phuong trinh dong rieng, danh so ben phai theo cach cua chinh Word: phuong trinh hien thi (oMathPara) dang
+    mang mot dong (eqArr) "bieu thuc#(so)" - Word dat so hieu sat le phai, khong can bang an (bang an hien luoi
+    net dut khi nguoi doc bat View Gridlines). oMathPara giu phan so co kich thuoc day du."""
+    body = re.sub(r"^<m:oMath>|</m:oMath>$", "", omml(tex))
+    num = number.strip().strip("()")
+    tnr = f"<m:rPr><m:nor/></m:rPr>{TNR}"
+    math = (f'<m:oMathPara><m:oMathParaPr><m:jc m:val="center"/></m:oMathParaPr><m:oMath><m:eqArr><m:eqArrPr>'
+            f'<m:maxDist m:val="1"/><m:ctrlPr>{TNR}</m:ctrlPr></m:eqArrPr><m:e>{body}'
+            # dau # phai la ky hieu toan hoc (khong m:nor) thi Word moi hieu la dau tach so hieu
+            f'<m:r><m:t>#</m:t></m:r><m:d><m:dPr><m:ctrlPr>{TNR}</m:ctrlPr></m:dPr><m:e>'
+            f'<m:r>{tnr}<m:t>{num}</m:t></m:r></m:e></m:d></m:e></m:eqArr></m:oMath></m:oMathPara>')
+    return f'<w:p><w:pPr><w:pStyle w:val="Equation"/><w:jc w:val="center"/></w:pPr>{math}</w:p>'
 
 
 # ------------------------------------------------------------------ hinh
