@@ -84,4 +84,4 @@ Hướng dẫn đầy đủ, gồm môi trường vận hành hằng ngày và d
 
 ## Giới hạn
 
-Dữ liệu là mô phỏng, chưa kiểm chứng trên dữ liệu thật của doanh nghiệp. Một số phân phối hành vi mua hàng được hiệu chỉnh từ bộ dữ liệu giao dịch công khai The Bread Basket (OpenML 43422). Mỗi tập có sáu kịch bản sự cố, nên các tỷ lệ phát hiện chỉ mang tính chỉ báo. Chi tiết ở mục 6.3 của báo cáo.
+Dữ liệu là mô phỏng, chưa kiểm chứng trên dữ liệu thật của doanh nghiệp. Một số phân phối hành vi mua hàng được hiệu chỉnh từ bộ dữ liệu giao dịch công khai The Bread Basket (OpenML 43422). Mỗi tập có sáu kịch bản sự cố, nên các tỷ lệ phát hiện chỉ mang tính chỉ báo. Chi tiết ở mục 6.4 của báo cáo.
