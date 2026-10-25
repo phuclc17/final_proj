@@ -189,11 +189,13 @@ def table(caption, rows, widths=None, source=None):
     cols = [int(TEXT_W * x / sum(w)) for x in w]
     cols[-1] += TEXT_W - sum(cols)
     # kieu ba duong ngang cua bai bao khoa hoc: duong dam tren cung va duoi cung, duong mong duoi dong tieu de,
-    # khong ke doc; giua cac dong chi co net xam rat mong de de doc o co nhieu dong
+    # net den 0,5 pt giua cac dong. Vien doc la net trang chu khong de 'nil': de 'nil' thi Word hien luoi cham
+    # quanh moi o khi bat View Gridlines (xam 0,25 pt cung hien thanh net cham tren man hinh)
+    white = '<w:{0} w:val="single" w:sz="4" w:space="0" w:color="FFFFFF"/>'
     borders = ('<w:top w:val="single" w:sz="12" w:space="0" w:color="000000"/>'
                '<w:bottom w:val="single" w:sz="12" w:space="0" w:color="000000"/>'
-               '<w:left w:val="nil"/><w:right w:val="nil"/><w:insideV w:val="nil"/>'
-               '<w:insideH w:val="single" w:sz="2" w:space="0" w:color="BFBFBF"/>')
+               + white.format("left") + white.format("right") + white.format("insideV")
+               + '<w:insideH w:val="single" w:sz="4" w:space="0" w:color="000000"/>')
     xml = [para(caption_runs(caption), style="ChuThichBang", keep_next=True) if caption else "",
            f'<w:tbl><w:tblPr><w:tblStyle w:val="TableGrid"/><w:tblW w:w="{TEXT_W}" w:type="dxa"/>'
            f'<w:jc w:val="center"/><w:tblBorders>{borders}</w:tblBorders><w:tblLayout w:type="fixed"/>'
