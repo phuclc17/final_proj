@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F&amp;B Ops Data Platform</title>
+<meta name="description" content="Nền tảng tích hợp và phân tích dữ liệu vận hành đa nguồn, hỗ trợ truy vết nguyên nhân biến động doanh thu cho chuỗi F&amp;B. Khóa luận tốt nghiệp, Đại học Kinh tế TP. Hồ Chí Minh.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #111827; --body: #374151; --muted: #6B7280; --line: #E5E7EB; --soft: #F6F7F9;
+  --accent: #B4232A; --navy: #1F3A5F; --link: #1D4ED8;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+body { margin: 0; background: #fff; color: var(--body); font: 16px/1.65 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; }
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+header.top { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line); }
+header.top .wrap { display: flex; align-items: center; gap: 28px; height: 56px; }
+header.top .brand { font-weight: 650; color: var(--ink); white-space: nowrap; }
+header.top nav { display: flex; gap: 20px; overflow-x: auto; scrollbar-width: none; }
+header.top nav a { color: var(--muted); font-size: 14px; white-space: nowrap; }
+header.top nav a:hover { color: var(--ink); text-decoration: none; }
+
+.hero { padding: 64px 0 40px; border-bottom: 1px solid var(--line); }
+.eyebrow { font-size: 13px; letter-spacing: .02em; color: var(--muted); font-weight: 500; }
+h1 { font-size: 44px; line-height: 1.12; letter-spacing: -.02em; color: var(--ink); margin: 10px 0 14px; font-weight: 700; }
+.lead { font-size: 19px; color: var(--body); max-width: 760px; margin: 0; }
+.byline { margin-top: 14px; color: var(--muted); font-size: 15px; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.btn { display: inline-block; padding: 10px 16px; border-radius: 6px; border: 1px solid var(--line); color: var(--ink);
+       font-weight: 500; font-size: 15px; background: #fff; }
+.btn:hover { border-color: #C7CBD1; text-decoration: none; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.primary:hover { background: #9A1D23; }
+.hint { font-size: 14px; color: var(--muted); margin-top: 12px; max-width: 760px; }
+
+.stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 36px; }
+.stat { border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+.stat .v { font-size: 24px; font-weight: 650; color: var(--ink); font-variant-numeric: tabular-nums; }
+.stat .k { font-size: 13.5px; color: var(--muted); line-height: 1.45; margin-top: 2px; }
+
+section { padding: 56px 0 8px; }
+section + section { border-top: 1px solid var(--line); }
+h2 { font-size: 28px; letter-spacing: -.015em; color: var(--ink); margin: 0 0 6px; font-weight: 650; }
+h2 .n { color: var(--muted); font-weight: 500; margin-right: 10px; }
+h3 { font-size: 18px; color: var(--ink); margin: 32px 0 8px; font-weight: 600; }
+p { margin: 10px 0; max-width: 820px; }
+.small { font-size: 14px; color: var(--muted); }
+
+figure { margin: 24px 0; }
+figure img, figure video { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+figcaption { font-size: 14px; color: var(--muted); margin-top: 8px; max-width: 820px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.grid2 figure { margin: 12px 0; }
+
+table { width: 100%; border-collapse: collapse; font-size: 15px; margin: 16px 0; }
+th { text-align: left; font-weight: 600; color: var(--ink); border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 9px 10px; }
+td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:last-child td { border-bottom: 2px solid var(--ink); }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.code { font-weight: 600; color: var(--ink); white-space: nowrap; }
+
+.cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 20px 0; }
+.card { border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+.card .t { font-size: 13px; color: var(--muted); font-weight: 500; }
+.card .h { font-size: 17px; font-weight: 600; color: var(--ink); margin-top: 4px; }
+.card .d { font-size: 14px; margin-top: 6px; line-height: 1.5; }
+
+ol.steps { padding-left: 20px; margin: 12px 0; max-width: 820px; }
+ol.steps li { margin: 6px 0; }
+
+footer { border-top: 1px solid var(--line); margin-top: 56px; padding: 28px 0 48px; font-size: 14px; color: var(--muted); }
+footer p { max-width: none; }
+
+@media (max-width: 860px) {
+  h1 { font-size: 34px; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cards { grid-template-columns: 1fr 1fr; }
+  .grid2 { grid-template-columns: 1fr; }
+  header.top .brand { display: none; }
+  table { font-size: 14px; display: block; overflow-x: auto; }
+}
+@media (max-width: 520px) {
+  .wrap { padding: 0 16px; }
+  .cards { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="brand">F&amp;B Ops Data Platform</span>
+    <nav>
+      <a href="#bai-toan">Bài toán</a>
+      <a href="#kien-truc">Kiến trúc</a>
+      <a href="#du-lieu">Dữ liệu nguồn</a>
+      <a href="#duong-ong">Đường ống</a>
+      <a href="#phat-hien">Phát hiện</a>
+      <a href="#van-hanh">Vận hành</a>
+      <a href="#ket-qua">Kết quả</a>
+      <a href="#video">Video</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Khóa luận tốt nghiệp ngành Công nghệ thông tin · Đại học Kinh tế TP. Hồ Chí Minh · 2026</div>
+    <h1>F&amp;B Ops Data Platform</h1>
+    <p class="lead">Nền tảng tích hợp và phân tích dữ liệu vận hành đa nguồn, hỗ trợ truy vết nguyên nhân biến động doanh thu cho chuỗi F&amp;B.</p>
+    <div class="byline">Lê Cao Phúc · Giảng viên hướng dẫn: TS. Ngô Tấn Vũ Khanh</div>
+    <div class="actions">
+      <a class="btn primary" href="app/">Mở ứng dụng trực tuyến</a>
+      <a class="btn" href="#video">Xem video trình diễn</a>
+      <a class="btn" href="https://github.com/phuclc17/fnb-ops-data-platform">Mã nguồn</a>
+      <a class="btn" href="https://github.com/phuclc17/fnb-ops-data-platform/blob/main/docs/BaoCao_KhoaLuan.pdf">Báo cáo PDF</a>
+      <a class="btn" href="dbt/">Tài liệu dbt</a>
+    </div>
+    <p class="hint">Ứng dụng trực tuyến chạy ở chế độ chỉ đọc, gồm hai tập đánh giá và môi trường vận hành sau một lượt bảy ngày dữ liệu mới. Lần mở đầu sau một thời gian không ai truy cập có thể mất một đến hai phút để khởi động.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="v">7</div><div class="k">hệ thống nguồn, ba kênh thu thập</div></div>
+      <div class="stat"><div class="v">505 nghìn</div><div class="k">dòng dữ liệu thô trong 183 ngày của tập phát triển</div></div>
+      <div class="stat"><div class="v">211/211</div><div class="k">bước dbt đạt, gồm 158 kiểm thử dữ liệu</div></div>
+      <div class="stat"><div class="v">4/6</div><div class="k">sự cố phát hiện ở tập kiểm tra; chỉ theo dõi doanh thu: 1/6</div></div>
+      <div class="stat"><div class="v">146 giây</div><div class="k">một lượt bảy ngày dữ liệu mới, từ nguồn đến cảnh báo</div></div>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<section id="xem-nhanh">
+  <h2>Xem nhanh trong năm phút</h2>
+  <ol class="steps">
+    <li>Trang Sơ đồ hệ thống: số liệu của từng tầng, từ tệp nguồn đến cảnh báo.</li>
+    <li>Trang Trung tâm cảnh báo, chọn môi trường "Đánh giá · tập phát triển": mọi chi nhánh, mọi tuần; chọn dòng CN2 tuần 06/05 để mở trang truy vết.</li>
+    <li>Trang Truy vết nguyên nhân: kết luận, đề xuất xử lý, doanh thu so với kỳ vọng, cây KPI; cuối trang, nút "Mở tệp gốc" đưa tới đúng dòng trong tệp nguồn.</li>
+    <li>Trang Vận hành hằng ngày: một lượt đường ống với bảy ngày dữ liệu mới và hai cảnh báo nó tìm ra.</li>
+    <li>Trang Kho dữ liệu: chạy câu SQL chỉ đọc trên Bronze, Silver, Gold.</li>
+  </ol>
+</section>
+
+<section id="bai-toan">
+  <h2><span class="n">01</span>Bài toán</h2>
+  <p>Chuỗi đồ ăn nhanh bán tại quầy, qua ứng dụng riêng và qua các sàn giao đồ ăn. Dữ liệu vận hành nằm ở máy POS, ứng dụng, báo cáo đối soát của sàn, sổ nhập kho, phiếu kiểm kê và máy chấm công, mỗi nơi một định dạng và một bộ mã. Khi doanh thu hay lợi nhuận giảm, quản lý chỉ thấy con số tổng và khó phân biệt một tuần có ngày lễ, nhiều ngày mưa với một sự cố vận hành.</p>
+  <p>Đề tài xét năm loại sự cố mà một nguồn dữ liệu đơn lẻ không cho thấy:</p>
+  <table>
+    <thead><tr><th>Mã</th><th>Sự cố</th><th>Dữ liệu cần đối chiếu</th></tr></thead>
+    <tbody>
+      <tr><td class="code">P1</td><td>Sàn tính hoa hồng cao hơn hợp đồng; đơn sàn không được nhập vào POS</td><td>Báo cáo đối soát GrabFood, ShopeeFood; POS; hợp đồng</td></tr>
+      <tr><td class="code">P2</td><td>Hao hụt nguyên liệu tươi vượt định mức</td><td>Sổ nhập kho, phiếu kiểm kê, lượng bán theo công thức món</td></tr>
+      <tr><td class="code">P3</td><td>Thiếu nhân sự ca tối, bếp quá tải, mất đơn</td><td>Chấm công; POS, ứng dụng; báo cáo sàn</td></tr>
+      <tr><td class="code">P4</td><td>Thất thoát nguyên liệu giá trị cao</td><td>Phiếu kiểm kê, sổ nhập kho, lượng bán</td></tr>
+      <tr><td class="code">P5</td><td>Gian lận tại quầy bằng hủy, hoàn hóa đơn</td><td>Hóa đơn POS theo từng thu ngân</td></tr>
+    </tbody>
+  </table>
+  <p class="small">Fast&amp;Fat là chuỗi giả định gồm 11 chi nhánh tại TP. Hồ Chí Minh. Dữ liệu vận hành của doanh nghiệp không công khai, nên một bộ mô phỏng đóng vai bảy hệ thống nguồn và sinh hai tập kịch bản sự cố có đáp án. Đường ống và các bộ phát hiện không đọc bộ mô phỏng hay đáp án; đáp án chỉ dùng để chấm kết quả.</p>
+</section>
+
+<section id="kien-truc">
+  <h2><span class="n">02</span>Kiến trúc</h2>
+  <figure>
+    <img src="images/kien_truc.png" width="1832" height="1560" alt="Kiến trúc tổng thể của nền tảng" loading="lazy">
+    <figcaption>Dữ liệu đi từ hệ thống nguồn qua vùng tiếp nhận, Bronze, Silver, Gold, các bộ phát hiện, rồi tới kho phục vụ và ứng dụng. Airflow điều phối toàn bộ chuỗi.</figcaption>
+  </figure>
+  <table>
+    <thead><tr><th>Thành phần</th><th>Công nghệ</th><th>Lý do chọn</th></tr></thead>
+    <tbody>
+      <tr><td>Thu thập</td><td>Python, FastAPI</td><td>Hai nguồn API cần kéo theo mốc ngày và đối chiếu tổng số bản ghi; tệp được kiểm tra theo hợp đồng dữ liệu trước khi nhận</td></tr>
+      <tr><td>Lưu trữ, biến đổi</td><td>DuckDB, dbt</td><td>Dữ liệu cỡ trăm megabyte, chạy trên một máy; SQL có kiểm thử, tài liệu và phả hệ</td></tr>
+      <tr><td>Kho phục vụ, báo cáo</td><td>PostgreSQL, Metabase</td><td>Nhiều người đọc đồng thời bằng tài khoản chỉ đọc; dashboard dựng bằng mã nên tái lập được</td></tr>
+      <tr><td>Ứng dụng</td><td>Streamlit</td><td>Các trang cần logic riêng: cảnh báo, truy vết, vận hành dữ liệu</td></tr>
+      <tr><td>Điều phối, đóng gói</td><td>Airflow, Docker Compose</td><td>Đường ống tự chạy khi có dữ liệu mới; cả hệ thống bật bằng một lệnh</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="du-lieu">
+  <h2><span class="n">03</span>Dữ liệu nguồn</h2>
+  <p>Mỗi ngày, bộ mô phỏng sinh sự kiện của chuỗi đúng một lần: đơn hàng, ca làm, tải bếp, hàng nhập, hao hụt, kiểm kê. Mỗi hệ thống nguồn xuất phần nó thấy, kèm lỗi riêng: hai phiên bản POS ghi ngày và tiền khác nhau, ứng dụng ghi giờ UTC, sổ kho ghi tên nguyên liệu tự do và chèn dòng tổng cộng, máy chấm công ghi trùng lượt quẹt. Một sự cố đưa vào thế giới mô phỏng để lại dấu vết ở nhiều nguồn cùng lúc.</p>
+  <figure>
+    <img src="images/du_lieu_tho.png" width="1580" height="1948" alt="Dữ liệu thô của các hệ thống nguồn" loading="lazy">
+    <figcaption>Trích nguyên văn từ tệp nguồn: hai mẫu sổ nhập kho, báo cáo ShopeeFood, hai phiên bản POS, máy chấm công, và sáu cách ghi mã cho cùng một chi nhánh.</figcaption>
+  </figure>
+  <figure>
+    <img src="images/mo_phong.png" width="1556" height="1914" alt="Trang Bộ mô phỏng" loading="lazy">
+    <figcaption>CN2 ngày 11/05/2024, giữa đợt thiếu nhân sự: 38 khách bỏ về không được hệ thống nào ghi nhận; 5 đơn sàn không vào POS chỉ lộ ra khi đối chiếu với báo cáo của sàn.</figcaption>
+  </figure>
+</section>
+
+<section id="duong-ong">
+  <h2><span class="n">04</span>Đường ống và kho dữ liệu</h2>
+  <div class="cards">
+    <div class="card"><div class="t">Thu thập</div><div class="h">3 kênh</div><div class="d">API theo mốc ngày, tệp xuất tự động, tệp tải lên. Tệp được nhận dạng theo nội dung; tệp sai hợp đồng bị từ chối kèm lý do.</div></div>
+    <div class="card"><div class="t">Bronze</div><div class="h">17 bảng nguyên văn</div><div class="d">Mỗi dòng giữ tên tệp và số dòng gốc. Nạp tăng dần theo mã băm; chạy lại không tạo dòng trùng.</div></div>
+    <div class="card"><div class="t">Silver</div><div class="h">20 bảng chuẩn hóa</div><div class="d">1.352 dòng lỗi được cách ly kèm lý do. Số dòng Bronze bằng Silver cộng cách ly ở cả bảy nguồn.</div></div>
+    <div class="card"><div class="t">Gold</div><div class="h">Lược đồ hình sao</div><div class="d">6 bảng sự kiện, 7 bảng chiều, 2 chiều SCD2, 5 bảng chỉ số; doanh thu khớp Silver theo chi nhánh và ngày.</div></div>
+  </div>
+  <div class="grid2">
+    <figure>
+      <img src="images/kho_sql.png" width="1556" height="1394" alt="Truy vấn trên Bronze" loading="lazy">
+      <figcaption>Bronze giữ nguyên khác biệt của hai phiên bản POS; Silver hợp nhất về một lược đồ.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/pha_he.png" width="1463" height="1892" alt="Phả hệ dữ liệu của fact_order" loading="lazy">
+      <figcaption>Phả hệ của bảng fact_order, sinh từ siêu dữ liệu dbt.</figcaption>
+    </figure>
+  </div>
+  <figure>
+    <img src="images/luoc_do_hinh_sao.png" width="1600" height="1384" alt="Lược đồ hình sao" loading="lazy">
+    <figcaption>Lược đồ hình sao của tầng Gold. Toàn bộ mô hình, cột, kiểm thử và phả hệ xem ở <a href="dbt/">tài liệu dbt</a>.</figcaption>
+  </figure>
+</section>
+
+<section id="phat-hien">
+  <h2><span class="n">05</span>Phát hiện và truy vết nguyên nhân</h2>
+  <p>Mỗi chỉ số của một chi nhánh trong một tuần được so với mức kỳ vọng: trung vị các chi nhánh cùng hạng trong chính tuần đó, cộng độ chênh thường ngày của chi nhánh trong tám tuần trước. Ngày lễ, mưa, điều chỉnh giá tác động lên cả nhóm nên tự triệt tiêu. Năm bộ phát hiện chấm điểm từng nguyên nhân:</p>
+  <table>
+    <thead><tr><th>Nguyên nhân</th><th>Cách phát hiện</th></tr></thead>
+    <tbody>
+      <tr><td class="code">P1a</td><td>Luật đối soát: tỷ lệ hoa hồng tính lại từ báo cáo sàn so với hợp đồng có hiệu lực</td></tr>
+      <tr><td class="code">P1b, P5</td><td>Kiểm định Poisson trên số đếm (đơn sàn thiếu trên POS; hóa đơn hủy, hoàn của từng thu ngân), hiệu chỉnh Bonferroni</td></tr>
+      <tr><td class="code">P2, P4</td><td>Hao hụt theo kỳ kiểm kê của từng nguyên liệu, so với các chi nhánh khác cùng kỳ bằng trung vị và MAD</td></tr>
+      <tr><td class="code">P3</td><td>Gộp năm tín hiệu: số ca bếp tối, thời gian chuẩn bị, cửa hàng tự hủy đơn, khách hủy vì chờ lâu</td></tr>
+    </tbody>
+  </table>
+  <figure>
+    <img src="images/cay_kpi.png" width="1838" height="854" alt="Cây KPI" loading="lazy">
+    <figcaption>Cây KPI tách doanh thu theo kênh, số đơn và giá trị đơn; mỗi nhánh gắn với các nguyên nhân có thể gây ra nó.</figcaption>
+  </figure>
+  <div class="grid2">
+    <figure>
+      <img src="images/canh_bao.png" width="1556" height="1954" alt="Trung tâm cảnh báo" loading="lazy">
+      <figcaption>Trung tâm cảnh báo: mọi chi nhánh, mọi tuần, sắp theo thiệt hại ước tính.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/truy_vet.png" width="1556" height="1888" alt="Truy vết nguyên nhân" loading="lazy">
+      <figcaption>CN2 tuần 06/05/2024: số ca bếp tối giảm một nửa, thời gian chuẩn bị tăng 47%, cửa hàng tự hủy đơn App tăng gấp năm. Đề xuất xử lý kèm thiệt hại ước tính.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="van-hanh">
+  <h2><span class="n">06</span>Vận hành tự động</h2>
+  <p>Hai DAG Airflow nối với nhau bằng Dataset: hệ thống nguồn ghi dữ liệu ngày mới, đường ống tự chạy bảy bước từ kéo API đến đưa sang kho phục vụ. Cửa chặn chất lượng dừng lượt chạy khi dữ liệu thiếu nghiêm trọng; khi đó người dùng vẫn thấy bản kết quả trước, không thấy kết quả dở dang.</p>
+  <figure>
+    <img src="images/dag.png" width="1792" height="1190" alt="Hai DAG Airflow" loading="lazy">
+    <figcaption>DAG hệ thống nguồn và DAG đường ống.</figcaption>
+  </figure>
+  <figure>
+    <img src="images/van_hanh.png" width="1556" height="1232" alt="Trang Vận hành hằng ngày" loading="lazy">
+    <figcaption>Một lượt bảy ngày dữ liệu mới: 236 tệp, 18.798 dòng, 211/211 bước dbt; hai cảnh báo trùng đúng hai sự cố đã cài cho môi trường vận hành.</figcaption>
+  </figure>
+  <figure>
+    <img src="images/tong_quan.png" width="1756" height="1908" alt="Dashboard Metabase" loading="lazy">
+    <figcaption>Dashboard Metabase trên kho phục vụ PostgreSQL, nhúng vào trang Tổng quan của ứng dụng.</figcaption>
+  </figure>
+</section>
+
+<section id="ket-qua">
+  <h2><span class="n">07</span>Kết quả đánh giá</h2>
+  <p>Mọi tham số được chọn trên tập phát triển. Cấu hình được chốt trước, rồi chạy tập kiểm tra đúng một lần.</p>
+  <table>
+    <thead><tr><th>Phương pháp</th><th>Tập</th><th class="num">Sự cố phát hiện</th><th class="num">Precision</th><th class="num">Recall theo tuần</th><th class="num">F1</th></tr></thead>
+    <tbody>
+      <tr><td>Đề xuất</td><td>Phát triển</td><td class="num">5/6</td><td class="num">0,72</td><td class="num">0,87</td><td class="num">0,79</td></tr>
+      <tr><td>Đề xuất</td><td>Kiểm tra</td><td class="num">4/6</td><td class="num">0,50</td><td class="num">0,54</td><td class="num">0,52</td></tr>
+      <tr><td>Chỉ theo dõi doanh thu</td><td>Kiểm tra</td><td class="num">1/6</td><td class="num">0,20</td><td class="num">0,08</td><td class="num">0,11</td></tr>
+      <tr><td>Isolation Forest</td><td>Kiểm tra</td><td class="num">2/6</td><td class="num">0,14</td><td class="num">0,15</td><td class="num">0,15</td></tr>
+    </tbody>
+  </table>
+  <p>Ở mọi sự cố có tín hiệu, nguyên nhân đúng xếp hạng một. Thất thoát kho với nhịp kiểm kê hai tuần không phát hiện được ở cả hai tập; thiếu nhân sự nhẹ và gian lận nhẹ ở tập kiểm tra nằm sát dưới ngưỡng; nhóm chi nhánh hạng C chỉ có ba chi nhánh nên mức kỳ vọng nhiễu và gây phần lớn báo động giả.</p>
+  <figure>
+    <img src="images/ket_qua_canh_bao.png" width="1768" height="1619" alt="Cảnh báo đặt cạnh thời gian sự cố" loading="lazy">
+    <figcaption>Cảnh báo của bộ phát hiện đặt cạnh thời gian các sự cố, theo chi nhánh và tuần.</figcaption>
+  </figure>
+  <p class="small">Chi tiết từng kịch bản, phân tích lỗi và độ nhạy: <a href="https://github.com/phuclc17/fnb-ops-data-platform/blob/main/docs/results/KET_QUA_DANH_GIA.md">kết quả đánh giá</a>, Chương 5 của báo cáo.</p>
+</section>
+
+<section id="video">
+  <h2><span class="n">08</span>Video trình diễn</h2>
+  <p>Khoảng mười phút: từ tệp dữ liệu gốc qua các tầng xử lý, đến cảnh báo, truy vết và quay lại đúng dòng dữ liệu gốc; sau đó là kênh tải tệp lên và phần kiểm chứng.</p>
+  <figure>
+    <video controls preload="metadata" poster="images/video_poster.jpg" src="demo.mp4"></video>
+  </figure>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Dữ liệu là mô phỏng, chưa kiểm chứng trên dữ liệu thật của doanh nghiệp. Một số phân phối hành vi mua hàng được hiệu chỉnh từ bộ dữ liệu giao dịch công khai The Bread Basket (OpenML 43422).</p>
+    <p><a href="https://github.com/phuclc17/fnb-ops-data-platform">Mã nguồn</a> · <a href="app/">Ứng dụng trực tuyến</a> · <a href="https://github.com/phuclc17/fnb-ops-data-platform/blob/main/docs/BaoCao_KhoaLuan.pdf">Báo cáo PDF</a> · <a href="dbt/">Tài liệu dbt</a></p>
+    <p>Lê Cao Phúc, 2026.</p>
+  </div>
+</footer>
+
+</body>
+</html>
