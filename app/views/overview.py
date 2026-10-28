@@ -10,12 +10,16 @@ import requests
 import streamlit as st
 
 import ui
-from common import DEMO, ROOT, analysis_page, current_profile, selection
+import overview_native
+from common import DEMO, ROOT, STATIC, analysis_page, current_profile, selection
 
 G, scores, alerts = analysis_page()
 branch, start, end = selection()
 names = G["dim_branch"].set_index("branch_id")
 title = "Toàn chuỗi" if branch is None else f"CN{branch} · {names.branch_name[branch]}"
+if STATIC:   # ban xem truc tuyen khong co Metabase: ve cung cac chi so tu Gold
+    overview_native.render(G, alerts, branch, start, end, title)
+    st.stop()
 ui.header(f"Tổng quan · {title}")
 
 links_file = ROOT / "bi" / "metabase_links.json"

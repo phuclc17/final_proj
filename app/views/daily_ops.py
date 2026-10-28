@@ -10,7 +10,7 @@ import airflow_client as af
 import duckdb
 
 import ui
-from common import DEMO, db_path, vn
+from common import DEMO, STATIC, db_path, vn
 
 PROFILE = "live"
 STEP_LABEL = {"extract": "Kéo dữ liệu qua API", "check": "Phát hiện tệp mới", "ingest": "Nạp Bronze", "quality": "Kiểm tra đầu vào",
@@ -130,34 +130,40 @@ def panel(busy_now):
     c3.metric("Trạng thái", "Đang xử lý" if busy_now else "Sẵn sàng", border=True)
 
 
-busy = is_busy()
+if STATIC:   # ban xem truc tuyen khong co Airflow: hien luot da chay that, doc tu nhat ky trong kho
+    st.caption("Bản xem trực tuyến không chạy Airflow. Các ô dưới đây là lượt đường ống gần nhất đã chạy thật trên môi "
+               "trường vận hành, đọc từ nhật ký trong kho.")
+    synced = from_warehouse(None)
+    if synced:
+        flow({"dag_run_id": ""}, {"xuat_tep": {"state": "success"}}, *synced)
+else:
+    busy = is_busy()
 
+    @st.fragment(run_every=3 if busy else None)
+    def live():
+        now = is_busy()
+        panel(now)
+        if busy and not now:      # vua xu ly xong: chay lai ca trang de cap nhat ket qua, mo lai nut bam
+            st.rerun()
 
-@st.fragment(run_every=3 if busy else None)
-def live():
-    now = is_busy()
-    panel(now)
-    if busy and not now:      # vua xu ly xong: chay lai ca trang de cap nhat ket qua, mo lai nut bam
-        st.rerun()
+    live()
 
-
-live()
-
-# ---------------------------------------------------------------- dieu khien
-st.subheader("Nhận dữ liệu ngày mới")
-c1, c2, c3 = st.columns([1.3, 1.6, 3])
-days = c1.selectbox("Số ngày", [1, 7], index=1, format_func=lambda x: f"{x} ngày", label_visibility="collapsed")
-if c2.button("Gửi dữ liệu ngày mới", type="primary", disabled=busy):
-    try:
-        af.trigger_source(days)
-        st.session_state.poll_until = time.time() + 60
-        st.toast(f"Hệ thống nguồn đang ghi dữ liệu của {days} ngày mới.")
-        st.rerun()
-    except Exception as e:  # Airflow tu choi hoac chua chay
-        st.error(f"Không gửi được lệnh: {e}")
-c3.caption("Các hệ thống nguồn ghi dữ liệu của những ngày kinh doanh kế tiếp; trong khóa luận, hệ thống nguồn do bộ mô "
-           "phỏng đóng vai. " + ("Trên bản trình diễn, việc này chỉ chạy khi bấm nút; đường ống tự xử lý sau đó khoảng "
-                                 "ba đến năm phút." if DEMO else "Bình thường việc này diễn ra lúc 23:00 mỗi ngày."))
+    # ------------------------------------------------------------ dieu khien
+    st.subheader("Nhận dữ liệu ngày mới")
+    c1, c2, c3 = st.columns([1.3, 1.6, 3])
+    days = c1.selectbox("Số ngày", [1, 7], index=1, format_func=lambda x: f"{x} ngày", label_visibility="collapsed")
+    if c2.button("Gửi dữ liệu ngày mới", type="primary", disabled=busy):
+        try:
+            af.trigger_source(days)
+            st.session_state.poll_until = time.time() + 60
+            st.toast(f"Hệ thống nguồn đang ghi dữ liệu của {days} ngày mới.")
+            st.rerun()
+        except Exception as e:  # Airflow tu choi hoac chua chay
+            st.error(f"Không gửi được lệnh: {e}")
+    c3.caption("Các hệ thống nguồn ghi dữ liệu của những ngày kinh doanh kế tiếp; trong khóa luận, hệ thống nguồn do bộ "
+               "mô phỏng đóng vai. " + ("Trên bản trình diễn, việc này chỉ chạy khi bấm nút; đường ống tự xử lý sau đó "
+                                        "khoảng ba đến năm phút." if DEMO
+                                        else "Bình thường việc này diễn ra lúc 23:00 mỗi ngày."))
 
 # ---------------------------------------------------------------- ket qua luot xu ly gan nhat
 log = query(PROFILE, "select * from ops.pipeline_runs order by finished_at")
@@ -213,6 +219,8 @@ if log is not None and not log.empty:
                                    "Số bước": hist.buoc, "Thời gian, giây": hist.giay.round(0),
                                    "Trạng thái": hist.trang_thai}), hide_index=True, width="stretch")
 
+if STATIC:
+    st.stop()
 with st.expander("Lịch chạy"):
     try:
         for d, label in ((af.SOURCE, "Hệ thống nguồn: 23:00 mỗi ngày"),

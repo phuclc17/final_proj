@@ -19,8 +19,10 @@ from analytics import detect  # noqa: E402
 from analytics.data import PROFILES, db_path, load_gold  # noqa: E402
 
 ALL = "Toàn chuỗi"
+# Ban xem truc tuyen: chi co ung dung va kho du lieu chi doc, khong co Airflow, Metabase, API nguon.
+STATIC = os.environ.get("FASTFAT_STATIC") == "1"
 # Ban trinh dien cong khai cho giang vien cham: an tai tep len, bat/tat lich chay; o SQL luon qua lop an toan.
-DEMO = os.environ.get("FASTFAT_DEMO") == "1"
+DEMO = os.environ.get("FASTFAT_DEMO") == "1" or STATIC
 
 
 @st.cache_data(show_spinner="Đang đọc kho dữ liệu và quét cảnh báo…")

@@ -1,12 +1,12 @@
-"""Nen tang du lieu van hanh Fast&Fat - mot ung dung duy nhat cho ca phan du lieu (DE) va phan phan tich (DA).
+"""F&B Ops Data Platform - mot ung dung duy nhat cho ca phan du lieu (DE) va phan phan tich (DA).
 Chay: .venv/Scripts/streamlit run app/main.py --server.port 8504   (hoac docker compose up -d -> cong 8501)"""
 import streamlit as st
 
 import ui
-from common import DEMO, PROFILES
+from common import DEMO, PROFILES, STATIC
 from analytics import assistant
 
-st.set_page_config(page_title="Fast&Fat · Dữ liệu vận hành", layout="wide")
+st.set_page_config(page_title="F&B Ops Data Platform", layout="wide")
 ui.setup()
 
 home = st.Page("views/home.py", title="Sơ đồ hệ thống", default=True)
@@ -48,7 +48,10 @@ elif not user_changed and st.session_state.get("profile_keep") not in (None, st.
 st.sidebar.selectbox("Môi trường dữ liệu", list(PROFILES), key="profile",
                      on_change=lambda: st.session_state.update(profile_changed=True))
 st.session_state.profile_keep = st.session_state.profile
-if DEMO:
+if STATIC:
+    st.sidebar.caption("Bản xem trực tuyến, chỉ đọc. Dữ liệu mô phỏng của một chuỗi giả định; Airflow và Metabase chạy "
+                       "trong bản Docker đầy đủ.")
+elif DEMO:
     st.sidebar.caption("Bản trình diễn trên dữ liệu mô phỏng của một chuỗi giả định. Dữ liệu môi trường vận hành "
                        "được đưa về điểm ban đầu mỗi đêm.")
 nav.run()

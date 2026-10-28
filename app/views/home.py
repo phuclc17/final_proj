@@ -5,13 +5,13 @@ import streamlit as st
 import airflow_client as af
 import dbt_meta
 import ui
-from common import C, current_profile, load_current, query, vn
+from common import STATIC, C, current_profile, load_current, query, vn
 
 profile = current_profile()
 orders = query(profile, "select count(*) as n, min(date_day) as d0, max(date_day) as d1 from gold.fact_order")
 period = (f"{pd.Timestamp(orders.d0.iloc[0]):%d/%m/%Y} – {pd.Timestamp(orders.d1.iloc[0]):%d/%m/%Y}"
           if orders is not None and len(orders) else "—")
-ui.header("Sơ đồ hệ thống", f"Fast&Fat · 11 chi nhánh · 4 kênh bán · dữ liệu {period} · môi trường "
+ui.header("Sơ đồ hệ thống", f"Chuỗi giả định Fast&Fat · 11 chi nhánh · 4 kênh bán · dữ liệu {period} · môi trường "
                             f"{st.session_state.get('profile', '')}")
 
 # ---------------------------------------------------------------- so lieu song cua tung tang
@@ -41,7 +41,7 @@ n_pass, n_tests = (int((tests["Trạng thái"] == "pass").sum()), len(tests)) if
 n_alert = int((alerts.level == "Cảnh báo").sum())
 n_alert_branches = alerts[alerts.level == "Cảnh báo"].branch_id.nunique()
 n_days = (pd.Timestamp(orders.d1.iloc[0]) - pd.Timestamp(orders.d0.iloc[0])).days + 1 if orders is not None else 0
-status = af.status(limit=1)
+status = None if STATIC else af.status(limit=1)
 last_run = (f"Lượt gần nhất {pd.Timestamp(runs.t.iloc[0]):%d/%m %H:%M}, {'thành công' if runs.ok.iloc[0] else 'lỗi'}"
             if runs is not None and len(runs) else "Chưa có lượt chạy tự động trên môi trường này")
 pub_t = f"{pd.Timestamp(pub.finished_at.iloc[0]):%d/%m %H:%M}" if pub is not None and len(pub) else "—"
@@ -67,7 +67,7 @@ ui.cards([
 ui.cards([
     ("Bộ phát hiện", f"{n_alert} tuần cảnh báo", f"{n_alert_branches} chi nhánh; {len(C.INDICATORS)} chỉ số giám sát", "05"),
     ("Kho phục vụ", "PostgreSQL", f"Bản sao Gold cho Metabase; lần đưa gần nhất {pub_t}", "06"),
-    ("Điều phối", "Airflow" if status else "Airflow chưa bật", last_run, "07"),
+    ("Điều phối", "Airflow" if status or STATIC else "Airflow chưa bật", last_run, "07"),
     ("Kiểm thử dữ liệu", f"{n_pass}/{n_tests} đạt" if n_tests else "—", "Khóa, toàn vẹn tham chiếu, đối soát giữa các tầng",
      "08"),
 ], cols=4)

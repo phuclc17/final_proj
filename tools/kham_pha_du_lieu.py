@@ -1,7 +1,7 @@
 """
 Kham pha du lieu (EDA) tren TAP PHAT TRIEN: in cac so lieu dung o muc 4.4 (du lieu tho, tang Bronze va buoc
 kiem tra cua Silver) va muc 4.7 (du lieu da lam sach, tang Gold) cua bao cao. Chi doc kho, khong doc ground_truth,
-khong dung tap kiem tra. Bieu do tuong ung: docs/report/figures/charts.py c4_nguong_lam_sach c4_kham_pha.
+khong dung tap kiem tra.
 
   .venv/Scripts/python tools/kham_pha_du_lieu.py
 """

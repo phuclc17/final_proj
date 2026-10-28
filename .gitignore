@@ -34,7 +34,3 @@ bi/metabase_links.json
 docs/review/*.mp4
 docs/review/_video_doan/
 
-# Ghi chu lam viec noi bo (khong dua len repo cong khai)
-CLAUDE.md
-BUSINESS_CONTEXT.md
-docs/KHUNG_BAO_CAO.md

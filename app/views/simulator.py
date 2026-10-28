@@ -437,7 +437,7 @@ with tab_model:
                 "tính tải bếp, quyết định từng đơn được phục vụ, bị hủy hay khách bỏ về, trừ tồn kho theo công thức món. "
                 "Sau đó mỗi hệ thống nguồn chỉ xuất phần nó thấy. Vì cùng một tập sự kiện, các nguồn nhất quán với nhau "
                 "như ngoài thực tế, và một sự cố gây ra dấu vết ở nhiều nguồn cùng lúc.")
-    fig = ROOT / "docs" / "report" / "figures" / "h3_3_chuoi_nhan_qua.png"
+    fig = ROOT / "docs" / "images" / "chuoi_nhan_qua.png"
     if fig.exists():
         st.image(str(fig), caption="Chuỗi nhân quả vận hành trong bộ mô phỏng", width=640)
 
