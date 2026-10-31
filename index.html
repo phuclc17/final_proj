@@ -148,6 +148,18 @@ footer p { max-width: none; }
   </ol>
 </section>
 
+<section id="mot-vong">
+  <h2>Một vòng sản phẩm</h2>
+  <p>Ví dụ trên môi trường vận hành, tuần 23–29/09/2024. Ứng dụng trực tuyến giữ đúng trạng thái sau vòng này.</p>
+  <ol class="steps">
+    <li>Dữ liệu đến. Cuối mỗi ngày, POS đám mây và ứng dụng đặt hàng có hóa đơn mới trên API; POS cài tại máy và máy chấm công xuất tệp; báo cáo đối soát tuần của sàn và sổ nhập kho được gửi vào vùng tiếp nhận.</li>
+    <li>Đường ống tự chạy. Airflow thấy dữ liệu mới và chạy bảy bước, từ kéo API đến đưa sang PostgreSQL: 236 tệp, 18.798 dòng, 211/211 bước dbt, 146 giây.</li>
+    <li>Cảnh báo. ShopeeFood tính hoa hồng 27% trên doanh thu món 10.565.000 đ của CN1 trong khi hợp đồng là 22%, thu thừa 528.250 đ; cùng tuần, CN3 thiếu nhân sự ca tối.</li>
+    <li>Truy vết. Trang Truy vết nguyên nhân cho kết luận, điểm từng giả thuyết, doanh thu so với kỳ vọng, và mở đúng dòng đối soát trong tệp ShopeeFood gốc.</li>
+    <li>Xử lý. Kế toán công nợ sàn đối chiếu phụ lục hợp đồng, gửi sàn yêu cầu hoàn 528.250 đ kèm bảng đối soát, theo dõi tỷ lệ ở kỳ kế tiếp; nếu vẫn lệch, cảnh báo xuất hiện lại.</li>
+  </ol>
+</section>
+
 <section id="bai-toan">
   <h2><span class="n">01</span>Bài toán</h2>
   <p>Chuỗi đồ ăn nhanh bán tại quầy, qua ứng dụng riêng và qua các sàn giao đồ ăn. Dữ liệu vận hành nằm ở máy POS, ứng dụng, báo cáo đối soát của sàn, sổ nhập kho, phiếu kiểm kê và máy chấm công, mỗi nơi một định dạng và một bộ mã. Khi doanh thu hay lợi nhuận giảm, quản lý chỉ thấy con số tổng và khó phân biệt một tuần có ngày lễ, nhiều ngày mưa với một sự cố vận hành.</p>
@@ -297,7 +309,6 @@ footer p { max-width: none; }
 
 <footer>
   <div class="wrap">
-    <p>Dữ liệu là mô phỏng, chưa kiểm chứng trên dữ liệu thật của doanh nghiệp. Một số phân phối hành vi mua hàng được hiệu chỉnh từ bộ dữ liệu giao dịch công khai The Bread Basket (OpenML 43422).</p>
     <p><a href="https://github.com/phuclc17/fnb-ops-data-platform">Mã nguồn</a> · <a href="app/">Ứng dụng trực tuyến</a> · <a href="https://github.com/phuclc17/fnb-ops-data-platform/blob/main/docs/BaoCao_KhoaLuan.pdf">Báo cáo PDF</a> · <a href="dbt/">Tài liệu dbt</a></p>
     <p>Lê Cao Phúc, 2026.</p>
   </div>
