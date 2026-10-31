@@ -33,6 +33,37 @@ Mỗi cảnh báo có nguyên nhân, mức thiệt hại ước tính, đề xu�
 
 Fast&Fat là chuỗi giả định. Dữ liệu vận hành của doanh nghiệp không công khai, nên một bộ mô phỏng đóng vai các hệ thống nguồn và sinh kèm hai tập sự cố có đáp án để đánh giá. Đường ống và bộ phát hiện không đọc bộ mô phỏng hay đáp án.
 
+## Một vòng sản phẩm
+
+Ví dụ trên môi trường vận hành, tuần 23–29/09/2024. Ứng dụng trực tuyến giữ đúng trạng thái sau vòng này.
+
+1. Dữ liệu đến. Cuối mỗi ngày, POS đám mây và ứng dụng đặt hàng có hóa đơn mới trên API; POS cài tại máy và máy chấm công xuất tệp; báo cáo đối soát tuần của GrabFood, ShopeeFood và sổ nhập kho được gửi vào vùng tiếp nhận.
+2. Đường ống tự chạy. Airflow thấy dữ liệu mới và chạy bảy bước: kéo API theo mốc ngày, phát hiện tệp mới, nạp Bronze, cửa chặn chất lượng, dbt dựng Silver và Gold kèm 158 kiểm thử, quét cảnh báo, đưa sang PostgreSQL. Lượt bảy ngày này nạp 236 tệp, 18.798 dòng trong 146 giây.
+3. Cảnh báo. Trung tâm cảnh báo có hai cảnh báo mới. Cảnh báo đầu: ShopeeFood tính hoa hồng 27% trên doanh thu món 10.565.000 đ của CN1, trong khi hợp đồng là 22%, thu thừa 528.250 đ. Cảnh báo thứ hai: CN3 thiếu nhân sự ca tối.
+4. Truy vết. Trang Truy vết nguyên nhân cho kết luận, điểm của từng giả thuyết và doanh thu so với kỳ vọng. Mục bằng chứng gốc hiện dòng đối soát kèm tên tệp `ShopeeFood_DoiSoat_20240923_20240929.xlsx` và số dòng; nút "Mở tệp gốc" mở đúng dòng đó trong tệp nguyên văn.
+5. Xử lý. Đề xuất giao cho kế toán công nợ sàn: đối chiếu với phụ lục hợp đồng, gửi sàn yêu cầu hoàn 528.250 đ kèm bảng đối soát, theo dõi tỷ lệ hoa hồng ở kỳ kế tiếp. Nếu tuần sau tỷ lệ vẫn lệch, cảnh báo xuất hiện lại.
+
+## Chức năng
+
+Mọi trang dùng chung bộ lọc môi trường dữ liệu, chi nhánh và khoảng thời gian. Môi trường vận hành nhận dữ liệu mới; hai tập đánh giá là dữ liệu cố định dùng để chấm bộ phát hiện.
+
+| Nhóm | Trang | Chức năng |
+|---|---|---|
+| Nguồn dữ liệu | Kết nối nguồn | Kênh thu thập của từng nguồn, dữ liệu mới nhất, độ trễ, trạng thái bộ kết nối API, tệp bị từ chối |
+| | Tải tệp lên | Gửi báo cáo sàn, sổ kho, phiếu kiểm kê; tệp được nhận dạng theo nội dung và báo đã nhận, thay bản cũ, trùng hoặc từ chối kèm lý do |
+| | Tệp nguồn | Xem nguyên văn mọi tệp đã nhận, lọc theo nguồn, chi nhánh, ngày |
+| Dữ liệu | Vận hành hằng ngày | Đưa dữ liệu ngày mới vào, theo dõi bảy bước của đường ống, xem cảnh báo của tuần vừa xử lý |
+| | Kho dữ liệu | Xem bảng Bronze, Silver, Gold; chạy câu SQL chỉ đọc, có sẵn truy vấn mẫu |
+| | Mô hình và phả hệ | Phả hệ của từng bảng và lược đồ hình sao, sinh từ siêu dữ liệu dbt |
+| | Chất lượng dữ liệu | Kết quả cửa chặn và 158 kiểm thử, đối soát số dòng giữa các tầng, dòng bị cách ly kèm lý do |
+| Phân tích vận hành | Tổng quan | Doanh thu, số đơn, AOV, COGS%, Labor%, hủy đơn theo kênh và chi nhánh |
+| | Trung tâm cảnh báo | Bản đồ nhiệt chi nhánh × tuần, danh sách cảnh báo sắp theo thiệt hại ước tính, chỉnh được ngưỡng |
+| | Truy vết nguyên nhân | Kết luận, đề xuất xử lý, cây KPI, điểm từng giả thuyết, bằng chứng gốc mở tới đúng dòng trong tệp nguồn |
+| Kiểm chứng | Bộ mô phỏng | Sự thật của một ngày đặt cạnh những gì từng hệ thống ghi lại; lịch và tác động của các kịch bản sự cố |
+| | Đánh giá bộ phát hiện | Kết quả trên hai tập, so với phương án cơ sở, độ nhạy theo ngưỡng và theo cách tính mức kỳ vọng |
+
+Bản trực tuyến chỉ đọc nên không có trang Tải tệp lên và nút đưa dữ liệu mới; Tổng quan vẽ trực tiếp từ kho thay cho dashboard Metabase.
+
 ## Kiến trúc
 
 ![Kiến trúc](docs/images/kien_truc.png)
@@ -69,7 +100,7 @@ Ngưỡng cảnh báo được chọn trên tập phát triển rồi chạy t�
 
 Trên tập kiểm tra, chỉ theo dõi doanh thu phát hiện 1/6 sự cố (F1 0,11), Isolation Forest phát hiện 2/6 (F1 0,15). Thất thoát kho với nhịp kiểm kê hai tuần không phát hiện được ở cả hai tập. Chi tiết và phân tích lỗi: [docs/results/KET_QUA_DANH_GIA.md](docs/results/KET_QUA_DANH_GIA.md).
 
-Về dữ liệu: 211/211 bước dbt đạt trên cả ba môi trường; số dòng Bronze bằng Silver cộng cách ly cộng dòng cấu trúc ở cả bảy nguồn; doanh thu thuần ở Gold khớp Silver theo từng chi nhánh và ngày. Một lượt bảy ngày dữ liệu mới đi từ hệ thống nguồn đến cảnh báo trong khoảng 150 giây.
+Về dữ liệu: 211/211 bước dbt đạt trên cả ba môi trường; số dòng Bronze bằng Silver cộng cách ly cộng dòng cấu trúc ở cả bảy nguồn; doanh thu thuần ở Gold khớp Silver theo từng chi nhánh và ngày. Một lượt bảy ngày dữ liệu mới đi từ hệ thống nguồn đến cảnh báo trong 146 giây.
 
 ## Mã nguồn
 
@@ -122,7 +153,3 @@ docker compose up -d --build
 Dashboard Metabase được dựng bằng `python -m pipeline.publish --profile <tập>` rồi `python bi/metabase_setup.py`. Mật khẩu trong `docker-compose.yml` là giá trị mặc định cho máy cá nhân.
 
 </details>
-
-## Giới hạn
-
-Dữ liệu là mô phỏng, chưa kiểm chứng trên dữ liệu thật của doanh nghiệp. Một số phân phối hành vi mua hàng được hiệu chỉnh từ bộ dữ liệu giao dịch công khai The Bread Basket (OpenML 43422). Mỗi tập chỉ có sáu kịch bản sự cố nên các tỷ lệ phát hiện mang tính chỉ báo. Xem mục 6.3 của báo cáo.
