@@ -5,13 +5,12 @@ Nền tảng tích hợp và phân tích dữ liệu vận hành đa nguồn, h�
 Khóa luận tốt nghiệp ngành Công nghệ thông tin, Trường Công nghệ và Thiết kế, Đại học Kinh tế TP. Hồ Chí Minh.
 Sinh viên thực hiện: Lê Cao Phúc. Giảng viên hướng dẫn: TS. Ngô Tấn Vũ Khanh.
 
-[Trang giới thiệu](https://phuclc17.github.io/fnb-ops-data-platform/) ·
-[Ứng dụng trực tuyến](https://phuclc17.github.io/fnb-ops-data-platform/app/) ·
-[Video trình diễn](https://phuclc17.github.io/fnb-ops-data-platform/#video) ·
+[Trang giới thiệu dự án](https://phuclc17.github.io/final_proj/) ·
+[Video trình diễn](https://phuclc17.github.io/final_proj/#video) ·
 [Báo cáo PDF](docs/BaoCao_KhoaLuan.pdf) ·
-[Tài liệu dbt](https://phuclc17.github.io/fnb-ops-data-platform/dbt/)
+[Tài liệu dbt](https://phuclc17.github.io/final_proj/dbt/)
 
-Ứng dụng trực tuyến mở được ngay trên trình duyệt, không cần cài đặt. Nếu trang đang khởi động, chờ khoảng một đến hai phút.
+Trang giới thiệu trình bày toàn bộ dự án trên một trang, xem được ngay trên trình duyệt: một vòng sản phẩm, kiến trúc, dữ liệu nguồn, đường ống, chất lượng dữ liệu, phát hiện và truy vết, kết quả đánh giá, phát hiện kinh doanh và video trình diễn.
 
 ![Truy vết nguyên nhân](docs/images/truy_vet.png)
 
@@ -35,7 +34,7 @@ Fast&Fat là chuỗi giả định. Dữ liệu vận hành của doanh nghiệp
 
 ## Một vòng sản phẩm
 
-Ví dụ trên môi trường vận hành, tuần 23–29/09/2024. Ứng dụng trực tuyến giữ đúng trạng thái sau vòng này.
+Ví dụ trên môi trường vận hành, tuần 23–29/09/2024.
 
 1. Dữ liệu đến. Cuối mỗi ngày, POS đám mây và ứng dụng đặt hàng có hóa đơn mới trên API; POS cài tại máy và máy chấm công xuất tệp; báo cáo đối soát tuần của GrabFood, ShopeeFood và sổ nhập kho được gửi vào vùng tiếp nhận.
 2. Đường ống tự chạy. Airflow thấy dữ liệu mới và chạy bảy bước: kéo API theo mốc ngày, phát hiện tệp mới, nạp Bronze, cửa chặn chất lượng, dbt dựng Silver và Gold kèm 158 kiểm thử, quét cảnh báo, đưa sang PostgreSQL. Lượt bảy ngày này nạp 236 tệp, 18.798 dòng trong 146 giây.
@@ -61,8 +60,6 @@ Mọi trang dùng chung bộ lọc môi trường dữ liệu, chi nhánh và kh
 | | Truy vết nguyên nhân | Kết luận, đề xuất xử lý, cây KPI, điểm từng giả thuyết, bằng chứng gốc mở tới đúng dòng trong tệp nguồn |
 | Kiểm chứng | Bộ mô phỏng | Sự thật của một ngày đặt cạnh những gì từng hệ thống ghi lại; lịch và tác động của các kịch bản sự cố |
 | | Đánh giá bộ phát hiện | Kết quả trên hai tập, so với phương án cơ sở, độ nhạy theo ngưỡng và theo cách tính mức kỳ vọng |
-
-Bản trực tuyến chỉ đọc nên không có trang Tải tệp lên và nút đưa dữ liệu mới; Tổng quan vẽ trực tiếp từ kho thay cho dashboard Metabase.
 
 ## Kiến trúc
 
